@@ -1,0 +1,962 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.2"/>
+
+
+    <meta name="description" content="分享自己的学习经历，实用技巧" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.2" />
+
+
+
+
+  <title> MockingBird </title>
+</head>
+
+<body>
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">MockingBird</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+
+  <ul id="menu" class="menu">
+     
+    
+      
+      <li class="menu-item menu-item-home">
+        <a href="/">
+          <i class="menu-item-icon icon-home"></i> <br />
+          首页
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-categories">
+        <a href="/categories">
+          <i class="menu-item-icon icon-categories"></i> <br />
+          分类
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-archives">
+        <a href="/archives">
+          <i class="menu-item-icon icon-archives"></i> <br />
+          归档
+        </a>
+      </li>
+    
+      
+      <li class="menu-item menu-item-tags">
+        <a href="/tags">
+          <i class="menu-item-icon icon-tags"></i> <br />
+          标签
+        </a>
+      </li>
+    
+  </ul>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+  <div id="posts" class="posts-expand">
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/04/function-hoisting/">
+                函数的提升
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/javascript/">javascript</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/04/function-hoisting/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/function-hoisting/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>我们知道，对于所有的变量，无论在函数体的什么地方声明，都会在后台被提升到函数体顶部。</p>
+</blockquote>
+<p>这个规则对于函数同样适用，其原因在于函数只是分配给变量的对象。<strong>唯一需要引起注意的地方在于当适用函数声明时，函数定义也会被提升，而不仅仅是函数声明被提升。</strong>看下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);   <span class="comment">// "function"</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> bar);   <span class="comment">// "undefined"</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<p><code>test()</code>函数中的<code>foo</code>和<code>bar</code>的声明被提升到了顶部；同时，需要注意的是：<code>foo</code>和<code>bar</code>的区别在于前者的定义得到了提升，而后者的定义没有提升，这也就是<code>console.log(typeof bar)</code>输出<code>undefined</code>的原因。</p>
+<p>所以，需要记住的是：<strong>函数表达式仅仅是变量被提升，而函数的实现没有被提升。</strong><br>上面的代码中，后台解析的代码类似于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> bar;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);   <span class="comment">// "function"</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> bar);   <span class="comment">// "undefined"</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hoisting/"> #hoisting </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/06/01/code-style/">
+                javascript 代码规范
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/javascript/">javascript</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/javascript/规范/">规范</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/01/code-style/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/01/code-style/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>以下编码风格来自于《编写可维护的 javascript》一书中，加上个人总结，自代表个人风格，仅供参考。</p>
+<h2 id="缩进">缩进</h2><p>缩进可以采用<strong>2格缩进</strong>或者<strong>4格缩进</strong>，具体使用哪个看团队的代码规范和自己的爱好。</p>
+<h2 id="行尾分号">行尾分号</h2><p>行尾一律加上<code>;</code>分号，除非该行需要折行。</p>
+<h2 id="行的长度">行的长度</h2><p>单行不应该超过80个字符，如果超过，应该折行编写。</p>
+<h2 id="折行">折行</h2><p>当一行长度达到单行最大字符限制时，手动将一行拆成两行。遵守：</p>
+<ol>
+<li>在运算符后换行</li>
+<li>下一行增加两层缩进</li>
+</ol>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">callAFunction<span class="list">(<span class="keyword">argument1</span>, argument2, argument3, argument4, argument5, argument6,</span><br><span class="line">        argument7)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h2 id="空行">空行</h2><p>一段代码的语义和另一段代码不相关，这时就应该使用空格将它们分隔开来。</p>
+<h2 id="命名">命名</h2><ul>
+<li>常量<br>常量使用大写字母和下划线命名。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> MAX_COUNT</span> = <span class="number">10</span>;</span><br><span class="line"><span class="variable"><span class="keyword">var</span> URL</span> = 'http:<span class="comment">//www.google.com/';</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>动词常见约定：<br><img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2011.jpg?imageView2/2/w/1366"></p>
+<ul>
+<li>构造函数<br>构造函数首字母应该大写。</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> me = Person(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="基本类型的表示">基本类型的表示</h2><ul>
+<li>字符串<br>普通字符串采用<strong><code>&#39;</code>单引号</strong>包裹，json 对象中的字符串采用<strong>双引号</strong>包裹。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> name</span> = 'Tom';</span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="keyword">var</span> me</span> = &#123;</span><br><span class="line">    name: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数字<br>书写完整，不要省去整数部分或小数部分，<strong>不要使用八进制写法</strong>。</li>
+<li>null<br>不要使用<code>null</code>来检查是否传入了某个参数；不要用<code>null</code>来检查一个未初始化的变量。</li>
+<li>undefined<br>尽量避免在代码中使用<code>undefined</code>，如果要判断一个变量是否存在可以这样：</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(name === <span class="literal">null</span> || <span class="keyword">typeof</span>(name) === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对象<br>采用对象字面量的方式定义对象：</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">me</span> = &#123;</span><br><span class="line">    <span class="property">name</span>: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组<br>采用数组字面量的方式定义数组：</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/css3-animate-or-js-animate/">
+                CSS3 Animate or JS Animate ?
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/css3-animate-or-js-animate/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/css3-animate-or-js-animate/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。</p>
+<p>首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 <code>Rendering（回流）</code>，也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试。</p>
+<h2 id="测试重绘">测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
+<ul>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="external">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
+</ul>
+<p>测试结果如下（CSS3 左， jquery 右）：</p>
+<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%209.jpg?imageView2/2/w/1366">
+<p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
+<h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
+<ul>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="external">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
+</ul>
+<p>测试结果如下（CSS3 左， jquery 右）：</p>
+<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2010.jpg?imageView2/2/w/1366">
+<p>可以看到，两者没有太打的区别。</p>
+<h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
+<h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
+<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/animation/"> #animation </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/27/intro-of-css3-transition-transform-animation/">
+                CSS3 Transition, transform 和 animation 介绍
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/intro-of-css3-transition-transform-animation/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/intro-of-css3-transition-transform-animation/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
+<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">transition</span> ： <span class="attribute">transition-property</span> <span class="attribute">transition-duration</span> <span class="attribute">transition-timing-function</span> <span class="attribute">transition-delay</span> <span class="attr_selector">[, ...]</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
+<li>transition-duration<br>动画执行的持续时间，单位为<code>s（秒）</code>或者 <code>ms（毫秒）</code>。</li>
+<li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
+<li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
+</ol>
+<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
+<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">transform</span>:<span class="value"> rotate | scale | skew | translate |matrix</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
+<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
+<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
+<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
+</ul>
+<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">keyframes</span> IDENT </span>&#123;</span><br><span class="line">  <span class="tag">from</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">Percentage</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">to</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line"><span class="at_rule">@<span class="keyword">keyframes</span> IDENT </span>&#123;</span><br><span class="line">  0% <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">Percentage</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  100% <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
+<ul>
+<li>animation-name 关键帧名<br>用来定义一个动画的名称，也就是由前面的<code>keyframes</code>创建的动画名，默认值为<code>none</code>，当值为<code>none</code>时，将没有任何动画效果。如果我们要同时附几个<code>animation</code>给一个元素，只要用逗号<code>,</code>隔开即可。</li>
+<li>animation-iteration-count 动画循环次数<br>默认为<code>1</code>，如果要进行无限循环，只要设为<code>infinite</code>即可。</li>
+<li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
+<li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
+</ul>
+<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
+<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css3/"> #css3 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              <a class="post-title-link" href="/2015/05/26/css3-box-shadow/">
+                css3 box shadow
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/26/css3-box-shadow/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-box-shadow/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
+<h2 id="语法">语法</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">E</span> &#123;<span class="tag">box-shadow</span><span class="pseudo">:inset</span> <span class="tag">x-offset</span> <span class="tag">y-offset</span> <span class="tag">blur-radius</span> <span class="tag">spread-radius</span> <span class="tag">color</span>&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;<span class="attribute">box-shadow</span>:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
+<li><code>x-offset</code><br>水平方向的偏移量；</li>
+<li><code>y-offset</code><br>垂直方向的偏移量；</li>
+<li><code>blur-radius</code>模糊半径<br>可选，只能为整数，值越大阴影就越模糊；</li>
+<li><code>spead-radius</code>扩展半径<br>可选，可以为正数或者负数，如果为负数，整个阴影将会缩小；</li>
+<li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
+</ul>
+<p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
+<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css3/"> #css3 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+  </div>
+
+  
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+  </div>
+
+
+        </div>
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg" alt="McBird" />
+          <p class="site-author-name">McBird</p>
+        </div>
+        <p class="site-description motion-element">分享自己的学习经历，实用技巧</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/CodingMonkeyzh" target="_blank">github</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://weibo.com/1914017207" target="_blank">weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://http://www.zhihu.com/people/zhou-quan-31-68" target="_blank">zhihu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+
+      </div>
+
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">McBird</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.content img').each(function () {
+        var $image = $(this);
+        var $imageWrapLink = $image.parent('a');
+
+        if ($imageWrapLink.size() < 1) {
+          $imageWrapLink = $image.wrap('<a href="' + this.getAttribute('src') + '"></a>').parent('a');
+        }
+        $imageWrapLink.addClass('fancybox');
+      });
+    });
+    $('.fancybox').fancybox({
+      helpers: {
+        overlay: {
+          locked: false
+        }
+      }
+    });
+  </script>
+
+
+  <script type="text/javascript">
+  function hasMobileUA () {
+    var nav = window.navigator;
+    var ua = nav.userAgent;
+    var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+    return pa.test(ua);
+  }
+
+  function isDesktop () {
+    return screen.width > 991 && !hasMobileUA();
+  }
+
+  function isTablet () {
+    return screen.width < 992 && screen.width > 767 && hasMobileUA();
+  }
+
+  function isMobile () {
+    return screen.width < 767 && hasMobileUA();
+  }
+
+  function escapeSelector (selector) {
+    return selector.replace(/[!"$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\$&")
+  }
+</script>
+
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" id="motion.global">
+  $(document).ready(function () {
+    var body = $('body');
+    var isSidebarVisible = false;
+    var sidebarToggle = $('.sidebar-toggle');
+    var sidebarToggleLine1st = $('.sidebar-toggle-line-first')
+    var sidebarToggleLine2nd = $('.sidebar-toggle-line-middle');
+    var sidebarToggleLine3rd = $('.sidebar-toggle-line-last');
+    var sidebar = $('.sidebar');
+
+    var SIDEBAR_WIDTH = '320px';
+    var SIDEBAR_DISPLAY_DURATION = 300;
+
+    var sidebarToogleLineStatusInit = {width: '100%', opacity: 1, left: 0, rotateZ: 0, top: 0};
+
+    var sidebarToggleLine1stStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine1stStatusArrow = {width: '50%', rotateZ: '-45deg', top: '2px'};
+    var sidebarToogleLine1stStatusClose = {width: '100%', rotateZ: '-45deg', top: '5px'};
+
+    var sidebarToggleLine2ndStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine2ndStatusArrow = {width: '90%'};
+    var sidebarToogleLine2ndStatusClose = {opacity: 0};
+
+    var sidebarToggleLine3rdStatusInit = sidebarToogleLineStatusInit;
+    var sidebarToggleLine3rdStatusArrow = {width: '50%', rotateZ: '45deg', top: '-2px'};
+    var sidebarToogleLine3rdStatusClose = {width: '100%', rotateZ: '45deg', top: '-5px'};
+
+    LogoAndMenuMotion();
+    sidebatToggleMotion();
+    postsListMotion();
+    backToTopMotion();
+
+
+    $(document)
+      .on('sidebar.isShowing', function () {
+        isDesktop() && body.velocity(
+          {paddingRight: SIDEBAR_WIDTH},
+          SIDEBAR_DISPLAY_DURATION
+        );
+        sidebarContentMotion();
+      })
+      .on('sidebar.isHiding', function () {});
+
+    function LogoAndMenuMotion() {
+      $.Velocity.RunSequence([
+        { e: $('.brand'), p: { opacity: 1 }, o: { duration: 100 } },
+        { e: $('.logo'), p: { opacity: 1, top: 0 }, o: { duration: 50} },
+        
+        { e: $('.site-title'), p: { opacity: 1, top: 0 }, o: { duration: 200 } }
+      ]);
+      $('.menu-item').velocity('transition.slideDownIn', {display: null});
+    }
+
+
+    function backToTopMotion () {
+      var b2top = $('.back-to-top');
+      b2top.on('click', function () {
+        body.velocity('scroll');
+      });
+    }
+
+    function sidebarShowMotion () {
+
+      sidebarToggleLine1st.velocity(sidebarToogleLine1stStatusClose);
+      sidebarToggleLine2nd.velocity(sidebarToogleLine2ndStatusClose);
+      sidebarToggleLine3rd.velocity(sidebarToogleLine3rdStatusClose);
+
+      sidebar.velocity({width: SIDEBAR_WIDTH}, {
+        display: 'block',
+        duration: SIDEBAR_DISPLAY_DURATION,
+        complete: function () {
+          sidebar.addClass('sidebar-active');
+          sidebar.trigger('sidebar.didShow');
+        }
+      });
+      sidebar.trigger('sidebar.isShowing');
+    }
+
+    function sidebarHideMotion () {
+      isDesktop() && body.velocity({paddingRight: 0});
+      sidebar.velocity('reverse');
+
+      sidebarToggleLine1st.velocity(sidebarToggleLine1stStatusInit);
+      sidebarToggleLine2nd.velocity(sidebarToggleLine2ndStatusInit);
+      sidebarToggleLine3rd.velocity(sidebarToggleLine3rdStatusInit);
+
+      sidebar.removeClass('sidebar-active');
+      sidebar.trigger('sidebar.isHiding');
+    };
+
+    function sidebarContentMotion () {
+      $('.sidebar .motion-element').velocity(
+        'transition.slideRightIn',
+        {stagger: 50, drag: true}
+      );
+    }
+
+    function postsListMotion () {
+      var postMotionOptions = window.postMotionOptions || {stagger: 300, drag: true};
+      $('.post').velocity('transition.slideDownIn', postMotionOptions);
+    }
+
+    function sidebatToggleMotion () {
+      sidebarToggle.on('click', function () {
+        isSidebarVisible ? sidebarHideMotion() : sidebarShowMotion();
+        isSidebarVisible = !isSidebarVisible;
+      });
+
+      sidebarToggle.hover(function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusArrow);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusArrow);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusArrow);
+      }, function () {
+        if (isSidebarVisible) {return}
+        sidebarToggleLine1st.velocity('stop').velocity(sidebarToggleLine1stStatusInit);
+        sidebarToggleLine2nd.velocity('stop').velocity(sidebarToggleLine2ndStatusInit);
+        sidebarToggleLine3rd.velocity('stop').velocity(sidebarToggleLine3rdStatusInit);
+      });
+    }
+  });
+
+</script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"codingmonkeyzh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+</body>
+</html>
