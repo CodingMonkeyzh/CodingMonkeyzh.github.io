@@ -112,6 +112,121 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/26/image-tilt-effect/">
+                制作图片倾斜（tilt）效果
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/css3/turorials/">turorials</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/26/image-tilt-effect/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/26/image-tilt-effect/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>原文来自：</p>
+<blockquote>
+<p><a href="http://tympanus.net/codrops/2015/05/28/image-tilt-effect/" target="_blank" rel="external">http://tympanus.net/codrops/2015/05/28/image-tilt-effect/</a></p>
+</blockquote>
+<p>所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：<br><a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+<h2 id="文档结构">文档结构</h2><p>对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非常简单。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;img <span class="type">class</span>=<span class="string">"tilt-effect"</span> src=<span class="string">"http://placehold.it/500x300"</span> alt=<span class="string">""</span> /&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>上面这段结构经过脚本处理之后，会被替换成下面的结构：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"container"</span>&gt;</span><br><span class="line">  &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"tilt"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"tilt__back"</span> style=<span class="string">"background-image: url(http://placehold.it/500x300);"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"tilt__front"</span> style=<span class="string">"opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"tilt__front"</span> style=<span class="string">"opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);"</span>&gt;&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="脚本分析">脚本分析</h2><p>我们利用了<a href="https://gist.github.com/CodingMonkeyzh/7c43c9a25f0d132b83d6" target="_blank" rel="external">filtfx.js</a>这个插件对上面的图片进行处理， 来实现倾斜效果。我在原来的代码中加入了一些注释，来帮助我们理解。下面我们对该插件的核心代码进行分析。</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function TiltFx(el, <span class="keyword">options</span>) &#123;</span><br><span class="line">  <span class="keyword">this</span>.el = el;</span><br><span class="line">  <span class="keyword">this</span>.<span class="keyword">options</span> = extend(&#123;&#125;, <span class="keyword">this</span>.<span class="keyword">options</span>);</span><br><span class="line">  extend(<span class="keyword">this</span>.<span class="keyword">options</span>, <span class="keyword">options</span>);</span><br><span class="line">  <span class="keyword">this</span>._init();</span><br><span class="line">  <span class="keyword">this</span>._initEvents();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是构造函数，如果我们的文档中，加入了上面的插件，那么插件会遍历文档中具有<code>tilt-effet</code>的<code>img</code>元素，来调用构造函数<code>TiltFx()</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 遍历所有拥有‘title-effect’类的img元素</span></span><br><span class="line">  [].slice.call(<span class="built_in">document</span>.querySelectorAll(<span class="string">'img.tilt-effect'</span>)).forEach(<span class="function"><span class="keyword">function</span><span class="params">(img)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> TiltFx(img, <span class="built_in">JSON</span>.parse(img.getAttribute(<span class="string">'data-tilt-options'</span>)));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>TiltFx()</code>具有一个原型属性，两个原型方法。原型属性配置了一些默认的参数用于调用：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 默认参数</span><br><span class="line"> */</span></span><br><span class="line">TiltFx.prototype.options = &#123;</span><br><span class="line">  extraImgs: <span class="number">2</span>, <span class="comment">// 额外的辅助图片数量</span></span><br><span class="line">  opacity: <span class="number">0.7</span>,</span><br><span class="line">  bgfixed: <span class="keyword">true</span>, <span class="comment">// 底图是否固定</span></span><br><span class="line">  movement: &#123;    <span class="comment">// 这是一些用于移动的参数</span></span><br><span class="line">    <span class="built_in">perspective</span>: <span class="number">1000</span>,</span><br><span class="line">    translateX: -<span class="number">10</span>,</span><br><span class="line">    translateY: -<span class="number">10</span>, </span><br><span class="line">    translateZ: <span class="number">20</span>,</span><br><span class="line">    <span class="built_in">rotateX</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="built_in">rotateY</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="built_in">rotateZ</span>: <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一个原型方法是<code>_init()</code>，用于初始化DOM结点，生成我们的目标DOM结点：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">TiltFx.prototype._init = function() &#123;</span><br><span class="line">  <span class="keyword">this</span>.tiltWrapper = document.createElement(<span class="string">'div'</span>);</span><br><span class="line">  <span class="keyword">this</span>.tiltWrapper.className = <span class="string">'tilt'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// main image element.</span></span><br><span class="line">  <span class="keyword">this</span>.tiltImgBack = document.createElement(<span class="string">'div'</span>);</span><br><span class="line">  <span class="keyword">this</span>.tiltImgBack.className = <span class="string">'tilt__back'</span>;</span><br><span class="line">  <span class="keyword">this</span>.tiltImgBack.style.backgroundImage = <span class="string">'url('</span> + <span class="keyword">this</span>.el.src + <span class="string">')'</span>;</span><br><span class="line">  <span class="keyword">this</span>.tiltWrapper.appendChild(<span class="keyword">this</span>.tiltImgBack);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// image elements limit.</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs &lt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs = <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs &gt; <span class="number">5</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs = <span class="number">5</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="keyword">options</span>.movement.perspective) &#123;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">options</span>.movement.perspective = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// add the extra image elements.</span></span><br><span class="line">  <span class="keyword">this</span>.imgElems = [];</span><br><span class="line">  <span class="keyword">for</span> (var i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs; ++i) &#123;</span><br><span class="line">    var el = document.createElement(<span class="string">'div'</span>);</span><br><span class="line">    el.className = <span class="string">'tilt__front'</span>;</span><br><span class="line">    el.style.backgroundImage = <span class="string">'url('</span> + <span class="keyword">this</span>.el.src + <span class="string">')'</span>;</span><br><span class="line">    el.style.opacity = <span class="keyword">this</span>.<span class="keyword">options</span>.opacity;</span><br><span class="line">    <span class="keyword">this</span>.tiltWrapper.appendChild(el);</span><br><span class="line">    <span class="keyword">this</span>.imgElems.<span class="keyword">push</span>(el);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="keyword">options</span>.bgfixed) &#123;</span><br><span class="line">    <span class="keyword">this</span>.imgElems.<span class="keyword">push</span>(<span class="keyword">this</span>.tiltImgBack);</span><br><span class="line">    ++<span class="keyword">this</span>.<span class="keyword">options</span>.extraImgs;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// add it to the DOM and remove original img element.</span></span><br><span class="line">  <span class="keyword">this</span>.el.parentNode.insertBefore(<span class="keyword">this</span>.tiltWrapper, <span class="keyword">this</span>.el);</span><br><span class="line">  <span class="keyword">this</span>.el.parentNode.removeChild(<span class="keyword">this</span>.el);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// tiltWrapper properties: width/height/left/top</span></span><br><span class="line">  <span class="keyword">this</span>.view = &#123;</span><br><span class="line">    width: <span class="keyword">this</span>.tiltWrapper.offsetWidth,</span><br><span class="line">    height: <span class="keyword">this</span>.tiltWrapper.offsetHeight</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>另外一个原型方式是用于监听鼠标事件之类的：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">TiltFx.prototype._initEvents = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> <span class="keyword">self</span> = this,</span><br><span class="line">    moveOpts = <span class="keyword">self</span>.options.movement;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// mousemove event..</span></span><br><span class="line">  this.tiltWrapper.addEventListener(<span class="string">'mousemove'</span>, <span class="function"><span class="keyword">function</span><span class="params">(ev)</span> </span>&#123;</span><br><span class="line">    requestAnimationFrame(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">// mouse position relative to the document.</span></span><br><span class="line">      <span class="keyword">var</span> mousepos = getMousePos(ev),</span><br><span class="line">        <span class="comment">// document scrolls.</span></span><br><span class="line">        docScrolls = &#123;</span><br><span class="line">          left: document.body.scrollLeft + document.documentElement.scrollLeft,</span><br><span class="line">          top: document.body.scrollTop + document.documentElement.scrollTop</span><br><span class="line">        &#125;,</span><br><span class="line">        bounds = <span class="keyword">self</span>.tiltWrapper.getBoundingClientRect(),</span><br><span class="line">        <span class="comment">// mouse position relative to the main element (tiltWrapper).</span></span><br><span class="line">        relmousepos = &#123;</span><br><span class="line">          x: mousepos.x - bounds.left - docScrolls.left,</span><br><span class="line">          y: mousepos.y - bounds.top - docScrolls.top</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// configure the movement for each image element.</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">self</span>.imgElems.length; i &lt; len; ++i) &#123;</span><br><span class="line">        <span class="keyword">var</span> el = <span class="keyword">self</span>.imgElems[i],</span><br><span class="line">          rotX = moveOpts.rotateX ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateX / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.rotateX / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">          rotY = moveOpts.rotateY ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateY / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.rotateY / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">          rotZ = moveOpts.rotateZ ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateZ / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.rotateZ / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">          transX = moveOpts.translateX ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateX / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.translateX / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">          transY = moveOpts.translateY ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateY / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.translateY / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">          transZ = moveOpts.translateZ ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateZ / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.translateZ / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        el.style.WebkitTransform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d('</span> + transX + <span class="string">'px,'</span> + transY + <span class="string">'px,'</span> + transZ + <span class="string">'px) rotate3d(1,0,0,'</span> + rotX + <span class="string">'deg) rotate3d(0,1,0,'</span> + rotY + <span class="string">'deg) rotate3d(0,0,1,'</span> + rotZ + <span class="string">'deg)'</span>;</span><br><span class="line">        el.style.transform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d('</span> + transX + <span class="string">'px,'</span> + transY + <span class="string">'px,'</span> + transZ + <span class="string">'px) rotate3d(1,0,0,'</span> + rotX + <span class="string">'deg) rotate3d(0,1,0,'</span> + rotY + <span class="string">'deg) rotate3d(0,0,1,'</span> + rotZ + <span class="string">'deg)'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// reset all when mouse leaves the main wrapper.</span></span><br><span class="line">  this.tiltWrapper.addEventListener(<span class="string">'mouseleave'</span>, <span class="function"><span class="keyword">function</span><span class="params">(ev)</span> </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="keyword">self</span>.imgElems.length; i &lt; len; ++i) &#123;</span><br><span class="line">        <span class="keyword">var</span> el = <span class="keyword">self</span>.imgElems[i];</span><br><span class="line">        el.style.WebkitTransform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d(0,0,0) rotate3d(1,1,1,0deg)'</span>;</span><br><span class="line">        el.style.transform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d(0,0,0) rotate3d(1,1,1,0deg)'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, <span class="number">60</span>);</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// window resize</span></span><br><span class="line">  window.addEventListener(<span class="string">'resize'</span>, throttle(<span class="function"><span class="keyword">function</span><span class="params">(ev)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// recalculate tiltWrapper properties: width/height/left/top</span></span><br><span class="line">    <span class="keyword">self</span>.view = &#123;</span><br><span class="line">      width: <span class="keyword">self</span>.tiltWrapper.offsetWidth,</span><br><span class="line">      height: <span class="keyword">self</span>.tiltWrapper.offsetHeight</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, <span class="number">50</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，监听<code>mousemove</code>的事件处理函数中的计算比较复杂，关键的部分就是在这里：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> el = <span class="keyword">self</span>.imgElems[i],</span><br><span class="line">  rotX = moveOpts.rotateX ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateX / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.rotateX / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">  rotY = moveOpts.rotateY ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateY / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.rotateY / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">  rotZ = moveOpts.rotateZ ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.rotateZ / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.rotateZ / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">  transX = moveOpts.translateX ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateX / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.width * relmousepos.x - ((i + <span class="number">1</span>) * moveOpts.translateX / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">  transY = moveOpts.translateY ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateY / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.translateY / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>,</span><br><span class="line">  transZ = moveOpts.translateZ ? <span class="number">2</span> * ((i + <span class="number">1</span>) * moveOpts.translateZ / <span class="keyword">self</span>.options.extraImgs) / <span class="keyword">self</span>.view.height * relmousepos.y - ((i + <span class="number">1</span>) * moveOpts.translateZ / <span class="keyword">self</span>.options.extraImgs) : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">el.style.WebkitTransform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d('</span> + transX + <span class="string">'px,'</span> + transY + <span class="string">'px,'</span> + transZ + <span class="string">'px) rotate3d(1,0,0,'</span> + rotX + <span class="string">'deg) rotate3d(0,1,0,'</span> + rotY + <span class="string">'deg) rotate3d(0,0,1,'</span> + rotZ + <span class="string">'deg)'</span>;</span><br><span class="line">el.style.transform = <span class="string">'perspective('</span> + moveOpts.perspective + <span class="string">'px) translate3d('</span> + transX + <span class="string">'px,'</span> + transY + <span class="string">'px,'</span> + transZ + <span class="string">'px) rotate3d(1,0,0,'</span> + rotX + <span class="string">'deg) rotate3d(0,1,0,'</span> + rotY + <span class="string">'deg) rotate3d(0,0,1,'</span> + rotZ + <span class="string">'deg)'</span>;</span><br></pre></td></tr></table></figure>
+<p>这里我们根据鼠标的位置，计算出了各个图层对应的<strong>偏移量和旋转角度</strong>，然后对它们进行变换即可。<br>最后<code>mouseleave</code>之后，我们再把个个图层恢复到初始位置就行了。</p>
+<p>Demo：<a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/effect/"> #effect </a>
+          
+            <a href="/tags/image/"> #image </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/04/function-hoisting/">
                 函数的提升
               </a>
@@ -529,105 +644,11 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/26/css3-box-shadow/">
-                css3 box shadow
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/css3/">css3</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/26/css3-box-shadow/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-box-shadow/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
-<h2 id="语法">语法</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">E</span> &#123;<span class="tag">box-shadow</span><span class="pseudo">:inset</span> <span class="tag">x-offset</span> <span class="tag">y-offset</span> <span class="tag">blur-radius</span> <span class="tag">spread-radius</span> <span class="tag">color</span>&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;<span class="attribute">box-shadow</span>:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
-<li><code>x-offset</code><br>水平方向的偏移量；</li>
-<li><code>y-offset</code><br>垂直方向的偏移量；</li>
-<li><code>blur-radius</code>模糊半径<br>可选，只能为整数，值越大阴影就越模糊；</li>
-<li><code>spead-radius</code>扩展半径<br>可选，可以为正数或者负数，如果为负数，整个阴影将会缩小；</li>
-<li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
-</ul>
-<p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
-<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/css3/"> #css3 </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </div>
 
 
@@ -658,7 +679,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -672,7 +693,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
