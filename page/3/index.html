@@ -112,6 +112,117 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/27/intro-of-css3-transition-transform-animation/">
+                CSS3 Transition, transform 和 animation 介绍
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-27
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/27/intro-of-css3-transition-transform-animation/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/intro-of-css3-transition-transform-animation/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
+<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">transition</span> ： <span class="attribute">transition-property</span> <span class="attribute">transition-duration</span> <span class="attribute">transition-timing-function</span> <span class="attribute">transition-delay</span> <span class="attr_selector">[, ...]</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
+<li>transition-duration<br>动画执行的持续时间，单位为<code>s（秒）</code>或者 <code>ms（毫秒）</code>。</li>
+<li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
+<li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
+</ol>
+<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
+<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">transform</span>:<span class="value"> rotate | scale | skew | translate |matrix</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
+<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
+<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
+<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
+</ul>
+<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="at_rule">@<span class="keyword">keyframes</span> IDENT </span>&#123;</span><br><span class="line">  <span class="tag">from</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">Percentage</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">to</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line"><span class="at_rule">@<span class="keyword">keyframes</span> IDENT </span>&#123;</span><br><span class="line">  0% <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  <span class="tag">Percentage</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">  100% <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">Properties</span>:<span class="value"> Properties value</span></span>;</span><br><span class="line">  &#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
+<ul>
+<li>animation-name 关键帧名<br>用来定义一个动画的名称，也就是由前面的<code>keyframes</code>创建的动画名，默认值为<code>none</code>，当值为<code>none</code>时，将没有任何动画效果。如果我们要同时附几个<code>animation</code>给一个元素，只要用逗号<code>,</code>隔开即可。</li>
+<li>animation-iteration-count 动画循环次数<br>默认为<code>1</code>，如果要进行无限循环，只要设为<code>infinite</code>即可。</li>
+<li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
+<li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
+</ul>
+<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
+<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
+
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css3/"> #css3 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/26/css3-box-shadow/">
                 css3 box shadow
               </a>
@@ -485,94 +596,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/08/change-screenshot-name/">
-                Mac OS X 修改截图默认文件名
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-08
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/system/">system</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/08/change-screenshot-name/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/change-screenshot-name/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>下面纪录一下通过<strong>Terminal</strong>来改变默认截图格式、名称、以及存储目录。</p>
-<h2 id="查看当前配置">查看当前配置</h2><p>可以通过下面的命令查看当前配置（修改之后的）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">defaults <span class="built_in">read</span> com.apple.screencapture</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"include-date"</span> = <span class="number">0</span>;</span><br><span class="line">    location = <span class="string">"/Users/mcbird/Sites/blog/static/images"</span>;</span><br><span class="line">    name = screen;</span><br><span class="line">    <span class="built_in">type</span> = jpg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="改变格式">改变格式</h2><p>默认是<code>png</code>格式。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> type jpg</span><br></pre></td></tr></table></figure></p>
-<h2 id="自定义文件名">自定义文件名</h2><p>默认文件名是<strong>屏幕截图 2015-01-01 12:12:12</strong>这样的，下面对其修改。</p>
-<h3 id="去掉日期">去掉日期</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> <span class="string">"include-date"</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h3 id="改变名称">改变名称</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> name screen</span><br></pre></td></tr></table></figure>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/mac-os-x/"> #mac os x </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -608,7 +631,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -622,7 +645,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
