@@ -20,7 +20,7 @@
 
 
 
-  <meta name="keywords" content="css3," />
+  <meta name="keywords" content="编程风格," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> css3 box shadow // MockingBird </title>
+  <title> React 编程风格指南 // MockingBird </title>
 </head>
 
 <body>
@@ -110,7 +110,7 @@
           
           
             
-              css3 box shadow
+              React 编程风格指南
             
           
         </h1>
@@ -118,14 +118,22 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-05-26
+          发表于 2015-10-23
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分类于
             
-              <a href="/categories/css3/">css3</a>
+              <a href="/categories/javascript/">javascript</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/javascript/react/">react</a>
 
               
               
@@ -138,8 +146,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/26/css3-box-shadow/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-box-shadow/"></span>
+            <a href="/2015/10/23/react-style-guide/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/23/react-style-guide/"></span>
             </a>
           </span>
           
@@ -153,18 +161,39 @@
       
 
       
-        <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
-<h2 id="语法">语法</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">E</span> &#123;<span class="tag">box-shadow</span><span class="pseudo">:inset</span> <span class="tag">x-offset</span> <span class="tag">y-offset</span> <span class="tag">blur-radius</span> <span class="tag">spread-radius</span> <span class="tag">color</span>&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;<span class="attribute">box-shadow</span>:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
+        <p>本文讨论的是 <code>React.js</code> 编程中的一些编程风格，团队开发中遵循统一的风格有利于提高代码的阅读体验。<br>本文译自<a href="https://github.com/Khan/style-guides/blob/master/style/react.md" target="_blank" rel="external">React style guide</a>。下面将从三个方面来讲。</p>
+<h2 id="语法">语法</h2><h3 id="方法顺序遵循生命周期放在前面，_render()_方法放在最后">方法顺序遵循生命周期放在前面， <code>render()</code> 方法放在最后</h3><p>在 <code>react</code> 组件内部，方法的顺序如下：</p>
+<ol>
+<li>生命周期方法（按照时间先后顺序依次为： <code>getDefaultProps</code>, <code>getInitialState</code>, <code>componentWillMount</code>, <code>componentDidMount</code>, <code>componentWillReceiveProps</code>, <code>shouldComponentUpdate</code>, <code>componentWillUpdate</code>, <code>componentDidUpdate</code>, <code>componentWillUnmount</code> ）</li>
+<li>其他的方法</li>
+<li><code>render</code> 方法</li>
+</ol>
+<h3 id="事件处理函数的命名">事件处理函数的命名</h3><p>采用 “handle” + “EventName” 的方式来命名<br>Example：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Component</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.handleClick&#125;</span> <span class="attribute">onLaunchMissiles</span>=<span class="value">&#123;this.handleLaunchMissiles&#125;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="事件函数作为属性时的命名">事件函数作为属性时的命名</h3><p>为了跟 <code>react</code> 的事件命名保持一致： <code>onClick</code>, <code>onDrag</code>, <code>onChange</code>, 等等，采用如下格式：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Component</span> <span class="attribute">onLaunchMissiles</span>=<span class="value">&#123;this.handleLaunchMissiles&#125;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="元素跟_return_放在同一行">元素跟 <code>return</code> 放在同一行</h3><p>为了节约空间，采用下面的写法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="command">return</span> &lt;<span class="keyword">div</span>&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;;</span><br></pre></td></tr></table></figure></p>
+<p>而不是：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (      // <span class="string">"div"</span> 与 <span class="string">"return"</span> 不在同一行</span><br><span class="line">    &lt;<span class="keyword">div</span>&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h3 id="对HTML的属性进行对齐和排序">对HTML的属性进行对齐和排序</h3><p>如果属性不是太多，那就放在同一行，否则就把每一个属性都单独写一行：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="variable">className=</span><span class="string">"highlight"</span> <span class="variable">key=</span><span class="string">"highlight-div"</span>&gt;</span><br><span class="line">&lt;div</span><br><span class="line">    <span class="variable">className=</span><span class="string">"highlight"</span></span><br><span class="line">    <span class="variable">key=</span><span class="string">"highlight-div"</span></span><br><span class="line">&gt;</span><br><span class="line">&lt;Image</span><br><span class="line">    <span class="variable">className=</span><span class="string">"highlight"</span></span><br><span class="line">    <span class="variable">key=</span><span class="string">"highlight-div"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>而不是：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">div</span> className=<span class="string">"highlight"</span>      <span class="comment">// 属性没有在单独行</span></span><br><span class="line">     key=<span class="string">"highlight-div"</span></span><br><span class="line">&gt;</span><br><span class="line">&lt;<span class="tag">div</span>                            <span class="comment">// 闭合便签不在单独的行</span></span><br><span class="line">    className=<span class="string">"highlight"</span></span><br><span class="line">    key=<span class="string">"highlight-div"</span>&gt;</span><br><span class="line">&lt;<span class="tag">div</span>                            <span class="comment">// 属性没有排序（一般重要的属性写在前面）</span></span><br><span class="line">    key=<span class="string">"highlight-div"</span></span><br><span class="line">    className=<span class="string">"highlight"</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="一个文件只导出一个_react_类">一个文件只导出一个 react 类</h3><p>每一个 <code>.jsx</code> 应该只能导出单独的 <code>react 类</code>。这样有利于测试，因为这些测试框架要求一个文件导出的就是一个函数。<br><em>注意：你依然可以在一个文件中定义多个类，只要保证导出的只有一个即可。</em></p>
+<h2 id="语言特色">语言特色</h2><h3 id="确保“呈现型”的组件功能单一">确保“呈现型”的组件功能单一</h3><p>把 <code>react 组件</code> 分为“逻辑型组件”和“呈现型组件” 是很有必要的。前者包含的是业务逻辑，里面不应该包含HTML；后者一般是可复用的，可以包含HTML。前者可以拥有自己的内部的 <code>state</code>，而后者不应该拥有。</p>
+<h3 id="多用_props">多用 props</h3><p>如果能用 <code>props</code> 就不要用 <code>state</code>，这一定程度上可以减少应用程序的复杂度。<br>一般的模式是：创建一个“无状态”的组件（呈现型组件），只负责呈现数据，把包含 <code>state</code> 的“逻辑型组件”做为这些组件的父级组件。 然后把它内部的 <code>state</code> 作为 <code>props</code>传递给下面的呈现型组件。这些逻辑型组件包含了所有的交互逻辑。</p>
+<h3 id="使用_propTypes">使用 propTypes</h3><p><code>react 组件</code> 都应该完成 <code>propTypes</code> 验证。每一个 <code>this.props</code> 的属性都应该有一个与之对应的 <code>propTypes</code>。<br>避免使用这些没有描述意义的 prop-types:</p>
 <ul>
-<li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
-<li><code>x-offset</code><br>水平方向的偏移量；</li>
-<li><code>y-offset</code><br>垂直方向的偏移量；</li>
-<li><code>blur-radius</code>模糊半径<br>可选，只能为整数，值越大阴影就越模糊；</li>
-<li><code>spead-radius</code>扩展半径<br>可选，可以为正数或者负数，如果为负数，整个阴影将会缩小；</li>
-<li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
+<li>React.PropTypes.any</li>
+<li>React.PropTypes.array</li>
+<li>React.PropTypes.object</li>
 </ul>
-<p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
-<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
+<p>最好使用：</p>
+<ul>
+<li>React.PropTypes.arrayOf</li>
+<li>React.PropTypes.objectOf</li>
+<li>React.PropTypes.instanceOf</li>
+<li>React.PropTypes.shape</li>
+</ul>
+<h3 id="永远不要在DOM中保存_state">永远不要在DOM中保存 state</h3><p>不要通过 <code>data-</code> 属性或class类。所有的信息应该都存储在javascript中，或者在React组件中，或者在React store 中，如果使用了类似 <code>Redux</code> 这样的框架的话。</p>
+<h2 id="React_库和组件">React 库和组件</h2><h3 id="不要使用_backbone_模型">不要使用 backbone 模型</h3><p>直接使用 flux action，或者 <code>$.ajax</code> 来代替。</p>
+<h3 id="尽量少用_jQuery_就少用">尽量少用 jQuery 就少用</h3><p>永远也不要用jquery去操作DOM。<br>尝试避免jquery插件的使用。有必要的话，把jquery插件包装在React组件中。<br>你可以使用 <code>$.ajax</code>（但是不要用其他方法，像 <code>$.post</code>） 来进行网络通信。</p>
+<h3 id="复用组件">复用组件</h3><p>你可以从<a href="http://react-components.com/" target="_blank" rel="external">react-components.com</a>获取第三方React组件。</p>
 
       
     </div>
@@ -173,7 +202,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css3/"> #css3 </a>
+            <a href="/tags/编程风格/"> #编程风格 </a>
           
         </div>
       
@@ -182,13 +211,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/26/css3-media-query/">CSS3 Media Query</a>
+              <a href="/2015/09/18/javascript-timers/">javascript 定时器工作原理</a>
             
           </div>
         </div>
@@ -204,8 +231,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/05/26/css3-box-shadow/"
-               data-title="css3 box shadow" data-url="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">
+          <div class="ds-thread" data-thread-key="2015/10/23/react-style-guide/"
+               data-title="React 编程风格指南" data-url="http://blog.mcbird.cn/2015/10/23/react-style-guide/">
           </div>
         
       </div>
@@ -301,7 +328,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEMO"><span class="nav-number">2.</span> <span class="nav-text">DEMO</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法顺序遵循生命周期放在前面，_render()_方法放在最后"><span class="nav-number">1.1.</span> <span class="nav-text">方法顺序遵循生命周期放在前面， render() 方法放在最后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件处理函数的命名"><span class="nav-number">1.2.</span> <span class="nav-text">事件处理函数的命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件函数作为属性时的命名"><span class="nav-number">1.3.</span> <span class="nav-text">事件函数作为属性时的命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元素跟_return_放在同一行"><span class="nav-number">1.4.</span> <span class="nav-text">元素跟 return 放在同一行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对HTML的属性进行对齐和排序"><span class="nav-number">1.5.</span> <span class="nav-text">对HTML的属性进行对齐和排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个文件只导出一个_react_类"><span class="nav-number">1.6.</span> <span class="nav-text">一个文件只导出一个 react 类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言特色"><span class="nav-number">2.</span> <span class="nav-text">语言特色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#确保“呈现型”的组件功能单一"><span class="nav-number">2.1.</span> <span class="nav-text">确保“呈现型”的组件功能单一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多用_props"><span class="nav-number">2.2.</span> <span class="nav-text">多用 props</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用_propTypes"><span class="nav-number">2.3.</span> <span class="nav-text">使用 propTypes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#永远不要在DOM中保存_state"><span class="nav-number">2.4.</span> <span class="nav-text">永远不要在DOM中保存 state</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React_库和组件"><span class="nav-number">3.</span> <span class="nav-text">React 库和组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不要使用_backbone_模型"><span class="nav-number">3.1.</span> <span class="nav-text">不要使用 backbone 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尽量少用_jQuery_就少用"><span class="nav-number">3.2.</span> <span class="nav-text">尽量少用 jQuery 就少用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复用组件"><span class="nav-number">3.3.</span> <span class="nav-text">复用组件</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
