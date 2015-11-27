@@ -112,6 +112,131 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/01/code-style/">
+                javascript 代码规范
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/javascript/">javascript</a>
+
+              
+              
+                ， 
+              
+
+            
+              <a href="/categories/javascript/规范/">规范</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/01/code-style/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/01/code-style/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>以下编码风格来自于《编写可维护的 javascript》一书中，加上个人总结，自代表个人风格，仅供参考。</p>
+<h2 id="缩进">缩进</h2><p>缩进可以采用<strong>2格缩进</strong>或者<strong>4格缩进</strong>，具体使用哪个看团队的代码规范和自己的爱好。</p>
+<h2 id="行尾分号">行尾分号</h2><p>行尾一律加上<code>;</code>分号，除非该行需要折行。</p>
+<h2 id="行的长度">行的长度</h2><p>单行不应该超过80个字符，如果超过，应该折行编写。</p>
+<h2 id="折行">折行</h2><p>当一行长度达到单行最大字符限制时，手动将一行拆成两行。遵守：</p>
+<ol>
+<li>在运算符后换行</li>
+<li>下一行增加两层缩进</li>
+</ol>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">callAFunction<span class="list">(<span class="keyword">argument1</span>, argument2, argument3, argument4, argument5, argument6,</span><br><span class="line">        argument7)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h2 id="空行">空行</h2><p>一段代码的语义和另一段代码不相关，这时就应该使用空格将它们分隔开来。</p>
+<h2 id="命名">命名</h2><ul>
+<li>常量<br>常量使用大写字母和下划线命名。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> MAX_COUNT</span> = <span class="number">10</span>;</span><br><span class="line"><span class="variable"><span class="keyword">var</span> URL</span> = 'http:<span class="comment">//www.google.com/';</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>动词常见约定：<br><img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2011.jpg?imageView2/2/w/1366"></p>
+<ul>
+<li>构造函数<br>构造函数首字母应该大写。</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> me = Person(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="基本类型的表示">基本类型的表示</h2><ul>
+<li>字符串<br>普通字符串采用<strong><code>&#39;</code>单引号</strong>包裹，json 对象中的字符串采用<strong>双引号</strong>包裹。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> name</span> = 'Tom';</span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="keyword">var</span> me</span> = &#123;</span><br><span class="line">    name: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数字<br>书写完整，不要省去整数部分或小数部分，<strong>不要使用八进制写法</strong>。</li>
+<li>null<br>不要使用<code>null</code>来检查是否传入了某个参数；不要用<code>null</code>来检查一个未初始化的变量。</li>
+<li>undefined<br>尽量避免在代码中使用<code>undefined</code>，如果要判断一个变量是否存在可以这样：</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(name === <span class="literal">null</span> || <span class="keyword">typeof</span>(name) === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对象<br>采用对象字面量的方式定义对象：</li>
+</ul>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">me</span> = &#123;</span><br><span class="line">    <span class="property">name</span>: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组<br>采用数组字面量的方式定义数组：</li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/27/css3-animate-or-js-animate/">
                 CSS3 Animate or JS Animate ?
               </a>
@@ -497,105 +622,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/25/css3-drop-box/">
-                css3 实现 drop-box
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-25
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/css3/">css3</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/25/css3-drop-box/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/css3-drop-box/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%204.jpg?imageView2/2/w/1366">
-<p>下面记录一下是实现步骤。</p>
-<h2 id="DOM_结构">DOM 结构</h2><p>我们仅仅需要一个<code>div</code>作为主体，阴影可借助伪元素<code>:before</code>和<code>:after</code>来实现。所以我们的 DOM 结构非常简单。</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"drop-shadow"</span>&gt;drop shadow effect&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="添加阴影">添加阴影</h2><p>给两个伪元素添加阴影，暂时先搞定左边，右边的阴影稍后再处理。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: <span class="string">""</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">z-index</span>:<span class="value"> -<span class="number">1</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">20%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15px</span> <span class="number">20px</span> <span class="function">rgba</span>(<span class="number">125</span>, <span class="number">125</span>, <span class="number">125</span>, <span class="number">0.8</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>现在，我们看到的是这个样子：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%205.jpg?imageView2/2/w/1366">
-<h2 id="调整阴影">调整阴影</h2><p>下面我们再通过<code>transform</code>来旋转一下阴影的角度，这样看起来更有立体感。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: <span class="string">""</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">z-index</span>:<span class="value"> -<span class="number">1</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">20%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15px</span> <span class="number">20px</span> <span class="function">rgba</span>(<span class="number">125</span>, <span class="number">125</span>, <span class="number">125</span>, <span class="number">0.8</span>)</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(-<span class="number">5deg</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样我们就完成了一边的制作了：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%206.jpg?imageView2/2/w/1366">
-<h2 id="调整阴影-1">调整阴影</h2><p>接下来，我们只需要把其中一个阴影挪到右边即可。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">after &#123;</span><br><span class="line">   right: <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> auto</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">5deg</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样，左边的阴影就<em>翻转</em>到了右边，大功告成：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%207.jpg?imageView2/2/w/1366">
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/css3/"> #css3 </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -631,7 +657,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -20,7 +20,7 @@
 
 
 
-  <meta name="keywords" content="css3," />
+  <meta name="keywords" content="animation," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> css3 box shadow // MockingBird </title>
+  <title> 「译」高效的 “box-shadow” 动画 // MockingBird </title>
 </head>
 
 <body>
@@ -110,7 +110,7 @@
           
           
             
-              css3 box shadow
+              「译」高效的 “box-shadow” 动画
             
           
         </h1>
@@ -118,7 +118,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-05-26
+          发表于 2015-11-27
         </span>
 
         
@@ -138,8 +138,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/05/26/css3-box-shadow/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-box-shadow/"></span>
+            <a href="/2015/11/27/animate-box-shadow-performance/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/27/animate-box-shadow-performance/"></span>
             </a>
           </span>
           
@@ -153,18 +153,15 @@
       
 
       
-        <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
-<h2 id="语法">语法</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">E</span> &#123;<span class="tag">box-shadow</span><span class="pseudo">:inset</span> <span class="tag">x-offset</span> <span class="tag">y-offset</span> <span class="tag">blur-radius</span> <span class="tag">spread-radius</span> <span class="tag">color</span>&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;<span class="attribute">box-shadow</span>:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
-<li><code>x-offset</code><br>水平方向的偏移量；</li>
-<li><code>y-offset</code><br>垂直方向的偏移量；</li>
-<li><code>blur-radius</code>模糊半径<br>可选，只能为整数，值越大阴影就越模糊；</li>
-<li><code>spead-radius</code>扩展半径<br>可选，可以为正数或者负数，如果为负数，整个阴影将会缩小；</li>
-<li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
-</ul>
-<p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
-<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
+        <p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
+<p>如何才能防止在给 <code>box-shadow</code> 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？<br>答案就是：不可能。给变化的 <code>box-shadow</code> 制作动画会大大缩减页面渲染的性能。</p>
+<p>但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以保证你的动画能够保证在 <code>60 FPS</code> 左右：通过改变子元素的 <code>opacity</code> 透明度。</p>
+<h2 id="Demo">Demo</h2><p><img src="http://tobiasahlin.com/static/animate-box-shadow/demo.gif" alt="box-shadow 动画对比"></p>
+<p><a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="external">查看这个Demo</a>，比较一下两种实现方式的不同。左边的动画是在 <code>box-shadow</code> 的 <code>:hover</code> 状态时执行 <code>box-shadow</code> 动画， 而右边的实现方式中，我们通过 <code>:after</code> 添加了一个伪元素，并给它添加了 <code>box-shadow</code>， 然后通过执行 <code>opacity</code> 动画来是实现相同的效果。</p>
+<p>如果你打开你的调试工具，可以看到下面类似的结果（绿色部分表示绘制；越少越好）：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/ca0ee6b35743513538f3d5f53b795d6a.png" alt="timeline 对比"></p>
+<p>很明显如果我们直接执行 <code>box-shadow</code> 的动画会导致更多的重绘。</p>
+<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="external">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="class">.make-it-slow</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.15</span>)</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transition</span>:<span class="value"> box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line">.make-it-slow:hover &#123;</span><br><span class="line">  box-shadow: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="class">.make-it-fast</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.15</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="rule"><span class="attribute">.make-it-fast</span>:<span class="value">after &#123;</span><br><span class="line">  box-shadow: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>)</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transition</span>:<span class="value"> opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line">.make-it-fast:hover:after &#123;</span><br><span class="line">  opacity: <span class="number">1</span></span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上面的例子中，高效的实现方式有两层：一层负责呈现盒子，一层负责盒子阴影的过度动画，只对阴影的 <code>opcity</code> 执行动画。</p>
 
       
     </div>
@@ -173,7 +170,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css3/"> #css3 </a>
+            <a href="/tags/animation/"> #animation </a>
           
         </div>
       
@@ -182,13 +179,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/26/css3-media-query/">CSS3 Media Query</a>
+              <a href="/2015/10/23/react-style-guide/">React 编程风格指南</a>
             
           </div>
         </div>
@@ -204,8 +199,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/05/26/css3-box-shadow/"
-               data-title="css3 box shadow" data-url="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">
+          <div class="ds-thread" data-thread-key="2015/11/27/animate-box-shadow-performance/"
+               data-title="「译」高效的 “box-shadow” 动画" data-url="http://blog.mcbird.cn/2015/11/27/animate-box-shadow-performance/">
           </div>
         
       </div>
@@ -301,7 +296,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEMO"><span class="nav-number">2.</span> <span class="nav-text">DEMO</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.</span> <span class="nav-text">Demo</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
