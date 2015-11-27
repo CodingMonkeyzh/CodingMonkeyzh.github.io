@@ -153,7 +153,9 @@
       
 
       
-        <p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
+        <blockquote>
+<p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
+</blockquote>
 <p>如何才能防止在给 <code>box-shadow</code> 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？<br>答案就是：不可能。给变化的 <code>box-shadow</code> 制作动画会大大缩减页面渲染的性能。</p>
 <p>但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以保证你的动画能够保证在 <code>60 FPS</code> 左右：通过改变子元素的 <code>opacity</code> 透明度。</p>
 <h2 id="Demo">Demo</h2><p><img src="http://tobiasahlin.com/static/animate-box-shadow/demo.gif" alt="box-shadow 动画对比"></p>
