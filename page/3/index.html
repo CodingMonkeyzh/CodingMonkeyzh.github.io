@@ -185,7 +185,7 @@
 <li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
 </ul>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>动词常见约定：<br><img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2011.jpg?imageView2/2/w/1366"></p>
+<p>动词常见约定：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/1392876bfb60f3ba7f8b13c27c221c57.png" alt="动词常见约定"></p>
 <ul>
 <li>构造函数<br>构造函数首字母应该大写。</li>
 </ul>
@@ -208,6 +208,7 @@
 <li>数组<br>采用数组字面量的方式定义数组：</li>
 </ul>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></table></figure>
+
         
       
     </div>
@@ -291,7 +292,7 @@
 <li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%209.jpg?imageView2/2/w/1366">
+<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png" alt="使用 jquery 动画效果图"></p>
 <p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
 <h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
 <ul>
@@ -299,7 +300,7 @@
 <li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2010.jpg?imageView2/2/w/1366">
+<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png" alt="使用CSS3动画效果图"></p>
 <p>可以看到，两者没有太打的区别。</p>
 <h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
 <h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
@@ -595,7 +596,7 @@
 <h2 id="引入方式">引入方式</h2><p>引入媒体查询的方式有两种。</p>
 <h3 id="link_方式引入">link 方式引入</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="variable">rel=</span><span class="string">"stylesheet"</span> <span class="variable">media=</span><span class="string">"screen and (max-width: 600px)"</span> <span class="variable">href=</span><span class="string">"small.css"</span> /&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="css_中引入">css 中引入</h3><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@media</span> <span class="function">screen <span class="title">and</span> <span class="params">(max-width: <span class="number">600</span>px)</span> </span>&#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常见的_Media_Query">常见的 Media Query</h2><img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%208.jpg?imageView2/2/w/1366">
+<h2 id="常见的_Media_Query">常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
 <p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="external">兼容性参考</a></p>
 
         

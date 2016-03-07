@@ -161,7 +161,7 @@
 <li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%209.jpg?imageView2/2/w/1366">
+<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png" alt="使用 jquery 动画效果图"></p>
 <p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
 <h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
 <ul>
@@ -169,7 +169,7 @@
 <li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
-<img alt="图片说明" src="http://7xiyp1.com1.z0.glb.clouddn.com/static/images/screen%2010.jpg?imageView2/2/w/1366">
+<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png" alt="使用CSS3动画效果图"></p>
 <p>可以看到，两者没有太打的区别。</p>
 <h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
 <h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
