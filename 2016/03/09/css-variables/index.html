@@ -20,7 +20,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="css," />
 
 
 
@@ -31,7 +31,7 @@
 
 
 
-  <title> javascript 代码规范 // MockingBird </title>
+  <title> 简单介绍 CSS Variables // MockingBird </title>
 </head>
 
 <body>
@@ -110,7 +110,7 @@
           
           
             
-              javascript 代码规范
+              简单介绍 CSS Variables
             
           
         </h1>
@@ -118,22 +118,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-06-01
+          发表于 2016-03-09
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分类于
             
-              <a href="/categories/javascript/">javascript</a>
-
-              
-              
-                ， 
-              
-
-            
-              <a href="/categories/javascript/规范/">规范</a>
+              <a href="/categories/css/">css</a>
 
               
               
@@ -146,8 +138,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/01/code-style/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/01/code-style/"></span>
+            <a href="/2016/03/09/css-variables/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/09/css-variables/"></span>
             </a>
           </span>
           
@@ -161,66 +153,42 @@
       
 
       
-        <p>以下编码风格来自于《编写可维护的 javascript》一书中，加上个人总结，自代表个人风格，仅供参考。</p>
-<h2 id="缩进">缩进</h2><p>缩进可以采用<strong>2格缩进</strong>或者<strong>4格缩进</strong>，具体使用哪个看团队的代码规范和自己的爱好。</p>
-<h2 id="行尾分号">行尾分号</h2><p>行尾一律加上<code>;</code>分号，除非该行需要折行。</p>
-<h2 id="行的长度">行的长度</h2><p>单行不应该超过80个字符，如果超过，应该折行编写。</p>
-<h2 id="折行">折行</h2><p>当一行长度达到单行最大字符限制时，手动将一行拆成两行。遵守：</p>
-<ol>
-<li>在运算符后换行</li>
-<li>下一行增加两层缩进</li>
-</ol>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">callAFunction<span class="list">(<span class="keyword">argument1</span>, argument2, argument3, argument4, argument5, argument6,</span><br><span class="line">        argument7)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<h2 id="空行">空行</h2><p>一段代码的语义和另一段代码不相关，这时就应该使用空格将它们分隔开来。</p>
-<h2 id="命名">命名</h2><ul>
-<li>常量<br>常量使用大写字母和下划线命名。</li>
+        <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
+<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="external">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="external">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
+<h2 id="如何定义和使用_CSS_Variables">如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="external">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="pseudo">:root</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">--brand-primary</span>:<span class="value"> <span class="hexcolor">#338800</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="function">var</span>(--brand-primary)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><em>CSS变量同样是可嵌套使用的，<code>:root</code>用来定义全局变量</em></p>
+<h2 id="浏览器兼容性">浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
+<h2 id="还有一些你该知道的">还有一些你该知道的</h2><ul>
+<li><code>var()</code> 还可以接受第二个参数（ <code>color: var(--header-color, blue);</code> ），表示备选参数，第一个参数获取失败的时候，它就生效了。</li>
+<li><p>变量也是可用嵌套的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">--base-color</span>:<span class="value"> <span class="hexcolor">#f93ce9</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">--background-gradient</span>:<span class="value"> <span class="function">linear-gradient</span>(to top, <span class="function">var</span>(--base-color), <span class="hexcolor">#444</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量还可以更另一个CSS特性——<code>calc()</code>方法一起使用：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">--container-width</span>:<span class="value"> <span class="number">1000px</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">max-width</span>:<span class="value"> <span class="function">calc</span>(<span class="function">var</span>(--container-width) / <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> MAX_COUNT</span> = <span class="number">10</span>;</span><br><span class="line"><span class="variable"><span class="keyword">var</span> URL</span> = 'http:<span class="comment">//www.google.com/';</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
-</ul>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myName = <span class="string">'Tom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>动词常见约定：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/1392876bfb60f3ba7f8b13c27c221c57.png" alt="动词常见约定"></p>
-<ul>
-<li>构造函数<br>构造函数首字母应该大写。</li>
-</ul>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span><span class="params">(name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> me = Person(<span class="string">'Tom'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="基本类型的表示">基本类型的表示</h2><ul>
-<li>字符串<br>普通字符串采用<strong><code>&#39;</code>单引号</strong>包裹，json 对象中的字符串采用<strong>双引号</strong>包裹。</li>
-</ul>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> name</span> = 'Tom';</span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="keyword">var</span> me</span> = &#123;</span><br><span class="line">    name: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数字<br>书写完整，不要省去整数部分或小数部分，<strong>不要使用八进制写法</strong>。</li>
-<li>null<br>不要使用<code>null</code>来检查是否传入了某个参数；不要用<code>null</code>来检查一个未初始化的变量。</li>
-<li>undefined<br>尽量避免在代码中使用<code>undefined</code>，如果要判断一个变量是否存在可以这样：</li>
-</ul>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(name === <span class="literal">null</span> || <span class="keyword">typeof</span>(name) === <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对象<br>采用对象字面量的方式定义对象：</li>
-</ul>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var <span class="keyword">me</span> = &#123;</span><br><span class="line">    <span class="property">name</span>: <span class="string">"Tom"</span>,</span><br><span class="line">    age: <span class="number">23</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组<br>采用数组字面量的方式定义数组：</li>
-</ul>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> colors = [<span class="string">'red'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>];</span><br></pre></td></tr></table></figure>
 
       
     </div>
 
     <div class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/css/"> #css </a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/04/function-hoisting/">函数的提升</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/27/css3-animate-or-js-animate/">CSS3 Animate or JS Animate ?</a>
+              <a href="/2015/11/27/animate-box-shadow-performance/">「译」高效的 “box-shadow” 动画</a>
             
           </div>
         </div>
@@ -236,8 +204,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/01/code-style/"
-               data-title="javascript 代码规范" data-url="http://blog.mcbird.cn/2015/06/01/code-style/">
+          <div class="ds-thread" data-thread-key="2016/03/09/css-variables/"
+               data-title="简单介绍 CSS Variables" data-url="http://blog.mcbird.cn/2016/03/09/css-variables/">
           </div>
         
       </div>
@@ -333,7 +301,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#缩进"><span class="nav-number">1.</span> <span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行尾分号"><span class="nav-number">2.</span> <span class="nav-text">行尾分号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行的长度"><span class="nav-number">3.</span> <span class="nav-text">行的长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#折行"><span class="nav-number">4.</span> <span class="nav-text">折行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空行"><span class="nav-number">5.</span> <span class="nav-text">空行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名"><span class="nav-number">6.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型的表示"><span class="nav-number">7.</span> <span class="nav-text">基本类型的表示</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何定义和使用_CSS_Variables"><span class="nav-number">1.</span> <span class="nav-text">如何定义和使用 CSS Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器兼容性"><span class="nav-number">2.</span> <span class="nav-text">浏览器兼容性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还有一些你该知道的"><span class="nav-number">3.</span> <span class="nav-text">还有一些你该知道的</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

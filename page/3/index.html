@@ -112,6 +112,95 @@
           
           
             
+              <a class="post-title-link" href="/2015/06/04/function-hoisting/">
+                函数的提升
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-06-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/javascript/">javascript</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/06/04/function-hoisting/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/function-hoisting/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>我们知道，对于所有的变量，无论在函数体的什么地方声明，都会在后台被提升到函数体顶部。</p>
+</blockquote>
+<p>这个规则对于函数同样适用，其原因在于函数只是分配给变量的对象。<strong>唯一需要引起注意的地方在于当适用函数声明时，函数定义也会被提升，而不仅仅是函数声明被提升。</strong>看下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);   <span class="comment">// "function"</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> bar);   <span class="comment">// "undefined"</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+<p><code>test()</code>函数中的<code>foo</code>和<code>bar</code>的声明被提升到了顶部；同时，需要注意的是：<code>foo</code>和<code>bar</code>的区别在于前者的定义得到了提升，而后者的定义没有提升，这也就是<code>console.log(typeof bar)</code>输出<code>undefined</code>的原因。</p>
+<p>所以，需要记住的是：<strong>函数表达式仅仅是变量被提升，而函数的实现没有被提升。</strong><br>上面的代码中，后台解析的代码类似于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> bar;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo);   <span class="comment">// "function"</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">typeof</span> bar);   <span class="comment">// "undefined"</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hoisting/"> #hoisting </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
               <a class="post-title-link" href="/2015/06/01/code-style/">
                 javascript 代码规范
               </a>
@@ -535,94 +624,6 @@
 
 
     
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/26/css3-media-query/">
-                CSS3 Media Query
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-26
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/css3/">css3</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/26/css3-media-query/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-media-query/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>通过<em>Media Query 媒体查询</em>可以针对符合相应条件的媒体设置特定的样式。</p>
-<h2 id="引入方式">引入方式</h2><p>引入媒体查询的方式有两种。</p>
-<h3 id="link_方式引入">link 方式引入</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="variable">rel=</span><span class="string">"stylesheet"</span> <span class="variable">media=</span><span class="string">"screen and (max-width: 600px)"</span> <span class="variable">href=</span><span class="string">"small.css"</span> /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="css_中引入">css 中引入</h3><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@media</span> <span class="function">screen <span class="title">and</span> <span class="params">(max-width: <span class="number">600</span>px)</span> </span>&#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常见的_Media_Query">常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
-<p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="external">兼容性参考</a></p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/css3/"> #css3 </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
   </div>
 
   
@@ -658,7 +659,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -672,7 +673,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
