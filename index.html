@@ -36,7 +36,7 @@
 
 <body>
   <div class="container one-column 
-   page-home 
+  
 ">
     <div class="headband"></div>
 
@@ -112,9 +112,114 @@
           
           
             
-              <a class="post-title-link" href="/2016/03/09/css-variables/">
-                简单介绍 CSS Variables
-              </a>
+              [译]你应该知道的5个 Flexbox 技巧
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2016-05-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/05/24/5-flexbox-tech-you-need-to-know-ahout/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/5-flexbox-tech-you-need-to-know-ahout/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/2c418c62e57391e06b3b09628a83ce65.png" alt="header-img"></p>
+<p>Flexbox 是一个高效的CSS UI设计标准。使用简单的几个 flexbox 属性我们就可以构建我们的页面通过一个一个小的布局快，我们可以对这些布局快可以轻松地进行定位和缩放。</p>
+<p>在这篇文章中，我们将要通过5种flexbox的方式来解决普通的css布局问题。其中还包含了这些技术在真实生活中的实践。</p>
+<h2 id="创建一个等高的列">创建一个等高的列</h2><p>如果让你把所有的列的高度弄上去一样高，这是恨烦的。简单的通过 <code>min-height</code> 是不行的，因为一旦内容发生变化，那么一些列会变高而其它的仍然还是原来的高度。</p>
+<p>用 flexbox 来解决这个问题再简单不过了，因为痛过这种方式创建的列默认情况下就是等高的。我们要做的就是初始化这个 flex 盒子，然后确保 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="external"><code>flex-direction</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="external"><code>align-items</code></a> 属性被赋值为默认值。</p>
+<p>CSS 部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">        /* Initialize the flex model */</span><br><span class="line">	display: flex;</span><br><span class="line"></span><br><span class="line">        /* These are the default values but you can set them anyway */</span><br><span class="line">	flex-direction: row;    /* Items inside the container will be positioned horizontally */</span><br><span class="line">        align-items: stretch;   /* Items inside the container will take up it&apos;s entire height */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HTML 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- Equal height columns --&gt;</span><br><span class="line"></span><br><span class="line">	&lt;div&gt;...&lt;/div&gt;</span><br><span class="line">	&lt;div&gt;...&lt;/div&gt;</span><br><span class="line">	&lt;div&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你可以在 <a href="http://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/" target="_blank" rel="external">Easiest Way To Create Equal Height Sidebars </a>这篇文章中查看实例，它创建了一个包含侧边栏和主内容区的响应式页面。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fad225a184b73073e735f91483b5936a.png" alt="等高的列实例"></p>
+<h2 id="重新定位元素">重新定位元素</h2><p>以前，如果我们要动态的的区改变元素的顺序，我们可能会尝试一些CSS hack，而且还有写一些 javascript，真是让人沮丧！但是有了 flexbox，只有一个CSS属性就可以搞定这个问题了！</p>
+<p>它叫做 <code>order</code> ，就像这个名字一样，一切尽可能的简单。它让我们可以通过一个数字来设定这个flex项在屏幕中的出现顺序（越小的数代表越高的优先级）。</p>
+<p>CSS 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">.container&#123;</span><br><span class="line">	display: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/* Reverse the order of elements */</span><br><span class="line"></span><br><span class="line">.blue&#123;</span><br><span class="line">	order: 3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.red&#123;</span><br><span class="line">	order: 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.green&#123;</span><br><span class="line">	order: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- These items will appear in reverse order --&gt;</span><br><span class="line"></span><br><span class="line">	&lt;div class=&quot;blue&quot;&gt;...&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;red&quot;&gt;...&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;green&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这个属性有非常多多实战应用。如果你想了解的话，你可以看 <a href="http://tutorialzine.com/2015/11/using-flexbox-to-create-a-responsive-comment-section/" target="_blank" rel="external">这篇文章</a>， 它讲了如果使用这个玩意来做一个响应式的评论区。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3ee31b005c8549d72bfa12555c53a42e.png" alt="order 属性"></p>
+<h2 id="水平垂直居中">水平垂直居中</h2><p>在CSS中垂直居中问题我们经常遇到，为什么一个简单的垂直居中实现起来如此复杂？如果 Google 一下 <em>CSS 垂直居中</em>，可以找到无限多的解决方案，它们中的很大一部分都是采用 <code>table</code> 或者 <code>transform</code> 来实现（然而这些东西设计出来不是为来布局的）。</p>
+<p>Flexbox 非常简单的解决了这个问题。没有个flex布局都具有两个方向（X轴和Y轴）和两个用来置顶它们都对齐方式的属性。把两个属性都设成居中对齐，我们就可以把这个元素放在它都父级容器的中间了。</p>
+<p>CSS 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.container&#123;</span><br><span class="line">	display: flex;</span><br><span class="line"></span><br><span class="line">	/* Center according to the main axis */</span><br><span class="line">	justify-content: center;</span><br><span class="line"></span><br><span class="line">	/* Center according to the secondary axis */</span><br><span class="line">        align-items: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- Any element placed here will be centered</span><br><span class="line">		 both horizonally and vertically --&gt;</span><br><span class="line"></span><br><span class="line">	&lt;div&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你可以阅读<a href="http://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally/" target="_blank" rel="external">这篇文章</a>来了解更多<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/cdb8ce1aefb6b34623773d59eb12e6ee.png" alt="Horizontal And Vertical Centering With Flexbox"></p>
+<h2 id="创建一个完全的响应式网格">创建一个完全的响应式网格</h2><p>许多的开发者创建响应式网格的时候都依赖一个CSS框架。Bootstrap 是最流行的一个，当然还有其它成百上千个库可以帮你做到。它们都可以正常的工作并且有很多的选项，但是它们都太重了。如果你只是想要实现一个网格布局，仅仅需要 flexbox 就可以帮你搞定了！</p>
+<p>在 flexbox 网格系统中，被设置了 <code>display:flex</code> 属性的元素就相当于“行（row）”。它里面的水平方向的列可以是任意数量的元素，可以通过 <code>flex</code> 属性来设置尺寸。flex 模型适应视口的大小，所以这个设置应该在所有的设备上看起来都是可以的。然而，如果我们发现在水平方向上没有足够的空间时，我们可以简单的通过媒体查询来现实一个垂直方向上的布局。</p>
+<p>CSS 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">.container&#123;</span><br><span class="line">	display: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/* Classes for each column size. */</span><br><span class="line"></span><br><span class="line">.col-1&#123;</span><br><span class="line">	flex: 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.col-2&#123;</span><br><span class="line">	flex: 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media (max-width: 800px)&#123;</span><br><span class="line">	.container&#123;</span><br><span class="line">		/* Turn the horizontal layout into a vertical one. */</span><br><span class="line">		flex-direction: column;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- This column will be 25% wide --&gt;</span><br><span class="line">	&lt;div class=&quot;col-1&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- This column will be 50% wide --&gt;</span><br><span class="line">	&lt;div class=&quot;col-2&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- This column will be 25% wide --&gt;</span><br><span class="line">	&lt;div class=&quot;col-1&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你可以在 <a href="http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/" target="_blank" rel="external">The Easiest Way To Make Responsive Headers</a> 查看这项技术的运用。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/80663c4d6acf85ed938506bd679b5788.png" alt="Responsive Header With Flexbox"></p>
+<h2 id="创建一个完美的紧贴页面底部的页脚">创建一个完美的紧贴页面底部的页脚</h2><p>Flexbox 同样也可以很容易的解决这个问题。通过 flex 元素可以保证页脚永远在页面的底部。</p>
+<p>给 <code>body</code> 标签加一个 <code>diplay:flex</code> 属性，这样我们就可以对整个页面使用flex模型属性。这样我们就可以把主要的内容区和页脚区分别作为 flex项，以便于我们准确的控制他们的位置。</p>
+<p>CSS 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">html&#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">body&#123;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.main&#123;</span><br><span class="line">   /* The main section will take up all the available free space</span><br><span class="line">      on the page that is not taken up by the footer. */</span><br><span class="line">   flex: 1 0 auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">footer&#123;</span><br><span class="line">   /* The footer will take up as much vertical space as it needs and not a pixel more. */</span><br><span class="line">   flex: 0 0 auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- All the page content goes here  --&gt;</span><br><span class="line"></span><br><span class="line">	&lt;div class=&quot;main&quot;&gt;...&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;!-- Our sticky foooter --&gt;</span><br><span class="line"></span><br><span class="line">	&lt;footer&gt;...&lt;/footer&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果你要了解更多，你可以阅读 <a href="http://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/" target="_blank" rel="external">The Best Way To Make Sticky Footers。</a><br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3cdb3d6fc72b932e16861fb1803c5565.png" alt="Sticky Footers With Flexbox"></p>
+<h2 id="结论">结论</h2><p>主流的浏览器（<a href="http://caniuse.com/#feat=flexbox" target="_blank" rel="external">不包括 IE9</a>）现在都支持 flexbox 布局模型了，所以，除非你的用户更喜欢用古老的IE浏览器，你是可以非常放心的在产品用用 flexbox 布局的！</p>
+<p>我希望这些能够帮助你创建更加强健响应式布局！</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Flexbox/"> #Flexbox </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              简单介绍 CSS Variables
             
           
         </h1>
@@ -157,23 +262,21 @@
       
 
       
-        
-          <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
+        <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
 <p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="external">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="external">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
-<h2 id="如何定义和使用_CSS_Variables">如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="external">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="pseudo">:root</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">--brand-primary</span>:<span class="value"> <span class="hexcolor">#338800</span></span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">body</span> <span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="function">var</span>(--brand-primary)</span></span>;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="如何定义和使用_CSS_Variables">如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="external">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><em>CSS变量同样是可嵌套使用的，<code>:root</code>用来定义全局变量</em></p>
 <h2 id="浏览器兼容性">浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
 <h2 id="还有一些你该知道的">还有一些你该知道的</h2><ul>
 <li><code>var()</code> 还可以接受第二个参数（ <code>color: var(--header-color, blue);</code> ），表示备选参数，第一个参数获取失败的时候，它就生效了。</li>
 <li><p>变量也是可用嵌套的：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">--base-color</span>:<span class="value"> <span class="hexcolor">#f93ce9</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">--background-gradient</span>:<span class="value"> <span class="function">linear-gradient</span>(to top, <span class="function">var</span>(--base-color), <span class="hexcolor">#444</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--base-color</span>: <span class="selector-id">#f93ce9</span>;</span><br><span class="line"><span class="selector-tag">--background-gradient</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">to</span> <span class="selector-tag">top</span>, <span class="selector-tag">var</span>(<span class="selector-tag">--base-color</span>), <span class="selector-id">#444</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>变量还可以更另一个CSS特性——<code>calc()</code>方法一起使用：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">--container-width</span>:<span class="value"> <span class="number">1000px</span></span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">max-width</span>:<span class="value"> <span class="function">calc</span>(<span class="function">var</span>(--container-width) / <span class="number">2</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--container-width: 1000px;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
-        
       
     </div>
 
@@ -189,8 +292,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -208,9 +309,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/11/27/animate-box-shadow-performance/">
-                「译」高效的 “box-shadow” 动画
-              </a>
+              「译」高效的 “box-shadow” 动画
             
           
         </h1>
@@ -253,8 +352,7 @@
       
 
       
-        
-          <blockquote>
+        <blockquote>
 <p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
 </blockquote>
 <p>如何才能防止在给 <code>box-shadow</code> 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？<br>答案就是：不可能。给变化的 <code>box-shadow</code> 制作动画会大大缩减页面渲染的性能。</p>
@@ -263,10 +361,9 @@
 <p><a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="external">查看这个Demo</a>，比较一下两种实现方式的不同。左边的动画是在 <code>box-shadow</code> 的 <code>:hover</code> 状态时执行 <code>box-shadow</code> 动画， 而右边的实现方式中，我们通过 <code>:after</code> 添加了一个伪元素，并给它添加了 <code>box-shadow</code>， 然后通过执行 <code>opacity</code> 动画来是实现相同的效果。</p>
 <p>如果你打开你的调试工具，可以看到下面类似的结果（绿色部分表示绘制；越少越好）：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/ca0ee6b35743513538f3d5f53b795d6a.png" alt="timeline 对比"></p>
 <p>很明显如果我们直接执行 <code>box-shadow</code> 的动画会导致更多的重绘。</p>
-<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="external">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="class">.make-it-slow</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.15</span>)</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transition</span>:<span class="value"> box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line">.make-it-slow:hover &#123;</span><br><span class="line">  box-shadow: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="class">.make-it-fast</span> <span class="rules">&#123;</span><br><span class="line">  <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.15</span>)</span></span>;</span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="rule"><span class="attribute">.make-it-fast</span>:<span class="value">after &#123;</span><br><span class="line">  box-shadow: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="function">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0.3</span>)</span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">  <span class="rule"><span class="attribute">transition</span>:<span class="value"> opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line">.make-it-fast:hover:after &#123;</span><br><span class="line">  opacity: <span class="number">1</span></span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="external">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">  <span class="attribute">transition</span>: box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在上面的例子中，高效的实现方式有两层：一层负责呈现盒子，一层负责盒子阴影的过度动画，只对阴影的 <code>opcity</code> 执行动画。</p>
 
-        
       
     </div>
 
@@ -282,8 +379,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -301,9 +396,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/10/23/react-style-guide/">
-                React 编程风格指南
-              </a>
+              React 编程风格指南
             
           
         </h1>
@@ -354,20 +447,19 @@
       
 
       
-        
-          <p>本文讨论的是 <code>React.js</code> 编程中的一些编程风格，团队开发中遵循统一的风格有利于提高代码的阅读体验。<br>本文译自<a href="https://github.com/Khan/style-guides/blob/master/style/react.md" target="_blank" rel="external">React style guide</a>。下面将从三个方面来讲。</p>
+        <p>本文讨论的是 <code>React.js</code> 编程中的一些编程风格，团队开发中遵循统一的风格有利于提高代码的阅读体验。<br>本文译自<a href="https://github.com/Khan/style-guides/blob/master/style/react.md" target="_blank" rel="external">React style guide</a>。下面将从三个方面来讲。</p>
 <h2 id="语法">语法</h2><h3 id="方法顺序遵循生命周期放在前面，_render()_方法放在最后">方法顺序遵循生命周期放在前面， <code>render()</code> 方法放在最后</h3><p>在 <code>react</code> 组件内部，方法的顺序如下：</p>
 <ol>
 <li>生命周期方法（按照时间先后顺序依次为： <code>getDefaultProps</code>, <code>getInitialState</code>, <code>componentWillMount</code>, <code>componentDidMount</code>, <code>componentWillReceiveProps</code>, <code>shouldComponentUpdate</code>, <code>componentWillUpdate</code>, <code>componentDidUpdate</code>, <code>componentWillUnmount</code> ）</li>
 <li>其他的方法</li>
 <li><code>render</code> 方法</li>
 </ol>
-<h3 id="事件处理函数的命名">事件处理函数的命名</h3><p>采用 “handle” + “EventName” 的方式来命名<br>Example：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Component</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.handleClick&#125;</span> <span class="attribute">onLaunchMissiles</span>=<span class="value">&#123;this.handleLaunchMissiles&#125;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="事件函数作为属性时的命名">事件函数作为属性时的命名</h3><p>为了跟 <code>react</code> 的事件命名保持一致： <code>onClick</code>, <code>onDrag</code>, <code>onChange</code>, 等等，采用如下格式：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Component</span> <span class="attribute">onLaunchMissiles</span>=<span class="value">&#123;this.handleLaunchMissiles&#125;</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="元素跟_return_放在同一行">元素跟 <code>return</code> 放在同一行</h3><p>为了节约空间，采用下面的写法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="command">return</span> &lt;<span class="keyword">div</span>&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;;</span><br></pre></td></tr></table></figure></p>
-<p>而不是：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (      // <span class="string">"div"</span> 与 <span class="string">"return"</span> 不在同一行</span><br><span class="line">    &lt;<span class="keyword">div</span>&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<h3 id="对HTML的属性进行对齐和排序">对HTML的属性进行对齐和排序</h3><p>如果属性不是太多，那就放在同一行，否则就把每一个属性都单独写一行：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="variable">className=</span><span class="string">"highlight"</span> <span class="variable">key=</span><span class="string">"highlight-div"</span>&gt;</span><br><span class="line">&lt;div</span><br><span class="line">    <span class="variable">className=</span><span class="string">"highlight"</span></span><br><span class="line">    <span class="variable">key=</span><span class="string">"highlight-div"</span></span><br><span class="line">&gt;</span><br><span class="line">&lt;Image</span><br><span class="line">    <span class="variable">className=</span><span class="string">"highlight"</span></span><br><span class="line">    <span class="variable">key=</span><span class="string">"highlight-div"</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
-<p>而不是：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="tag">div</span> className=<span class="string">"highlight"</span>      <span class="comment">// 属性没有在单独行</span></span><br><span class="line">     key=<span class="string">"highlight-div"</span></span><br><span class="line">&gt;</span><br><span class="line">&lt;<span class="tag">div</span>                            <span class="comment">// 闭合便签不在单独的行</span></span><br><span class="line">    className=<span class="string">"highlight"</span></span><br><span class="line">    key=<span class="string">"highlight-div"</span>&gt;</span><br><span class="line">&lt;<span class="tag">div</span>                            <span class="comment">// 属性没有排序（一般重要的属性写在前面）</span></span><br><span class="line">    key=<span class="string">"highlight-div"</span></span><br><span class="line">    className=<span class="string">"highlight"</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="事件处理函数的命名">事件处理函数的命名</h3><p>采用 “handle” + “EventName” 的方式来命名<br>Example：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Component onClick=&#123;this.handleClick&#125; onLaunchMissiles=&#123;this.handleLaunchMissiles&#125; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="事件函数作为属性时的命名">事件函数作为属性时的命名</h3><p>为了跟 <code>react</code> 的事件命名保持一致： <code>onClick</code>, <code>onDrag</code>, <code>onChange</code>, 等等，采用如下格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Component onLaunchMissiles=&#123;this.handleLaunchMissiles&#125; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="元素跟_return_放在同一行">元素跟 <code>return</code> 放在同一行</h3><p>为了节约空间，采用下面的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">return &lt;div&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;/div&gt;;</span><br></pre></td></tr></table></figure></p>
+<p>而不是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">return (      // &quot;div&quot; 与 &quot;return&quot; 不在同一行</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h3 id="对HTML的属性进行对齐和排序">对HTML的属性进行对齐和排序</h3><p>如果属性不是太多，那就放在同一行，否则就把每一个属性都单独写一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;highlight&quot; key=&quot;highlight-div&quot;&gt;</span><br><span class="line">&lt;div</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">&gt;</span><br><span class="line">&lt;Image</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>而不是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;highlight&quot;      // 属性没有在单独行</span><br><span class="line">     key=&quot;highlight-div&quot;</span><br><span class="line">&gt;</span><br><span class="line">&lt;div                            // 闭合便签不在单独的行</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;&gt;</span><br><span class="line">&lt;div                            // 属性没有排序（一般重要的属性写在前面）</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
 <h3 id="一个文件只导出一个_react_类">一个文件只导出一个 react 类</h3><p>每一个 <code>.jsx</code> 应该只能导出单独的 <code>react 类</code>。这样有利于测试，因为这些测试框架要求一个文件导出的就是一个函数。<br><em>注意：你依然可以在一个文件中定义多个类，只要保证导出的只有一个即可。</em></p>
 <h2 id="语言特色">语言特色</h2><h3 id="确保“呈现型”的组件功能单一">确保“呈现型”的组件功能单一</h3><p>把 <code>react 组件</code> 分为“逻辑型组件”和“呈现型组件” 是很有必要的。前者包含的是业务逻辑，里面不应该包含HTML；后者一般是可复用的，可以包含HTML。前者可以拥有自己的内部的 <code>state</code>，而后者不应该拥有。</p>
 <h3 id="多用_props">多用 props</h3><p>如果能用 <code>props</code> 就不要用 <code>state</code>，这一定程度上可以减少应用程序的复杂度。<br>一般的模式是：创建一个“无状态”的组件（呈现型组件），只负责呈现数据，把包含 <code>state</code> 的“逻辑型组件”做为这些组件的父级组件。 然后把它内部的 <code>state</code> 作为 <code>props</code>传递给下面的呈现型组件。这些逻辑型组件包含了所有的交互逻辑。</p>
@@ -389,7 +481,6 @@
 <h3 id="尽量少用_jQuery_就少用">尽量少用 jQuery 就少用</h3><p>永远也不要用jquery去操作DOM。<br>尝试避免jquery插件的使用。有必要的话，把jquery插件包装在React组件中。<br>你可以使用 <code>$.ajax</code>（但是不要用其他方法，像 <code>$.post</code>） 来进行网络通信。</p>
 <h3 id="复用组件">复用组件</h3><p>你可以从<a href="http://react-components.com/" target="_blank" rel="external">react-components.com</a>获取第三方React组件。</p>
 
-        
       
     </div>
 
@@ -405,8 +496,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -424,9 +513,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/09/18/javascript-timers/">
-                javascript 定时器工作原理
-              </a>
+              javascript 定时器工作原理
             
           
         </h1>
@@ -469,8 +556,7 @@
       
 
       
-        
-          <p>说到 javascript 中的定时器，我们肯定会想到 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数。本文将从 <em>事件循环（Event Loop）</em> 的角度来分析两者的工作原理和区别。</p>
+        <p>说到 javascript 中的定时器，我们肯定会想到 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数。本文将从 <em>事件循环（Event Loop）</em> 的角度来分析两者的工作原理和区别。</p>
 <h2 id="setTimeout()">setTimeout()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout" target="_blank" rel="external">MDN</a>对 <code>setTimeout</code> 的定义为：</p>
 <blockquote>
 <p>在指定的延迟时间之后调用一个函数或执行一个代码片段。</p>
@@ -488,8 +574,8 @@
 <li>setInterval: 延时delay毫秒之后，先看看事件队列中是否存在还没有执行的回调函数（setInterval的回调函数），如果存在，就不要再往事件队列里加入回调函数了。</li>
 </ul>
 <p>所以，当我们的代码中存在耗时的任务时，定时器并不会表现的如我们所想的那样。</p>
-<h2 id="通过一个例子来理解">通过一个例子来理解</h2><p>下面的代码，本来希望能够在 <code>100ms</code> 和 <code>200ms</code> 的时候（也就是刚好等待 <code>100ms</code>）调用回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 106</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 107</span></span><br></pre></td></tr></table></figure></p>
-<p>这样的结果看上去正是我们所想的那样，但是一旦我们在代码中加入了耗时的任务时候，结果就不像我们所期望的那样了：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">  heavyTask();  <span class="comment">// 耗时任务</span></span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask(); <span class="comment">// 耗时任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1015</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 1018</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 1000</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="通过一个例子来理解">通过一个例子来理解</h2><p>下面的代码，本来希望能够在 <code>100ms</code> 和 <code>200ms</code> 的时候（也就是刚好等待 <code>100ms</code>）调用回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 106</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 107</span></span><br></pre></td></tr></table></figure></p>
+<p>这样的结果看上去正是我们所想的那样，但是一旦我们在代码中加入了耗时的任务时候，结果就不像我们所期望的那样了：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">  heavyTask();  <span class="comment">// 耗时任务</span></span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask(); <span class="comment">// 耗时任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1015</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 1018</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 1000</span></span><br></pre></td></tr></table></figure></p>
 <p>两个 <code>setTimeout</code> 的等待事件由于耗时任务的存在不再是 <code>100ms</code> 了！我们来描述一下事情的经过：</p>
 <ol>
 <li>首先，第一个耗时任务（<code>heavyTask()</code>）开始执行，它需要大约 <code>1000ms</code> 才能执行完毕。</li>
@@ -497,133 +583,24 @@
 <li>第一个 <code>setTimeout</code> 回调一执行，又开启了第二个 <code>setTimeout</code>， 这个定时器也是期望延时 <code>100ms</code> 之后能够执行它的回调函数。 但是，在第一个 <code>setTimeout</code> 又存在一个耗时任务，所有它的剧情跟第一个定时器一样，也等待了 1000ms 才开始执行。</li>
 </ol>
 <p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png" alt="setTimeout"></p>
-<p>再来看 <code>setInterval</code> 的一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intervalStart = now();</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'interval距定义定时器的时间：'</span>, now() - loopStart);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1013</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1016</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1123</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1224</span></span><br></pre></td></tr></table></figure></p>
+<p>再来看 <code>setInterval</code> 的一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intervalStart = now();</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'interval距定义定时器的时间：'</span>, now() - loopStart);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1013</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1016</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1123</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1224</span></span><br></pre></td></tr></table></figure></p>
 <p>上面这段代码，我们期望每隔 <code>100ms</code> 就打出一条日志。相对于 <code>setTimeout</code> 的区别， <code>setInterval</code> 在<strong>准备把回调函数加入到事件队列的时候，会判断队列中是否还有未执行的回调</strong>，如果有的话，它就不会再往队列中添加回调函数。 不然，会出现多个回调同时执行的情况。</p>
 <p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png" alt="setInterval"></p>
 <h2 id="总结">总结</h2><p>上面对javascript定时器执行原理进行了简要的分析，希望能够帮助我们更深入的理解javascript。文中有描述不当的地方可以在评论中指出。</p>
 <blockquote>
-<p>文章地址：<a href="http://blog.mcbird.cn/2015/09/18/javascript-timers/" target="_blank" rel="external">http://blog.mcbird.cn/2015/09/18/javascript-timers/</a></p>
+<p>文章地址：<a href="http://blog.mcbird.cn/2015/09/18/javascript-timers/">http://blog.mcbird.cn/2015/09/18/javascript-timers/</a></p>
 </blockquote>
 
-        
       
     </div>
 
     <div class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/setInterval/"> #setInterval </a>
           
             <a href="/tags/setTimeout/"> #setTimeout </a>
           
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/09/11/react-on-es6-plus/">
-                [译]在 React.js 中使用 ES6+
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-09-11
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/javascript/">javascript</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/09/11/react-on-es6-plus/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/11/react-on-es6-plus/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>原文地址： <a href="http://babeljs.io/blog/2015/06/07/react-on-es6-plus/" target="_blank" rel="external">http://babeljs.io/blog/2015/06/07/react-on-es6-plus/</a></p>
-</blockquote>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/652b57761014ee46dc3114e22229b92f.png" alt="babel.js"></p>
-<p>在今年对 Instagram Web 进行全新的设计的时候，我喜欢在写 React 组件的时候，用上一些 ES6+ 的新特性。请允许我列举这些能够改变你写 React 应用方式的新特性。比起以往，这些特性能够使你撸起码来更加容易、有趣！</p>
-<h2 id="类（Class）">类（Class）</h2><p>使用 ES6+ 来编写 React 组件最明显的变化就是我们定义组件（类）的语法的方式。我们可以用定义一个继承了 <code>React.Component</code> 的ES6 类来代替原本使用 <code>React.createClass</code> 的来创建类的方式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">alt</span>=<span class="value">&#123;this.props.caption&#125;</span> <span class="attribute">src</span>=<span class="value">&#123;this.props.src&#125;</span> /&gt;</span>;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们可以发现这种写法使得定义组件的方式变得更加简洁：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> Photo = React.createClass(&#123;</span><br><span class="line">  handleDoubleTap: <span class="function"><span class="keyword">function</span><span class="params">(e)</span> </span>&#123; … &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; … &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  handleDoubleTap(e) &#123; … &#125;</span><br><span class="line">  render() &#123; … &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样我们可以少写一对圆括号、一个分号、每个方法的冒号和 <code>function</code> 关键字。</p>
-<p>所有生命周期方法都可以采用这种方式来定义。 但是 <code>componentWillMount</code> 还可以用 <code>constructor</code> 来代替：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> EmbedModal = React.createClass(&#123;</span><br><span class="line">  componentWillMount: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; … &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmbedModal</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="comment">// Operations usually carried out in componentWillMount go here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="属性初始化（property_initializers）">属性初始化（property initializers）</h2><p>在 ES6+ 类中，属性类型 <code>prop type</code> 和默认属性 <code>default prop</code> 可以通过类中的 <code>static</code> 来声明。同时，组件的初始状态（ <code>initial state</code> ）可以通过 ES7 的<a href="https://gist.github.com/jeffmo/054df782c05639da2adb" target="_blank" rel="external">属性初始化（property initializers）</a>来完成：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> Video = React.createClass(&#123;</span><br><span class="line">  getDefaultProps: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      autoPlay: <span class="literal">false</span>,</span><br><span class="line">      maxLoops: <span class="number">10</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      loopsRemaining: <span class="keyword">this</span>.props.maxLoops,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    autoPlay: React.PropTypes.bool.isRequired,</span><br><span class="line">    maxLoops: React.PropTypes.number.isRequired,</span><br><span class="line">    posterFrameSrc: React.PropTypes.string.isRequired,</span><br><span class="line">    videoSrc: React.PropTypes.string.isRequired,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Video</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  static defaultProps = &#123;</span><br><span class="line">    autoPlay: <span class="literal">false</span>,</span><br><span class="line">    maxLoops: <span class="number">10</span>,</span><br><span class="line">  &#125;</span><br><span class="line">  static propTypes = &#123;</span><br><span class="line">    autoPlay: React.PropTypes.bool.isRequired,</span><br><span class="line">    maxLoops: React.PropTypes.number.isRequired,</span><br><span class="line">    posterFrameSrc: React.PropTypes.string.isRequired,</span><br><span class="line">    videoSrc: React.PropTypes.string.isRequired,</span><br><span class="line">  &#125;</span><br><span class="line">  state = &#123;</span><br><span class="line">    loopsRemaining: <span class="keyword">this</span>.props.maxLoops,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>ES7 中在构造函数（ <code>constructor</code> ）下的属性初始化操作中的 <code>this</code> 指向的是类的实例，所以初始状态（ <code>initial state</code> ）可以通过 <code>this.prop</code> （即传入的参数）来设定。</p>
-<h2 id="箭头函数（Arrow_function）">箭头函数（Arrow function）</h2><p><code>React.createClass</code> 方法在你的组件上做了一些额外的绑定工作，以确保在组件实实例的方法内部， <code>this</code> 指向的是组件实例自身。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Autobinding, brought to you by React.createClass</span></span><br><span class="line"><span class="keyword">var</span> PostInfo = React.createClass(&#123;</span><br><span class="line">  handleOptionsButtonClick: <span class="function"><span class="keyword">function</span><span class="params">(e)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Here, 'this' refers to the component instance.</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;showOptionsModal: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>由于我们使用 ES6+ 的语法定义类的时候没有采用 <code>React.createClass</code> 的方式，所以，这样看来我们不得不手动来绑定这些方法中 <code>this</code> 的指向：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Manually bind, wherever you need to</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostInfo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="comment">// Manually bind this method to the component instance...</span></span><br><span class="line">    <span class="keyword">this</span>.handleOptionsButtonClick = <span class="keyword">this</span>.handleOptionsButtonClick.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  handleOptionsButtonClick(e) &#123;</span><br><span class="line">    <span class="comment">// ...to ensure that 'this' refers to the component instance here.</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;showOptionsModal: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>幸运的是，通过 ES6+ 的箭头函数（ Arrow functions ）和属性初始化（ property initializers ）这两个特性使得把函数的 <code>this</code> 指向绑定为组件的实例变得非常的简单：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostInfo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  handleOptionsButtonClick = (e) =&gt; &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;showOptionsModal: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>函数体内的 <code>this</code> 对象，绑定定义时所在的对象，而不是使用时所在的对象。而恰好属性初始化（ property initializers ）刚好在这个作用域内。</p>
-<h2 id="动态属性名_&amp;_字符串模板">动态属性名 &amp; 字符串模板</h2><p>在 ES6+ 中对 <em>对象字面量的扩展</em> 使得我们可以在对象字面量中使用表达式来对属性命名。如果是在 ES5 中，我们也许只能这样做：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Form = React.createClass(&#123;</span><br><span class="line">  onChange: <span class="function"><span class="keyword">function</span><span class="params">(inputName, e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> stateToSet = &#123;&#125;;</span><br><span class="line">    stateToSet[inputName + <span class="string">'Value'</span>] = e.target.value;</span><br><span class="line">    <span class="keyword">this</span>.setState(stateToSet);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>但是，在 ES6+ 中，我们不仅可以在对象字面量属性的定义中使用表达式，还有使用使用 <em>字符串模板</em> ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Form</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  onChange(inputName, e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      [<span class="string">`<span class="subst">$&#123;inputName&#125;</span>Value`</span>]: e.target.value,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="析构_&amp;_扩展运算符">析构 &amp; 扩展运算符</h2><p>我们在编写组件的过程中，经常遇到要从父组件要把自己的很多属性多传给子组件的情况。有了 ES6+ 的 <em>析构</em> 和 <em>扩展运算符</em> 特性，这变得非常的方便：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoloadingPostsGrid</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">var</span> &#123;</span><br><span class="line">      className,</span><br><span class="line">      ...others,  <span class="comment">// contains all properties of this.props except for className</span></span><br><span class="line">    &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">className</span>=<span class="value">&#123;className&#125;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">PostsGrid</span> &#123;<span class="attribute">...others</span>&#125; /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">button</span> <span class="attribute">onClick</span>=<span class="value">&#123;this.handleLoadMoreClick&#125;</span>&gt;</span>Load more<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    )</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们可以把 <em>扩展运算符</em> 属性和普通的属性结合起来使用，这样使得我们可以利用优先级来使用属性的默认值和属性的覆盖。下面这个元素会获得一个 <code>override</code> 的类（ <code>class</code> ），及时 <code>this.props</code> 中有传递 <code>className</code> 属性。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &#123;...this.props&#125; className=<span class="string">"override"</span>&gt;</span><br><span class="line">  …</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>下面这种写法，可以给元素设定默认的 <code>className</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"base"</span> &#123;...this.props&#125;&gt;</span><br><span class="line">  …</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="最后">最后</h2><p>我希望你能够享受 ES6+ 的这些特性给你在编写 React.js 中带来的好处。感谢我的同事他们为这篇文章作出的贡献，还有，特别的感谢 Babel 团队，使得我们可以随意的使用这些特性。</p>
-<blockquote>
-<p>文章地址：<a href="http://blog.mcbird.cn/2015/09/11/react-on-es6-plus/" target="_blank" rel="external">http://blog.mcbird.cn/2015/09/11/react-on-es6-plus/</a></p>
-</blockquote>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/es6/"> #es6 </a>
-          
-            <a href="/tags/react-js/"> #react.js </a>
+            <a href="/tags/setInterval/"> #setInterval </a>
           
         </div>
       
@@ -631,8 +608,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -643,7 +618,7 @@
 
   
   <div class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
   </div>
 
 
@@ -674,7 +649,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -688,7 +663,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

@@ -36,7 +36,7 @@
 
 <body>
   <div class="container one-column 
-   page-home 
+  
 ">
     <div class="headband"></div>
 
@@ -112,9 +112,95 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/26/css3-media-query/">
-                CSS3 Media Query
-              </a>
+              css3 box shadow
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于 2015-05-26
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <a href="/categories/css3/">css3</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/26/css3-box-shadow/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/26/css3-box-shadow/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
+<h2 id="语法">语法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E &#123;box-shadow:inset x-offset y-offset blur-radius spread-radius color&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;box-shadow:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
+<li><code>x-offset</code><br>水平方向的偏移量；</li>
+<li><code>y-offset</code><br>垂直方向的偏移量；</li>
+<li><code>blur-radius</code>模糊半径<br>可选，只能为整数，值越大阴影就越模糊；</li>
+<li><code>spead-radius</code>扩展半径<br>可选，可以为正数或者负数，如果为负数，整个阴影将会缩小；</li>
+<li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
+</ul>
+<p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
+<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css3/"> #css3 </a>
+          
+        </div>
+      
+
+      
+
+      
+      
+    </div>
+  </div>
+
+
+    
+      
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              CSS3 Media Query
             
           
         </h1>
@@ -157,15 +243,13 @@
       
 
       
-        
-          <p>通过<em>Media Query 媒体查询</em>可以针对符合相应条件的媒体设置特定的样式。</p>
+        <p>通过<em>Media Query 媒体查询</em>可以针对符合相应条件的媒体设置特定的样式。</p>
 <h2 id="引入方式">引入方式</h2><p>引入媒体查询的方式有两种。</p>
-<h3 id="link_方式引入">link 方式引入</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="variable">rel=</span><span class="string">"stylesheet"</span> <span class="variable">media=</span><span class="string">"screen and (max-width: 600px)"</span> <span class="variable">href=</span><span class="string">"small.css"</span> /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="css_中引入">css 中引入</h3><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@media</span> <span class="function">screen <span class="title">and</span> <span class="params">(max-width: <span class="number">600</span>px)</span> </span>&#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="link_方式引入">link 方式引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-width: 600px)&quot; href=&quot;small.css&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="css_中引入">css 中引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media screen and (max-width: 600px) &#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="常见的_Media_Query">常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
 <p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="external">兼容性参考</a></p>
 
-        
       
     </div>
 
@@ -181,8 +265,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -200,9 +282,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/25/css3-drop-box/">
-                css3 实现 drop-box
-              </a>
+              css3 实现 drop-box
             
           
         </h1>
@@ -245,26 +325,24 @@
       
 
       
-        
-          <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
+        <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png" alt="drop shadow 阴影"></p>
 <p>下面记录一下是实现步骤。</p>
 <h2 id="DOM_结构">DOM 结构</h2><p>我们仅仅需要一个<code>div</code>作为主体，阴影可借助伪元素<code>:before</code>和<code>:after</code>来实现。所以我们的 DOM 结构非常简单。</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="type">class</span>=<span class="string">"drop-shadow"</span>&gt;drop shadow effect&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;drop-shadow&quot;&gt;drop shadow effect&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="添加阴影">添加阴影</h2><p>给两个伪元素添加阴影，暂时先搞定左边，右边的阴影稍后再处理。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: <span class="string">""</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">z-index</span>:<span class="value"> -<span class="number">1</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">20%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15px</span> <span class="number">20px</span> <span class="function">rgba</span>(<span class="number">125</span>, <span class="number">125</span>, <span class="number">125</span>, <span class="number">0.8</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>现在，我们看到的是这个样子：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/f3130bff3852dfb10af9fba8e1416b7d.png" alt="添加左边的阴影"></p>
 <h2 id="调整阴影">调整阴影</h2><p>下面我们再通过<code>transform</code>来旋转一下阴影的角度，这样看起来更有立体感。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: <span class="string">""</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">z-index</span>:<span class="value"> -<span class="number">1</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">bottom</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">50%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">20%</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15px</span> <span class="number">20px</span> <span class="function">rgba</span>(<span class="number">125</span>, <span class="number">125</span>, <span class="number">125</span>, <span class="number">0.8</span>)</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(-<span class="number">5deg</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line">   transform: rotate(-5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们就完成了一边的制作了：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/98f538f3a798bf60aee45c8623e3c1ad.png" alt="使用transform来是阴影倾斜"></p>
 <h2 id="调整阴影-1">调整阴影</h2><p>接下来，我们只需要把其中一个阴影挪到右边即可。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">.drop-shadow</span>:<span class="value">after &#123;</span><br><span class="line">   right: <span class="number">10px</span></span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">left</span>:<span class="value"> auto</span></span>;</span><br><span class="line">   <span class="rule"><span class="attribute">transform</span>:<span class="value"> <span class="function">rotate</span>(<span class="number">5deg</span>)</span></span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:after &#123;</span><br><span class="line">   right: 10px;</span><br><span class="line">   left: auto;</span><br><span class="line">   transform: rotate(5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>这样，左边的阴影就<em>翻转</em>到了右边，大功告成：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7850a4888ee6d6d522f3a9de9e7b6ce3.png" alt="最终的效果图"></p>
 
-        
       
     </div>
 
@@ -280,8 +358,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -299,9 +375,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/19/understanding-bfc-and-margin-collapse/">
-                理解BFC和Margin Collapse
-              </a>
+              理解BFC和Margin Collapse
             
           
         </h1>
@@ -344,8 +418,7 @@
       
 
       
-        
-          <h2 id="什么是_BFC_(Block_formating_contexts)">什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
+        <h2 id="什么是_BFC_(Block_formating_contexts)">什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
 <h2 id="BFC_的运用">BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
 <p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
 <h2 id="合并外边距与BFC">合并外边距与BFC</h2><p>在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是祖先关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。</p>
@@ -367,7 +440,6 @@
 </ul>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/10d7ccedd9c05a899eeb15b02fd5d7c8.png" alt=""><br>如上图所示，<code>margin-top</code>产生了折叠。</p>
 
-        
       
     </div>
 
@@ -383,8 +455,6 @@
       
 
       
-      
-        <div class="post-eof"></div>
       
     </div>
   </div>
@@ -402,9 +472,7 @@
           
           
             
-              <a class="post-title-link" href="/2015/05/08/change-screenshot-name/">
-                Mac OS X 修改截图默认文件名
-              </a>
+              Mac OS X 修改截图默认文件名
             
           
         </h1>
@@ -447,15 +515,13 @@
       
 
       
-        
-          <p>下面纪录一下通过<strong>Terminal</strong>来改变默认截图格式、名称、以及存储目录。</p>
-<h2 id="查看当前配置">查看当前配置</h2><p>可以通过下面的命令查看当前配置（修改之后的）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">defaults <span class="built_in">read</span> com.apple.screencapture</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"include-date"</span> = <span class="number">0</span>;</span><br><span class="line">    location = <span class="string">"/Users/mcbird/Sites/blog/static/images"</span>;</span><br><span class="line">    name = screen;</span><br><span class="line">    <span class="built_in">type</span> = jpg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="改变格式">改变格式</h2><p>默认是<code>png</code>格式。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> type jpg</span><br></pre></td></tr></table></figure></p>
+        <p>下面纪录一下通过<strong>Terminal</strong>来改变默认截图格式、名称、以及存储目录。</p>
+<h2 id="查看当前配置">查看当前配置</h2><p>可以通过下面的命令查看当前配置（修改之后的）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">defaults <span class="built_in">read</span> com.apple.screencapture</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"include-date"</span> = 0;</span><br><span class="line">    location = <span class="string">"/Users/mcbird/Sites/blog/static/images"</span>;</span><br><span class="line">    name = screen;</span><br><span class="line">    <span class="built_in">type</span> = jpg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="改变格式">改变格式</h2><p>默认是<code>png</code>格式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure></p>
 <h2 id="自定义文件名">自定义文件名</h2><p>默认文件名是<strong>屏幕截图 2015-01-01 12:12:12</strong>这样的，下面对其修改。</p>
-<h3 id="去掉日期">去掉日期</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> <span class="string">"include-date"</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<h3 id="改变名称">改变名称</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com<span class="class">.apple</span><span class="class">.screencapture</span> name screen</span><br></pre></td></tr></table></figure>
+<h3 id="去掉日期">去掉日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 0</span><br></pre></td></tr></table></figure>
+<h3 id="改变名称">改变名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name screen</span><br></pre></td></tr></table></figure>
 
-        
       
     </div>
 
@@ -472,100 +538,6 @@
 
       
       
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/07/Disable-dragging-an-image-form-html/">
-                阻止HTML中的图片拖动
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-05-07
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <a href="/categories/html/">html</a>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/05/07/Disable-dragging-an-image-form-html/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/07/Disable-dragging-an-image-form-html/"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>在HTML中的<code>img</code>图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：</p>
-<ol>
-<li>改用<code>background-image</code>的方式实现。</li>
-<li>给<code>image</code>添加一条样式规则：<code>pointer-events:none</code>（<a href="http://caniuse.com/#feat=pointer-events" target="_blank" rel="external">兼容性不太好</a>，而且一旦设置，这个元素将无法收到<code>hover/click</code>事件）。</li>
-<li><p>添加属性<code>draggable=&quot;false&quot;</code>：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">draggable</span>=<span class="value">"false"</span> <span class="attribute">src</span>=<span class="value">"images.png"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>给<code>img</code>元素绑定事件处理函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"img"</span>).mousedown(<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/image/"> #image </a>
-          
-        </div>
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
     </div>
   </div>
 
@@ -575,7 +547,7 @@
 
   
   <div class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
   </div>
 
 
@@ -606,7 +578,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -620,7 +592,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
