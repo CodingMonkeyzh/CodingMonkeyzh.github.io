@@ -258,6 +258,158 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/08/will-change/" itemprop="url">
+                  使用 will-change 来提升浏览器渲染效果
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-08T11:12:11+08:00" content="2015-07-08">
+              2015-07-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/css3/" itemprop="url" rel="index">
+                    <span itemprop="name">css3</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/css3/turorials/" itemprop="url" rel="index">
+                    <span itemprop="name">turorials</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/08/will-change/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/will-change/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天偶然在youtube上看到<a href="https://www.youtube.com/watch?v=QU1JAW5LRKU" target="_blank" rel="external">一段视频</a>，讲诉的是作者在他的网页中用到了<code>background-attachment: fixed;</code>来实现背景图固定效果，但是这种是实现方式导致页面在滚动时，会出现页面卡顿的现象，这很明显降低了用户的体验。 下面介绍通过<code>will-change</code>来部分规避这个问题。</p>
+<h2 id="原始版本">原始版本</h2><p>让我们先来重现一下产生问题的场景，我写了一个简单的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/zGWyYM" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/zGWyYM</a></p>
+<p>可以看到， 我们在<code>.first</code>块中放了一张背景图片，并且通过<code>background-attachment:fixed</code>来实现背景图固定的效果，你可以滚动页面感受一下效果，是不是很酷炫？下面是核心的样式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.first &#123;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-attachment: fixed;</span><br><span class="line">  background-size: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="external">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
+<h2 id="改进版本">改进版本</h2><p>下面，我们试试用<code>will-change</code>来做一下浏览器优化。同样，我基于前面的例子，放弃了之前的实现方式，加入了<code>will-change</code>来优化浏览器渲染效果，这是我的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/YXadXP" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/YXadXP</a></p>
+<p>我们没有在使用<code>background-attachment: fixed;</code>来实现这个效果，取而代之的是，利用<code>:before</code>，在其中放入一张<code>position:fixed;</code>的背景图片，然后用<code>will-change: transform</code>做浏览器渲染优化。下面是核心代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.first::before &#123;</span><br><span class="line">  content: &apos; &apos;;</span><br><span class="line">  position: fixed;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-size: cover;</span><br><span class="line">  will-change: transform;</span><br><span class="line">  z-index: -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那通过这种方式进行优化，表现力究竟如何呢？我们采用同样的方式对页面进行调试，结果如下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7d002738d7c2916a878a30dae0444445.png" alt="will-chagne 优化后的效果"><br>可以看到，<strong>页面的帧率明显得到了提升！页面滚动时变得流畅了许多。</strong></p>
+<p>那么，<code>will-change</code>到底是什么？</p>
+<blockquote>
+<p>will-change 为web开发者提供了一种告知浏览器该元素会有哪些变化的方法，这样浏览器可以在元素属性真正发生变化之前提前做好对应的优化准备工作。 这种优化可以将一部分复杂的计算工作提前准备好，使页面的反应更为快速灵敏。</p>
+</blockquote>
+<h2 id="will-change_的兼容性">will-change 的兼容性</h2><p>然后，will-change 目前还在实验结果，<a href="http://caniuse.com/#search=will-change" target="_blank" rel="external">浏览器的支持度不尽人意</a>，IE目前没有支持该属性，Chrome 36+, Firefox 38+ 也才开始支持这一属性。</p>
+<h2 id="注意事项">注意事项</h2><p>正如<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change" target="_blank" rel="external">MDN 上面提到的那样</a>，<code>will-change</code>虽然可以提升渲染效果，但是我们需要引起注意：</p>
+<ul>
+<li><strong>不要将 will-change 应用到太多元素上</strong>：浏览器已经尽力尝试去优化一切可以优化的东西了。有一些更强力的优化，如果与 <code>will-change</code> 结合在一起的话，有可能会消耗很多机器资源，如果过度使用的话，可能导致页面响应缓慢或者消耗非常多的资源。</li>
+<li><strong>有节制地使用</strong>：通常，当元素恢复到初始状态时，浏览器会丢弃掉之前做的优化工作。但是如果直接在样式表中显式声明了 <code>will-change</code> 属性，则表示目标元素可能会经常变化，浏览器会将优化工作保存得比之前更久。所以最佳实践是当元素变化之前和之后通过脚本来切换 <code>will-change</code> 的值。</li>
+<li><strong>不要过早应用 will-change 优化</strong>：如果你的页面在性能方面没什么问题，则不要添加 <code>will-change</code> 属性来榨取一丁点的速度。 <code>will-change</code> 的设计初衷是作为最后的优化手段，用来尝试解决现有的性能问题。它不应该被用来预防性能问题。过度使用 <code>will-change</code> 会导致大量的内存占用，并会导致更复杂的渲染过程，因为浏览器会试图准备可能存在的变化过程。这会导致更严重的性能问题。</li>
+<li><strong>给它足够的工作时间</strong>：这个属性是用来让页面开发者告知浏览器哪些属性可能会变化的。然后浏览器可以选择在变化发生前提前去做一些优化工作。所以给浏览器一点时间去真正做这些优化工作是非常重要的。使用时需要尝试去找到一些方法提前一定时间获知元素可能发生的变化，然后为它加上 <code>will-change</code> 属性。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/26/image-tilt-effect/" itemprop="url">
                   制作图片倾斜（tilt）效果
                 </a>
@@ -830,154 +982,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/27/intro-of-css3-transition-transform-animation/" itemprop="url">
-                  CSS3 Transition, transform 和 animation 介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T21:27:41+08:00" content="2015-05-27">
-              2015-05-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/27/intro-of-css3-transition-transform-animation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/intro-of-css3-transition-transform-animation/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
-<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition ： transition-property transition-duration transition-timing-function transition-delay [, ...]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
-<li>transition-duration<br>动画执行的持续时间，单位为<code>s（秒）</code>或者 <code>ms（毫秒）</code>。</li>
-<li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
-<li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
-</ol>
-<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
-<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform: rotate | scale | skew | translate |matrix;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
-<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
-<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
-<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
-</ul>
-<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  from &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  to &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
-<ul>
-<li>animation-name 关键帧名<br>用来定义一个动画的名称，也就是由前面的<code>keyframes</code>创建的动画名，默认值为<code>none</code>，当值为<code>none</code>时，将没有任何动画效果。如果我们要同时附几个<code>animation</code>给一个元素，只要用逗号<code>,</code>隔开即可。</li>
-<li>animation-iteration-count 动画循环次数<br>默认为<code>1</code>，如果要进行无限循环，只要设为<code>infinite</code>即可。</li>
-<li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
-<li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
-</ul>
-<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
-<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1023,7 +1027,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1031,7 +1035,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1040,7 +1044,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

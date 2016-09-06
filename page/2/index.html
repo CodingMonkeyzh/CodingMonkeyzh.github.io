@@ -258,6 +258,159 @@
             
               
                 
+                <a class="post-title-link" href="/2015/09/18/javascript-timers/" itemprop="url">
+                  javascript 定时器工作原理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-18T11:01:58+08:00" content="2015-09-18">
+              2015-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/18/javascript-timers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/javascript-timers/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>说到 javascript 中的定时器，我们肯定会想到 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数。本文将从 <em>事件循环（Event Loop）</em> 的角度来分析两者的工作原理和区别。</p>
+<h2 id="setTimeout()">setTimeout()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout" target="_blank" rel="external">MDN</a>对 <code>setTimeout</code> 的定义为：</p>
+<blockquote>
+<p>在指定的延迟时间之后调用一个函数或执行一个代码片段。</p>
+</blockquote>
+<h3 id="语法">语法</h3><p><code>setTimeout</code> 的语法非常简单，第一个参数为回调函数，第二个参数为延时的时间。函数返回一个数值类型的ID唯一标示符，此ID可以用作 <code>clearTimeout</code> 的参数来取消定时器：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeoutID = <span class="built_in">window</span>.setTimeout(code, delay);</span><br></pre></td></tr></table></figure></p>
+<p>IE0+ 还支持回调参数的传入：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeoutID = <span class="built_in">window</span>.setTimeout(func, delay, [param1, param2, ...]);</span><br></pre></td></tr></table></figure></p>
+<h2 id="setInterval()">setInterval()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setInterval" target="_blank" rel="external">MDN</a> 对 setInterval 的定义为：</p>
+<blockquote>
+<p>周期性地调用一个函数(function)或者执行一段代码。</p>
+</blockquote>
+<p>由于 <code>setInterval</code> 和 <code>setTimeout</code> 的用法一样，所以这里不再列出。</p>
+<h2 id="对第二个参数（delay）的说明">对第二个参数（delay）的说明</h2><p>由于javascript 的事件循环机制，导致<strong>第二个参数并不代表延迟delay毫秒之后立即执行回调函数，而是尝试将回调函数加入到事件队列</strong>。实际上，<code>setTimeout</code> 和 <code>setInterval</code> 在这一点上处理又存在区别：</p>
+<ul>
+<li>setTimeout：延时delay毫秒之后，啥也不管，直接将回调函数加入事件队列。</li>
+<li>setInterval: 延时delay毫秒之后，先看看事件队列中是否存在还没有执行的回调函数（setInterval的回调函数），如果存在，就不要再往事件队列里加入回调函数了。</li>
+</ul>
+<p>所以，当我们的代码中存在耗时的任务时，定时器并不会表现的如我们所想的那样。</p>
+<h2 id="通过一个例子来理解">通过一个例子来理解</h2><p>下面的代码，本来希望能够在 <code>100ms</code> 和 <code>200ms</code> 的时候（也就是刚好等待 <code>100ms</code>）调用回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 106</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 107</span></span><br></pre></td></tr></table></figure></p>
+<p>这样的结果看上去正是我们所想的那样，但是一旦我们在代码中加入了耗时的任务时候，结果就不像我们所期望的那样了：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">  heavyTask();  <span class="comment">// 耗时任务</span></span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask(); <span class="comment">// 耗时任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1015</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 1018</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 1000</span></span><br></pre></td></tr></table></figure></p>
+<p>两个 <code>setTimeout</code> 的等待事件由于耗时任务的存在不再是 <code>100ms</code> 了！我们来描述一下事情的经过：</p>
+<ol>
+<li>首先，第一个耗时任务（<code>heavyTask()</code>）开始执行，它需要大约 <code>1000ms</code> 才能执行完毕。</li>
+<li>从耗时任务开始执行，过了 <code>100ms</code>， 第一个 <code>setTimeout</code> 的回调函数期望执行，于是被加入到事件队列，但是此时前面的耗时任务还没执行完，所以它只能在队列中等待，直到耗时任务执行完毕它才开始执行，所以结果中我们开的看到的是： <code>第一个setTimeout回调执行等待时间： 1018</code>。</li>
+<li>第一个 <code>setTimeout</code> 回调一执行，又开启了第二个 <code>setTimeout</code>， 这个定时器也是期望延时 <code>100ms</code> 之后能够执行它的回调函数。 但是，在第一个 <code>setTimeout</code> 又存在一个耗时任务，所有它的剧情跟第一个定时器一样，也等待了 1000ms 才开始执行。</li>
+</ol>
+<p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png" alt="setTimeout"></p>
+<p>再来看 <code>setInterval</code> 的一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intervalStart = now();</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'interval距定义定时器的时间：'</span>, now() - loopStart);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1013</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1016</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1123</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1224</span></span><br></pre></td></tr></table></figure></p>
+<p>上面这段代码，我们期望每隔 <code>100ms</code> 就打出一条日志。相对于 <code>setTimeout</code> 的区别， <code>setInterval</code> 在<strong>准备把回调函数加入到事件队列的时候，会判断队列中是否还有未执行的回调</strong>，如果有的话，它就不会再往队列中添加回调函数。 不然，会出现多个回调同时执行的情况。</p>
+<p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png" alt="setInterval"></p>
+<h2 id="总结">总结</h2><p>上面对javascript定时器执行原理进行了简要的分析，希望能够帮助我们更深入的理解javascript。文中有描述不当的地方可以在评论中指出。</p>
+<blockquote>
+<p>文章地址：<a href="http://blog.mcbird.cn/2015/09/18/javascript-timers/">http://blog.mcbird.cn/2015/09/18/javascript-timers/</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/09/11/react-on-es6-plus/" itemprop="url">
                   [译]在 React.js 中使用 ES6+
                 </a>
@@ -863,158 +1016,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/08/will-change/" itemprop="url">
-                  使用 will-change 来提升浏览器渲染效果
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-08T11:12:11+08:00" content="2015-07-08">
-              2015-07-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/turorials/" itemprop="url" rel="index">
-                    <span itemprop="name">turorials</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/08/will-change/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/will-change/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天偶然在youtube上看到<a href="https://www.youtube.com/watch?v=QU1JAW5LRKU" target="_blank" rel="external">一段视频</a>，讲诉的是作者在他的网页中用到了<code>background-attachment: fixed;</code>来实现背景图固定效果，但是这种是实现方式导致页面在滚动时，会出现页面卡顿的现象，这很明显降低了用户的体验。 下面介绍通过<code>will-change</code>来部分规避这个问题。</p>
-<h2 id="原始版本">原始版本</h2><p>让我们先来重现一下产生问题的场景，我写了一个简单的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/zGWyYM" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/zGWyYM</a></p>
-<p>可以看到， 我们在<code>.first</code>块中放了一张背景图片，并且通过<code>background-attachment:fixed</code>来实现背景图固定的效果，你可以滚动页面感受一下效果，是不是很酷炫？下面是核心的样式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.first &#123;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-attachment: fixed;</span><br><span class="line">  background-size: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="external">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
-<h2 id="改进版本">改进版本</h2><p>下面，我们试试用<code>will-change</code>来做一下浏览器优化。同样，我基于前面的例子，放弃了之前的实现方式，加入了<code>will-change</code>来优化浏览器渲染效果，这是我的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/YXadXP" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/YXadXP</a></p>
-<p>我们没有在使用<code>background-attachment: fixed;</code>来实现这个效果，取而代之的是，利用<code>:before</code>，在其中放入一张<code>position:fixed;</code>的背景图片，然后用<code>will-change: transform</code>做浏览器渲染优化。下面是核心代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.first::before &#123;</span><br><span class="line">  content: &apos; &apos;;</span><br><span class="line">  position: fixed;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-size: cover;</span><br><span class="line">  will-change: transform;</span><br><span class="line">  z-index: -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那通过这种方式进行优化，表现力究竟如何呢？我们采用同样的方式对页面进行调试，结果如下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7d002738d7c2916a878a30dae0444445.png" alt="will-chagne 优化后的效果"><br>可以看到，<strong>页面的帧率明显得到了提升！页面滚动时变得流畅了许多。</strong></p>
-<p>那么，<code>will-change</code>到底是什么？</p>
-<blockquote>
-<p>will-change 为web开发者提供了一种告知浏览器该元素会有哪些变化的方法，这样浏览器可以在元素属性真正发生变化之前提前做好对应的优化准备工作。 这种优化可以将一部分复杂的计算工作提前准备好，使页面的反应更为快速灵敏。</p>
-</blockquote>
-<h2 id="will-change_的兼容性">will-change 的兼容性</h2><p>然后，will-change 目前还在实验结果，<a href="http://caniuse.com/#search=will-change" target="_blank" rel="external">浏览器的支持度不尽人意</a>，IE目前没有支持该属性，Chrome 36+, Firefox 38+ 也才开始支持这一属性。</p>
-<h2 id="注意事项">注意事项</h2><p>正如<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change" target="_blank" rel="external">MDN 上面提到的那样</a>，<code>will-change</code>虽然可以提升渲染效果，但是我们需要引起注意：</p>
-<ul>
-<li><strong>不要将 will-change 应用到太多元素上</strong>：浏览器已经尽力尝试去优化一切可以优化的东西了。有一些更强力的优化，如果与 <code>will-change</code> 结合在一起的话，有可能会消耗很多机器资源，如果过度使用的话，可能导致页面响应缓慢或者消耗非常多的资源。</li>
-<li><strong>有节制地使用</strong>：通常，当元素恢复到初始状态时，浏览器会丢弃掉之前做的优化工作。但是如果直接在样式表中显式声明了 <code>will-change</code> 属性，则表示目标元素可能会经常变化，浏览器会将优化工作保存得比之前更久。所以最佳实践是当元素变化之前和之后通过脚本来切换 <code>will-change</code> 的值。</li>
-<li><strong>不要过早应用 will-change 优化</strong>：如果你的页面在性能方面没什么问题，则不要添加 <code>will-change</code> 属性来榨取一丁点的速度。 <code>will-change</code> 的设计初衷是作为最后的优化手段，用来尝试解决现有的性能问题。它不应该被用来预防性能问题。过度使用 <code>will-change</code> 会导致大量的内存占用，并会导致更复杂的渲染过程，因为浏览器会试图准备可能存在的变化过程。这会导致更严重的性能问题。</li>
-<li><strong>给它足够的工作时间</strong>：这个属性是用来让页面开发者告知浏览器哪些属性可能会变化的。然后浏览器可以选择在变化发生前提前去做一些优化工作。所以给浏览器一点时间去真正做这些优化工作是非常重要的。使用时需要尝试去找到一些方法提前一定时间获知元素可能发生的变化，然后为它加上 <code>will-change</code> 属性。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1060,7 +1061,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1068,7 +1069,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1077,7 +1078,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
