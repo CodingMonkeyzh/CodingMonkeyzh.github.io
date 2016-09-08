@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css3," />
+  <meta name="keywords" content="性能优化," />
 
 
 
@@ -84,22 +84,28 @@
 
 
 
-<meta name="description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
+<meta name="description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
+函数节流（throttle）是什么
+函数节流（throttle）用来限制单位时间的函数被调用的最大次数
+
+比方说下面这段代码中的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSS3 Transition, transform 和 animation 介绍">
-<meta property="og:url" content="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/index.html">
+<meta property="og:title" content="函数节流（throttle）与函数去抖（debounce）的区别">
+<meta property="og:url" content="http://blog.mcbird.cn/2016/09/08/the-difference-between-throttling-and-debouncing/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
-<meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
+<meta property="og:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
+函数节流（throttle）是什么
+函数节流（throttle）用来限制单位时间的函数被调用的最大次数
+
+比方说下面这段代码中的">
+<meta property="og:updated_time" content="2016-09-08T06:35:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSS3 Transition, transform 和 animation 介绍">
-<meta name="twitter:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
+<meta name="twitter:title" content="函数节流（throttle）与函数去抖（debounce）的区别">
+<meta name="twitter:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
+函数节流（throttle）是什么
+函数节流（throttle）用来限制单位时间的函数被调用的最大次数
+
+比方说下面这段代码中的">
 
 
 
@@ -120,9 +126,9 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
 
 
 
-  <link rel="canonical" href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/"/>
+  <link rel="canonical" href="http://blog.mcbird.cn/2016/09/08/the-difference-between-throttling-and-debouncing/"/>
 
-  <title> CSS3 Transition, transform 和 animation 介绍 | MockingBird </title>
+  <title> 函数节流（throttle）与函数去抖（debounce）的区别 | MockingBird </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +268,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
             
             
               
-                CSS3 Transition, transform 和 animation 介绍
+                函数节流（throttle）与函数去抖（debounce）的区别
               
             
           </h1>
@@ -274,8 +280,8 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T21:27:41+08:00" content="2015-05-27">
-              2015-05-27
+            <time itemprop="dateCreated" datetime="2016-09-08T13:44:23+08:00" content="2016-09-08">
+              2016-09-08
             </time>
           </span>
 
@@ -288,8 +294,8 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -304,8 +310,8 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/27/intro-of-css3-transition-transform-animation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/intro-of-css3-transition-transform-animation/" itemprop="commentsCount"></span>
+                <a href="/2016/09/08/the-difference-between-throttling-and-debouncing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/the-difference-between-throttling-and-debouncing/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -328,35 +334,24 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
       
 
       
-        <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
-<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition ： transition-property transition-duration transition-timing-function transition-delay [, ...]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
-<li>transition-duration<br>动画执行的持续时间，单位为<code>s（秒）</code>或者 <code>ms（毫秒）</code>。</li>
-<li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
-<li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
-</ol>
-<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
-<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform: rotate | scale | skew | translate |matrix;</span><br></pre></td></tr></table></figure>
+        <p>以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。</p>
+<h2 id="函数节流（throttle）是什么">函数节流（throttle）是什么</h2><blockquote>
+<p>函数节流（throttle）用来限制单位时间的函数被调用的最大次数</p>
+</blockquote>
+<p>比方说下面这段代码中的 <code>fn()</code> 每 <code>100ms</code> 只能执行一次，那么 <code>1s</code> 内它最多只能执行10次：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">action, delay</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">if</span> (curr - last &gt; delay)</span><br><span class="line">      action.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    last = curr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = throttle(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="函数去抖（debounce）是什么">函数去抖（debounce）是什么</h2><blockquote>
+<p>函数去抖（debounce）规定了函数在指定的时间内不能被再次调用，如果在这期间被调用了，那么执行等待时间将会被刷新</p>
+</blockquote>
+<p>比方说下面这段代码中的 <code>fn()</code> 被调用后，要等待 <code>100ms</code> 函数 <code>func</code> 才会被执行，如果在这期间， <code>fn()</code> 又被调用了，那么等待时间将从调用的那一刻重新算起。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">action, idle</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ctx = <span class="keyword">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">    clearTimeout(last);</span><br><span class="line">    last = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        action.apply(ctx, args);</span><br><span class="line">    &#125;, idle);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = debounce(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Demo">Demo</h2><p>借用一个第三方示例：<br>
+<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="external">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="external">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.
+</iframe>
+</p>
+<hr>
+<p>参考资料：</p>
 <ul>
-<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
-<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
-<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
-<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
+<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="external">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
 </ul>
-<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  from &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  to &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
-<ul>
-<li>animation-name 关键帧名<br>用来定义一个动画的名称，也就是由前面的<code>keyframes</code>创建的动画名，默认值为<code>none</code>，当值为<code>none</code>时，将没有任何动画效果。如果我们要同时附几个<code>animation</code>给一个元素，只要用逗号<code>,</code>隔开即可。</li>
-<li>animation-iteration-count 动画循环次数<br>默认为<code>1</code>，如果要进行无限循环，只要设为<code>infinite</code>即可。</li>
-<li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
-<li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
-</ul>
-<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
-<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
 
       
     </div>
@@ -378,7 +373,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
       
         <div class="post-tags">
           
-            <a href="/tags/css3/" rel="tag">#css3</a>
+            <a href="/tags/性能优化/" rel="tag">#性能优化</a>
           
         </div>
       
@@ -387,17 +382,13 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/26/css3-box-shadow/" rel="next" title="css3 box shadow">
-                <i class="fa fa-chevron-left"></i> css3 box shadow
+              <a href="/2016/09/06/how-to-self-detect-a-memory-leak-in-node/" rel="next" title="［译］在 Node.js 中监测内存泄露">
+                <i class="fa fa-chevron-left"></i> ［译］在 Node.js 中监测内存泄露
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/05/27/css3-animate-or-js-animate/" rel="prev" title="CSS3 Animate or JS Animate ?">
-                CSS3 Animate or JS Animate ? <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -423,8 +414,8 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/05/27/intro-of-css3-transition-transform-animation/"
-           data-title="CSS3 Transition, transform 和 animation 介绍" data-url="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">
+      <div class="ds-thread" data-thread-key="2016/09/08/the-difference-between-throttling-and-debouncing/"
+           data-title="函数节流（throttle）与函数去抖（debounce）的区别" data-url="http://blog.mcbird.cn/2016/09/08/the-difference-between-throttling-and-debouncing/">
       </div>
     
   </div>
@@ -544,7 +535,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transition,_transform_和_animation_介绍"><span class="nav-number">1.</span> <span class="nav-text">Transition, transform 和 animation 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transition"><span class="nav-number">1.1.</span> <span class="nav-text">transition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transform"><span class="nav-number">1.2.</span> <span class="nav-text">transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#animation"><span class="nav-number">1.3.</span> <span class="nav-text">animation</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数节流（throttle）是什么"><span class="nav-number">1.</span> <span class="nav-text">函数节流（throttle）是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数去抖（debounce）是什么"><span class="nav-number">2.</span> <span class="nav-text">函数去抖（debounce）是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">3.</span> <span class="nav-text">Demo</span></a></li></ol></div>
             
           </div>
         </section>

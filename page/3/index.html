@@ -258,6 +258,174 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/24/react-mixins-by-example/" itemprop="url">
+                  『译』React Mixin 的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-07-24T16:05:05+08:00" content="2015-07-24">
+              2015-07-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/24/react-mixins-by-example/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/24/react-mixins-by-example/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>我使用 <code>React.js</code> 构建大型项目已经有一段时间了，我遇到过很多在不同的组件中都要用到相同功能的情况。因此，我花了一个小时左右的时间去了解<code>mixin</code>的用法，然后分享我所学习到的一些东西。</p>
+<h2 id="为什么使用_Mixin_？">为什么使用 Mixin ？</h2><p><code>React</code>回避子类组件，但是我们知道，到处重复地编写同样的代码是不好的。所以为了将同样的功能添加到多个组件当中，你需要将这些通用的功能包装成一个<code>mixin</code>，然后导入到你的模块中。 可以说，相比继承而已，<code>React</code>更喜欢这种组合的方式。嗯，我也喜欢这样。</p>
+<h2 id="写一个简单的_Mixin">写一个简单的 Mixin</h2><p>现在假设我们在写一个app，我们知道在某些情况下我们需要在好几个组件当中设置默认的<code>name</code>属性。<br>现在，我们不再是像以前一样在每个组件中写多个同样的<code>getDefaultProps</code>方法，我们可以像下面一样定义一个<code>mixin</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;name: <span class="string">"Skippy"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>它没什么特殊的，就是一个简单的对象而已。</p>
+<h2 id="加入到_React_组件中">加入到 React 组件中</h2><p>为了使用<code>mixin</code>，我们只需要简单得在组件中加入<code>mixins</code>属性，然后把刚才我们写的<code>mixin</code>包裹成一个数组，将它作为该属性的值即可：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentOne = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">ComponentOne</span> /&gt;</span>, document.body);</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/1/" target="_blank" rel="external">JSFiddle 示例：一个简单的 mixin 例子</a></p>
+<h2 id="重复使用">重复使用</h2><p>就像你想象的那样，我们可以在任何其他组件中包含我们的<code>mixin</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>&#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>Favorite food: &#123;this.props.food&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/2/" target="_blank" rel="external">JSFiddle 示例：在多个组件中使用同一个 mixin</a></p>
+<h2 id="生命周期方法会被重复调用！">生命周期方法会被重复调用！</h2><p>如何你的<code>mixin</code>当中包含<a href="http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods" target="_blank" rel="external">生命周期方法</a>，不要焦急，你仍然可以在你的组件中使用这些方法，而且它们都会被调用：</p>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/3/" target="_blank" rel="external">JSFiddle 示例：展示了两个 default props 都会被设置</a></p>
+<p>两个<code>getDefaultProps</code>方法都将被调用，所以我们可以得到默认为<code>Skippy</code>的<code>name</code>属性和默认为<code>Pancakes</code>的<code>food</code>属性。任何一个生命周期方法或属性都会被顺利地重复调用，但是下面的情况除外：</p>
+<ul>
+<li><code>render</code>：包含多个<code>render</code>方法是不行的。React 会跑出异常：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Uncaught Error: Invariant Violation: ReactCompositeComponentInterface: </span><br><span class="line">You are attempting to define `render` on your component more than once. </span><br><span class="line">This conflict may be due to a mixin.</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>displayName</code>：你多次的对它进行设置是没有问题的，但是，最终的结果只以最后一次设置为准。</li>
+</ul>
+<p>需要指出的是，<code>mixin</code>是可以包含在其他的<code>mixin</code>中的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UselessMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"asdas"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> LolMixin = &#123;</span><br><span class="line">   mixins: [UselessMixin]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> PantsOpinion = React.createClass(&#123;</span><br><span class="line">   mixins: [LolMixin],</span><br><span class="line">   render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>I dislike pants<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">PantsOpinion</span> /&gt;</span>, document.body);</span></span><br></pre></td></tr></table></figure>
+<p>程序会在控制台打印出<code>asdas</code>。</p>
+<h2 id="包含多个_Mixins">包含多个 Mixins</h2><p>我们的<code>mixins</code>要包裹在数组当中，提醒了我们可以在组件中包含多个<code>mixins</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;name: <span class="string">"Lizie"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> DefaultFoodMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;food: <span class="string">"Pancakes"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin, DefaultFoodMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>&#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>Favorite food: &#123;this.props.food&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="注意事项">注意事项</h2><p>这里有几件事需要引起我们的注意，当我们使用<code>mixins</code>的时候。 幸运地是，这些看起来并不是什么大问题，下面是我们在实践当中发现的一些问题：</p>
+<h3 id="设置相同的_Prop_和_State">设置相同的 Prop 和 State</h3><p>如果你尝试在不同的地方定义相同的属性时会出现下面的异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uncaught Error: Invariant Violation: mergeObjectsWithNoDuplicateKeys(): </span><br><span class="line">Tried to merge two objects with the same key: name</span><br></pre></td></tr></table></figure>
+<h3 id="设置相同的方法">设置相同的方法</h3><p>在不同的<code>mixin</code>中定义相同的方法，或者<code>mixin</code>和组件中包含了相同的方法时，会抛出异常：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"mixin mount method"</span>);</span><br><span class="line">        <span class="keyword">this</span>.logBlah()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// add a logBlah method here...</span></span><br><span class="line">    logBlah: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"blah"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MoreLogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"another mixin mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... and again here.</span></span><br><span class="line">    logBlah: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"something other than blah"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>异常信息同多次定义<code>rander</code>方法时抛出的异常一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Uncaught Error: Invariant Violation: ReactCompositeComponentInterface: </span><br><span class="line">You are attempting to define `logBlah` on your component more than once. </span><br><span class="line">This conflict may be due to a mixin.</span><br></pre></td></tr></table></figure>
+<h2 id="多个生命周期方法的调用顺序">多个生命周期方法的调用顺序</h2><p>如果我们的组件和<code>mixin</code>中都包含了相同的生命周期方法的话会怎样呢？</p>
+<blockquote>
+<p>我们的<code>mixin</code>方法首先会被调用，然后再是组件的中方法被调用。</p>
+</blockquote>
+<p>那当我们的组件中包含多个<code>mixin</code>，而这些<code>mixin</code>中又包含相同的生命周期方法时，调用顺序又是如何？</p>
+<blockquote>
+<p>它们会根据<code>mixins</code>中的顺序从左到右的进行调用。</p>
+</blockquote>
+<p>实例代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MoreLogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"another mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> ComponentOne = React.createClass(&#123;</span><br><span class="line">    mixins: [MoreLogOnMountMixin, LogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component one mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">var ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [LogOnMountMixin, MoreLogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component two mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>控制台将输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">another mixin mount method</span><br><span class="line">mixin mount method </span><br><span class="line">component one mount method</span><br><span class="line"></span><br><span class="line">mixin mount method</span><br><span class="line">another mixin mount method </span><br><span class="line">component two mount method</span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2><p>Mixin 使你React程序变得更为可重用，It’s a Good Thing.<br>我希望这篇文章能够对你有所帮助，如果有任何反馈，很高兴你能够在twitter上<a href="https://twitter.com/veddermatic" target="_blank" rel="external">@veddermatic</a></p>
+<blockquote>
+<p>原文链接：<a href="http://simblestudios.com/blog/development/react-mixins-by-example.html" target="_blank" rel="external">http://simblestudios.com/blog/development/react-mixins-by-example.html</a><br>翻译水平有限，文中带有个人理解，如有不恰当的地方，请在评论中指出，非常感谢！</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/08/will-change/" itemprop="url">
                   使用 will-change 来提升浏览器渲染效果
                 </a>
@@ -842,146 +1010,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/27/css3-animate-or-js-animate/" itemprop="url">
-                  CSS3 Animate or JS Animate ?
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-27T21:28:43+08:00" content="2015-05-27">
-              2015-05-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/27/css3-animate-or-js-animate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/27/css3-animate-or-js-animate/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。</p>
-<p>首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 <code>Rendering（回流）</code>，也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试。</p>
-<h2 id="测试重绘">测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
-<ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
-</ul>
-<p>测试结果如下（CSS3 左， jquery 右）：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png" alt="使用 jquery 动画效果图"></p>
-<p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
-<h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
-<ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
-</ul>
-<p>测试结果如下（CSS3 左， jquery 右）：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png" alt="使用CSS3动画效果图"></p>
-<p>可以看到，两者没有太打的区别。</p>
-<h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
-<h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
-<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1027,7 +1055,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1044,7 +1072,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

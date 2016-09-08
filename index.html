@@ -258,6 +258,143 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/08/the-difference-between-throttling-and-debouncing/" itemprop="url">
+                  函数节流（throttle）与函数去抖（debounce）的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-08T13:44:23+08:00" content="2016-09-08">
+              2016-09-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/08/the-difference-between-throttling-and-debouncing/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/08/the-difference-between-throttling-and-debouncing/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。</p>
+<h2 id="函数节流（throttle）是什么">函数节流（throttle）是什么</h2><blockquote>
+<p>函数节流（throttle）用来限制单位时间的函数被调用的最大次数</p>
+</blockquote>
+<p>比方说下面这段代码中的 <code>fn()</code> 每 <code>100ms</code> 只能执行一次，那么 <code>1s</code> 内它最多只能执行10次：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">action, delay</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">if</span> (curr - last &gt; delay)</span><br><span class="line">      action.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    last = curr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = throttle(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="函数去抖（debounce）是什么">函数去抖（debounce）是什么</h2><blockquote>
+<p>函数去抖（debounce）规定了函数在指定的时间内不能被再次调用，如果在这期间被调用了，那么执行等待时间将会被刷新</p>
+</blockquote>
+<p>比方说下面这段代码中的 <code>fn()</code> 被调用后，要等待 <code>100ms</code> 函数 <code>func</code> 才会被执行，如果在这期间， <code>fn()</code> 又被调用了，那么等待时间将从调用的那一刻重新算起。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">action, idle</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ctx = <span class="keyword">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">    clearTimeout(last);</span><br><span class="line">    last = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        action.apply(ctx, args);</span><br><span class="line">    &#125;, idle);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = debounce(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="Demo">Demo</h2><p>借用一个第三方示例：<br>
+<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="external">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="external">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.
+</iframe>
+</p>
+<hr>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="external">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/06/how-to-self-detect-a-memory-leak-in-node/" itemprop="url">
                   ［译］在 Node.js 中监测内存泄露
                 </a>
@@ -799,170 +936,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/10/23/react-style-guide/" itemprop="url">
-                  React 编程风格指南
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-10-23T23:02:27+08:00" content="2015-10-23">
-              2015-10-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/react/" itemprop="url" rel="index">
-                    <span itemprop="name">react</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/23/react-style-guide/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/23/react-style-guide/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文讨论的是 <code>React.js</code> 编程中的一些编程风格，团队开发中遵循统一的风格有利于提高代码的阅读体验。<br>本文译自<a href="https://github.com/Khan/style-guides/blob/master/style/react.md" target="_blank" rel="external">React style guide</a>。下面将从三个方面来讲。</p>
-<h2 id="语法">语法</h2><h3 id="方法顺序遵循生命周期放在前面，_render()_方法放在最后">方法顺序遵循生命周期放在前面， <code>render()</code> 方法放在最后</h3><p>在 <code>react</code> 组件内部，方法的顺序如下：</p>
-<ol>
-<li>生命周期方法（按照时间先后顺序依次为： <code>getDefaultProps</code>, <code>getInitialState</code>, <code>componentWillMount</code>, <code>componentDidMount</code>, <code>componentWillReceiveProps</code>, <code>shouldComponentUpdate</code>, <code>componentWillUpdate</code>, <code>componentDidUpdate</code>, <code>componentWillUnmount</code> ）</li>
-<li>其他的方法</li>
-<li><code>render</code> 方法</li>
-</ol>
-<h3 id="事件处理函数的命名">事件处理函数的命名</h3><p>采用 “handle” + “EventName” 的方式来命名<br>Example：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Component onClick=&#123;this.handleClick&#125; onLaunchMissiles=&#123;this.handleLaunchMissiles&#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="事件函数作为属性时的命名">事件函数作为属性时的命名</h3><p>为了跟 <code>react</code> 的事件命名保持一致： <code>onClick</code>, <code>onDrag</code>, <code>onChange</code>, 等等，采用如下格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Component onLaunchMissiles=&#123;this.handleLaunchMissiles&#125; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="元素跟_return_放在同一行">元素跟 <code>return</code> 放在同一行</h3><p>为了节约空间，采用下面的写法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">return &lt;div&gt;</span><br><span class="line">	...</span><br><span class="line">&lt;/div&gt;;</span><br></pre></td></tr></table></figure></p>
-<p>而不是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">return (      // &quot;div&quot; 与 &quot;return&quot; 不在同一行</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        ...</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<h3 id="对HTML的属性进行对齐和排序">对HTML的属性进行对齐和排序</h3><p>如果属性不是太多，那就放在同一行，否则就把每一个属性都单独写一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;highlight&quot; key=&quot;highlight-div&quot;&gt;</span><br><span class="line">&lt;div</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">&gt;</span><br><span class="line">&lt;Image</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure></p>
-<p>而不是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;highlight&quot;      // 属性没有在单独行</span><br><span class="line">     key=&quot;highlight-div&quot;</span><br><span class="line">&gt;</span><br><span class="line">&lt;div                            // 闭合便签不在单独的行</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">    key=&quot;highlight-div&quot;&gt;</span><br><span class="line">&lt;div                            // 属性没有排序（一般重要的属性写在前面）</span><br><span class="line">    key=&quot;highlight-div&quot;</span><br><span class="line">    className=&quot;highlight&quot;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="一个文件只导出一个_react_类">一个文件只导出一个 react 类</h3><p>每一个 <code>.jsx</code> 应该只能导出单独的 <code>react 类</code>。这样有利于测试，因为这些测试框架要求一个文件导出的就是一个函数。<br><em>注意：你依然可以在一个文件中定义多个类，只要保证导出的只有一个即可。</em></p>
-<h2 id="语言特色">语言特色</h2><h3 id="确保“呈现型”的组件功能单一">确保“呈现型”的组件功能单一</h3><p>把 <code>react 组件</code> 分为“逻辑型组件”和“呈现型组件” 是很有必要的。前者包含的是业务逻辑，里面不应该包含HTML；后者一般是可复用的，可以包含HTML。前者可以拥有自己的内部的 <code>state</code>，而后者不应该拥有。</p>
-<h3 id="多用_props">多用 props</h3><p>如果能用 <code>props</code> 就不要用 <code>state</code>，这一定程度上可以减少应用程序的复杂度。<br>一般的模式是：创建一个“无状态”的组件（呈现型组件），只负责呈现数据，把包含 <code>state</code> 的“逻辑型组件”做为这些组件的父级组件。 然后把它内部的 <code>state</code> 作为 <code>props</code>传递给下面的呈现型组件。这些逻辑型组件包含了所有的交互逻辑。</p>
-<h3 id="使用_propTypes">使用 propTypes</h3><p><code>react 组件</code> 都应该完成 <code>propTypes</code> 验证。每一个 <code>this.props</code> 的属性都应该有一个与之对应的 <code>propTypes</code>。<br>避免使用这些没有描述意义的 prop-types:</p>
-<ul>
-<li>React.PropTypes.any</li>
-<li>React.PropTypes.array</li>
-<li>React.PropTypes.object</li>
-</ul>
-<p>最好使用：</p>
-<ul>
-<li>React.PropTypes.arrayOf</li>
-<li>React.PropTypes.objectOf</li>
-<li>React.PropTypes.instanceOf</li>
-<li>React.PropTypes.shape</li>
-</ul>
-<h3 id="永远不要在DOM中保存_state">永远不要在DOM中保存 state</h3><p>不要通过 <code>data-</code> 属性或class类。所有的信息应该都存储在javascript中，或者在React组件中，或者在React store 中，如果使用了类似 <code>Redux</code> 这样的框架的话。</p>
-<h2 id="React_库和组件">React 库和组件</h2><h3 id="不要使用_backbone_模型">不要使用 backbone 模型</h3><p>直接使用 flux action，或者 <code>$.ajax</code> 来代替。</p>
-<h3 id="尽量少用_jQuery_就少用">尽量少用 jQuery 就少用</h3><p>永远也不要用jquery去操作DOM。<br>尝试避免jquery插件的使用。有必要的话，把jquery插件包装在React组件中。<br>你可以使用 <code>$.ajax</code>（但是不要用其他方法，像 <code>$.post</code>） 来进行网络通信。</p>
-<h3 id="复用组件">复用组件</h3><p>你可以从<a href="http://react-components.com/" target="_blank" rel="external">react-components.com</a>获取第三方React组件。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1008,7 +981,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1025,7 +998,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
