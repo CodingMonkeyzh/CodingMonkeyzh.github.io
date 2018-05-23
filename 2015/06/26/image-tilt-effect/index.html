@@ -84,31 +84,18 @@
 
 
 
-<meta name="description" content="原文来自：
-
-http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
-
-所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr
-文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
+<meta name="description" content="原文来自：  http://tympanus.net/codrops/2015/05/28/image-tilt-effect/  所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr 文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
+<meta name="keywords" content="image,effect">
 <meta property="og:type" content="article">
 <meta property="og:title" content="制作图片倾斜（tilt）效果">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/06/26/image-tilt-effect/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="原文来自：
-
-http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
-
-所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr
-文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
+<meta property="og:description" content="原文来自：  http://tympanus.net/codrops/2015/05/28/image-tilt-effect/  所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr 文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="制作图片倾斜（tilt）效果">
-<meta name="twitter:description" content="原文来自：
-
-http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
-
-所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr
-文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
+<meta name="twitter:description" content="原文来自：  http://tympanus.net/codrops/2015/05/28/image-tilt-effect/  所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：http://codepen.io/CodingMonkeyzh/pen/jPYNyr 文档结构对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非">
 
 
 
@@ -351,14 +338,14 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
       
         <p>原文来自：</p>
 <blockquote>
-<p><a href="http://tympanus.net/codrops/2015/05/28/image-tilt-effect/" target="_blank" rel="external">http://tympanus.net/codrops/2015/05/28/image-tilt-effect/</a></p>
+<p><a href="http://tympanus.net/codrops/2015/05/28/image-tilt-effect/" target="_blank" rel="noopener">http://tympanus.net/codrops/2015/05/28/image-tilt-effect/</a></p>
 </blockquote>
-<p>所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：<br><a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
-<h2 id="文档结构">文档结构</h2><p>对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非常简单。</p>
+<p>所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：<br><a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+<h2 id="文档结构"><a href="#文档结构" class="headerlink" title="文档结构"></a>文档结构</h2><p>对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非常简单。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;img class=&quot;tilt-effect&quot; src=&quot;http://placehold.it/500x300&quot; alt=&quot;&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <p>上面这段结构经过脚本处理之后，会被替换成下面的结构：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;tilt&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__back&quot; style=&quot;background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__front&quot; style=&quot;opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__front&quot; style=&quot;opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="脚本分析">脚本分析</h2><p>我们利用了<a href="https://gist.github.com/CodingMonkeyzh/7c43c9a25f0d132b83d6" target="_blank" rel="external">filtfx.js</a>这个插件对上面的图片进行处理， 来实现倾斜效果。我在原来的代码中加入了一些注释，来帮助我们理解。下面我们对该插件的核心代码进行分析。</p>
+<h2 id="脚本分析"><a href="#脚本分析" class="headerlink" title="脚本分析"></a>脚本分析</h2><p>我们利用了<a href="https://gist.github.com/CodingMonkeyzh/7c43c9a25f0d132b83d6" target="_blank" rel="noopener">filtfx.js</a>这个插件对上面的图片进行处理， 来实现倾斜效果。我在原来的代码中加入了一些注释，来帮助我们理解。下面我们对该插件的核心代码进行分析。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function TiltFx(el, options) &#123;</span><br><span class="line">  this.el = el;</span><br><span class="line">  this.options = extend(&#123;&#125;, this.options);</span><br><span class="line">  extend(this.options, options);</span><br><span class="line">  this._init();</span><br><span class="line">  this._initEvents();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这是构造函数，如果我们的文档中，加入了上面的插件，那么插件会遍历文档中具有<code>tilt-effet</code>的<code>img</code>元素，来调用构造函数<code>TiltFx()</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function init() &#123;</span><br><span class="line">  // 遍历所有拥有‘title-effect’类的img元素</span><br><span class="line">  [].slice.call(document.querySelectorAll(&apos;img.tilt-effect&apos;)).forEach(function(img) &#123;</span><br><span class="line">    new TiltFx(img, JSON.parse(img.getAttribute(&apos;data-tilt-options&apos;)));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -371,8 +358,8 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
 <p>我们可以看到，监听<code>mousemove</code>的事件处理函数中的计算比较复杂，关键的部分就是在这里：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var el = self.imgElems[i],</span><br><span class="line">  rotX = moveOpts.rotateX ? 2 * ((i + 1) * moveOpts.rotateX / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.rotateX / self.options.extraImgs) : 0,</span><br><span class="line">  rotY = moveOpts.rotateY ? 2 * ((i + 1) * moveOpts.rotateY / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.rotateY / self.options.extraImgs) : 0,</span><br><span class="line">  rotZ = moveOpts.rotateZ ? 2 * ((i + 1) * moveOpts.rotateZ / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.rotateZ / self.options.extraImgs) : 0,</span><br><span class="line">  transX = moveOpts.translateX ? 2 * ((i + 1) * moveOpts.translateX / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.translateX / self.options.extraImgs) : 0,</span><br><span class="line">  transY = moveOpts.translateY ? 2 * ((i + 1) * moveOpts.translateY / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.translateY / self.options.extraImgs) : 0,</span><br><span class="line">  transZ = moveOpts.translateZ ? 2 * ((i + 1) * moveOpts.translateZ / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.translateZ / self.options.extraImgs) : 0;</span><br><span class="line"></span><br><span class="line">el.style.WebkitTransform = &apos;perspective(&apos; + moveOpts.perspective + &apos;px) translate3d(&apos; + transX + &apos;px,&apos; + transY + &apos;px,&apos; + transZ + &apos;px) rotate3d(1,0,0,&apos; + rotX + &apos;deg) rotate3d(0,1,0,&apos; + rotY + &apos;deg) rotate3d(0,0,1,&apos; + rotZ + &apos;deg)&apos;;</span><br><span class="line">el.style.transform = &apos;perspective(&apos; + moveOpts.perspective + &apos;px) translate3d(&apos; + transX + &apos;px,&apos; + transY + &apos;px,&apos; + transZ + &apos;px) rotate3d(1,0,0,&apos; + rotX + &apos;deg) rotate3d(0,1,0,&apos; + rotY + &apos;deg) rotate3d(0,0,1,&apos; + rotZ + &apos;deg)&apos;;</span><br></pre></td></tr></table></figure>
 <p>这里我们根据鼠标的位置，计算出了各个图层对应的<strong>偏移量和旋转角度</strong>，然后对它们进行变换即可。<br>最后<code>mouseleave</code>之后，我们再把个个图层恢复到初始位置就行了。</p>
-<p>Demo：<a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
-
+<p>Demo：<a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/07/Disable-dragging-an-image-form-html/">阻止HTML中的图片拖动</a></li></ul></div>
       
     </div>
 
@@ -486,7 +473,7 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -503,7 +490,7 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -561,7 +548,7 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文档结构"><span class="nav-number">1.</span> <span class="nav-text">文档结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本分析"><span class="nav-number">2.</span> <span class="nav-text">脚本分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文档结构"><span class="nav-number">1.</span> <span class="nav-text">文档结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本分析"><span class="nav-number">2.</span> <span class="nav-text">脚本分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
           </div>
         </section>
@@ -580,7 +567,7 @@ http://tympanus.net/codrops/2015/05/28/image-tilt-effect/
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

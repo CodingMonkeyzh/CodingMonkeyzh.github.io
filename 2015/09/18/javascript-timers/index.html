@@ -84,33 +84,20 @@
 
 
 
-<meta name="description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。
-setTimeout()MDN对 setTimeout 的定义为：
-
-在指定的延迟时间之后调用一个函数或执行一个代码片段。
-
-语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
+<meta name="description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。 setTimeout()MDN对 setTimeout 的定义为：  在指定的延迟时间之后调用一个函数或执行一个代码片段。  语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
+<meta name="keywords" content="setTimeout,setInterval">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript 定时器工作原理">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/09/18/javascript-timers/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。
-setTimeout()MDN对 setTimeout 的定义为：
-
-在指定的延迟时间之后调用一个函数或执行一个代码片段。
-
-语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
+<meta property="og:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。 setTimeout()MDN对 setTimeout 的定义为：  在指定的延迟时间之后调用一个函数或执行一个代码片段。  语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript 定时器工作原理">
-<meta name="twitter:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。
-setTimeout()MDN对 setTimeout 的定义为：
-
-在指定的延迟时间之后调用一个函数或执行一个代码片段。
-
-语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
+<meta name="twitter:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。 setTimeout()MDN对 setTimeout 的定义为：  在指定的延迟时间之后调用一个函数或执行一个代码片段。  语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
 <meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png">
 
 
@@ -341,24 +328,24 @@ setTimeout()MDN对 setTimeout 的定义为：
 
       
         <p>说到 javascript 中的定时器，我们肯定会想到 <code>setTimeout()</code> 和 <code>setInterval()</code> 这两个函数。本文将从 <em>事件循环（Event Loop）</em> 的角度来分析两者的工作原理和区别。</p>
-<h2 id="setTimeout()">setTimeout()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout" target="_blank" rel="external">MDN</a>对 <code>setTimeout</code> 的定义为：</p>
+<h2 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout()"></a>setTimeout()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout" target="_blank" rel="noopener">MDN</a>对 <code>setTimeout</code> 的定义为：</p>
 <blockquote>
 <p>在指定的延迟时间之后调用一个函数或执行一个代码片段。</p>
 </blockquote>
-<h3 id="语法">语法</h3><p><code>setTimeout</code> 的语法非常简单，第一个参数为回调函数，第二个参数为延时的时间。函数返回一个数值类型的ID唯一标示符，此ID可以用作 <code>clearTimeout</code> 的参数来取消定时器：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeoutID = <span class="built_in">window</span>.setTimeout(code, delay);</span><br></pre></td></tr></table></figure></p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p><code>setTimeout</code> 的语法非常简单，第一个参数为回调函数，第二个参数为延时的时间。函数返回一个数值类型的ID唯一标示符，此ID可以用作 <code>clearTimeout</code> 的参数来取消定时器：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeoutID = <span class="built_in">window</span>.setTimeout(code, delay);</span><br></pre></td></tr></table></figure></p>
 <p>IE0+ 还支持回调参数的传入：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timeoutID = <span class="built_in">window</span>.setTimeout(func, delay, [param1, param2, ...]);</span><br></pre></td></tr></table></figure></p>
-<h2 id="setInterval()">setInterval()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setInterval" target="_blank" rel="external">MDN</a> 对 setInterval 的定义为：</p>
+<h2 id="setInterval"><a href="#setInterval" class="headerlink" title="setInterval()"></a>setInterval()</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setInterval" target="_blank" rel="noopener">MDN</a> 对 setInterval 的定义为：</p>
 <blockquote>
 <p>周期性地调用一个函数(function)或者执行一段代码。</p>
 </blockquote>
 <p>由于 <code>setInterval</code> 和 <code>setTimeout</code> 的用法一样，所以这里不再列出。</p>
-<h2 id="对第二个参数（delay）的说明">对第二个参数（delay）的说明</h2><p>由于javascript 的事件循环机制，导致<strong>第二个参数并不代表延迟delay毫秒之后立即执行回调函数，而是尝试将回调函数加入到事件队列</strong>。实际上，<code>setTimeout</code> 和 <code>setInterval</code> 在这一点上处理又存在区别：</p>
+<h2 id="对第二个参数（delay）的说明"><a href="#对第二个参数（delay）的说明" class="headerlink" title="对第二个参数（delay）的说明"></a>对第二个参数（delay）的说明</h2><p>由于javascript 的事件循环机制，导致<strong>第二个参数并不代表延迟delay毫秒之后立即执行回调函数，而是尝试将回调函数加入到事件队列</strong>。实际上，<code>setTimeout</code> 和 <code>setInterval</code> 在这一点上处理又存在区别：</p>
 <ul>
 <li>setTimeout：延时delay毫秒之后，啥也不管，直接将回调函数加入事件队列。</li>
 <li>setInterval: 延时delay毫秒之后，先看看事件队列中是否存在还没有执行的回调函数（setInterval的回调函数），如果存在，就不要再往事件队列里加入回调函数了。</li>
 </ul>
 <p>所以，当我们的代码中存在耗时的任务时，定时器并不会表现的如我们所想的那样。</p>
-<h2 id="通过一个例子来理解">通过一个例子来理解</h2><p>下面的代码，本来希望能够在 <code>100ms</code> 和 <code>200ms</code> 的时候（也就是刚好等待 <code>100ms</code>）调用回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 106</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 107</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="通过一个例子来理解"><a href="#通过一个例子来理解" class="headerlink" title="通过一个例子来理解"></a>通过一个例子来理解</h2><p>下面的代码，本来希望能够在 <code>100ms</code> 和 <code>200ms</code> 的时候（也就是刚好等待 <code>100ms</code>）调用回调函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 106</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 107</span></span><br></pre></td></tr></table></figure></p>
 <p>这样的结果看上去正是我们所想的那样，但是一旦我们在代码中加入了耗时的任务时候，结果就不像我们所期望的那样了：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timerStart1 = now();</span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'第一个setTimeout回调执行等待时间：'</span>, now() - timerStart1);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> timerStart2 = now();</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个setTimeout回调执行等待时间：'</span>, now() - timerStart2);</span><br><span class="line">  &#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">  heavyTask();  <span class="comment">// 耗时任务</span></span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask(); <span class="comment">// 耗时任务</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1015</span></span><br><span class="line"><span class="comment">// 第一个setTimeout回调执行等待时间： 1018</span></span><br><span class="line"><span class="comment">// 第二个setTimeout回调执行等待时间： 1000</span></span><br></pre></td></tr></table></figure></p>
 <p>两个 <code>setTimeout</code> 的等待事件由于耗时任务的存在不再是 <code>100ms</code> 了！我们来描述一下事情的经过：</p>
 <ol>
@@ -370,7 +357,7 @@ setTimeout()MDN对 setTimeout 的定义为：
 <p>再来看 <code>setInterval</code> 的一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intervalStart = now();</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'interval距定义定时器的时间：'</span>, now() - loopStart);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1013</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1016</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1123</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1224</span></span><br></pre></td></tr></table></figure></p>
 <p>上面这段代码，我们期望每隔 <code>100ms</code> 就打出一条日志。相对于 <code>setTimeout</code> 的区别， <code>setInterval</code> 在<strong>准备把回调函数加入到事件队列的时候，会判断队列中是否还有未执行的回调</strong>，如果有的话，它就不会再往队列中添加回调函数。 不然，会出现多个回调同时执行的情况。</p>
 <p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png" alt="setInterval"></p>
-<h2 id="总结">总结</h2><p>上面对javascript定时器执行原理进行了简要的分析，希望能够帮助我们更深入的理解javascript。文中有描述不当的地方可以在评论中指出。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面对javascript定时器执行原理进行了简要的分析，希望能够帮助我们更深入的理解javascript。文中有描述不当的地方可以在评论中指出。</p>
 <blockquote>
 <p>文章地址：<a href="http://blog.mcbird.cn/2015/09/18/javascript-timers/">http://blog.mcbird.cn/2015/09/18/javascript-timers/</a></p>
 </blockquote>
@@ -488,7 +475,7 @@ setTimeout()MDN对 setTimeout 的定义为：
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -505,7 +492,7 @@ setTimeout()MDN对 setTimeout 的定义为：
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -563,7 +550,7 @@ setTimeout()MDN对 setTimeout 的定义为：
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#setTimeout()"><span class="nav-number">1.</span> <span class="nav-text">setTimeout()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setInterval()"><span class="nav-number">2.</span> <span class="nav-text">setInterval()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对第二个参数（delay）的说明"><span class="nav-number">3.</span> <span class="nav-text">对第二个参数（delay）的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过一个例子来理解"><span class="nav-number">4.</span> <span class="nav-text">通过一个例子来理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#setTimeout"><span class="nav-number">1.</span> <span class="nav-text">setTimeout()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.1.</span> <span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setInterval"><span class="nav-number">2.</span> <span class="nav-text">setInterval()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对第二个参数（delay）的说明"><span class="nav-number">3.</span> <span class="nav-text">对第二个参数（delay）的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过一个例子来理解"><span class="nav-number">4.</span> <span class="nav-text">通过一个例子来理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
         </section>
@@ -582,7 +569,7 @@ setTimeout()MDN对 setTimeout 的定义为：
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

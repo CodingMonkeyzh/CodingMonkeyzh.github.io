@@ -90,6 +90,7 @@
 <meta property="og:url" content="http://blog.mcbird.cn/page/3/index.html">
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="分享自己的学习经历，实用技巧">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MockingBird">
 <meta name="twitter:description" content="分享自己的学习经历，实用技巧">
@@ -147,7 +148,7 @@
   
 
   <div class="container one-collumn sidebar-position-left 
-  
+   page-home 
  ">
     <div class="headband"></div>
 
@@ -258,6 +259,168 @@
             
               
                 
+                <a class="post-title-link" href="/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/" itemprop="url">
+                  [译]如何成为一个优秀的前端工程师
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-15T11:17:30+08:00" content="2015-08-15">
+              2015-08-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/think/" itemprop="url" rel="index">
+                    <span itemprop="name">think</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/15/How-to-Become-a-Great-Front-End-Engineer/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>原文地址：<a href="http://philipwalton.com/articles/how-to-become-a-great-front-end-engineer/" target="_blank" rel="noopener">http://philipwalton.com/articles/how-to-become-a-great-front-end-engineer/</a><br>来自Google的前端工程师-<a href="http://philipwalton.com/" target="_blank" rel="noopener">Philip Walton</a> 分享了自己关于如何成为优秀的工程师的一些观点。个人感觉很有价值，所以翻译成中文，方便大家阅读。 人水平有限，如翻译不妥之处请在评论中指出。</p>
+</blockquote>
+<p>最近，我收到了读者的邮件，引发了我的一些思考。这是他在邮件中问我的问题：</p>
+<blockquote>
+<p>Hi Philip, is it okay to ask how you become a great front-end engineer?<br>Any advice?</p>
+</blockquote>
+<p>我不得不承认，我感到非常的惊讶，居然会被问到这样的问题，因为我从来没有想过自己是一个<code>优秀</code>的前端工程师。实际上，我在这个行业工作的前几年里，我真的不觉得我能够胜任我的工作。我接受了这些工作只是因为我以前没有意识到我知道得东西太少了，我能够得到这些工作只是因为以前面试我的人不知道问我什么问题。</p>
+<p>话虽这么说，我最后还是把我自己的角色做得非常好，而且成为了团队里有价值的一员。当我最后离职的时候（下一个职位我还是无法胜任）我通常也会应试那些将要应聘我的职位的人。现在回想那些我面试过的应聘者，让我明白，看待知识的重要性。尽管我一开始在这个领域很薄弱。我现在的自己可能也不会雇佣以前的那个自己，尽管我知道随着工作经验的积累，成功也是可能的。</p>
+<p>在Web领域，我工作的越久，越让我意识到<strong>不错的人和真正优秀的人的区别在于不是他们知道什么，而是他们如何思考。</strong> 很明显，知识是很重要的–特别是在某些情况下–但是，在一个快速变化的领域并非如此。你获取知识的方式比你知道那些知识更为重要。而且也许最重要的是：你如何利用你的知识去解决日常生活中的问题。</p>
+<p>你可以找到大量谈论知识点、框架和工具的文章，这是知识都是获得一份工作所需要知道的。我想说一些不一样的。在这篇文章中，我会说一说前端工程师应有的心态，希望能够回答最开始的问题：怎样才能做到优秀？</p>
+<h2 id="不要只是解决问题，找到问题的根源所在"><a href="#不要只是解决问题，找到问题的根源所在" class="headerlink" title="不要只是解决问题，找到问题的根源所在"></a>不要只是解决问题，找到问题的根源所在</h2><p>很多的人只是不断地写一些 CSS 和 Javascript 补丁直到他们发现这些东西可以正常的工作了，然后他们就不管了。我在代码审查的过程中看到了很多这样的做法。</p>
+<p>我会经常问别人：“为什么你要在这里加一个 <code>float: left</code> ？” 或者 “这个 <code>overflow:hidden</code> 真的需要吗？”，然后他们会回答：“我不知道，但是如果我删掉他们，就出问题了”。</p>
+<p>Javascript 也一样。我看到一些人用 <code>setTimeout</code> 来防止执行顺序上的问题，或者是一些人滥用 <code>stopPropagation()</code> 而没有考虑到它也许会影响页面中的其他事件处理函数。</p>
+<p>我遇到过很多相同或类似的问题，如果你从来不花时间去了解问题的根源所在，你会发现你会一遍一遍的遭遇同样的困境。</p>
+<p>花时间去深入的研究你的解决方案<em>为什么</em>可行看起来需要耗费很多的精力，但是我发誓它会在将来给你节约很多时间。对你现在工作的系统有一个全面的理解可以减少你将来的猜测和检查工作。</p>
+<h2 id="学会预测浏览器领域将来的变化"><a href="#学会预测浏览器领域将来的变化" class="headerlink" title="学会预测浏览器领域将来的变化"></a>学会预测浏览器领域将来的变化</h2><p>前端跟后端主要的不同是：后端的运行环境在你的控制之下。但是对于前端而言，相比于后端，它完全不在你的控制范围。你的用户所使用的平台或者设备随时都有可能改变，你的代码需要能够优雅地处理这种情况。</p>
+<p>我记得早在2011年的时候，我在一个非常著名的 javascript 框架看到下面这样一段源码（大致如此）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> isIE6 = !isIE7 &amp;&amp; !isIE8 &amp;&amp; !isIE9;</span><br></pre></td></tr></table></figure>
+<p>我知道在现实生活中，<code>feature detaction</code> 并不能100%的有效，有些时候我们不得不采用这种不好的方式或者浏览器白名单的方式，但是任何时候你这样做的时候，你应该预测未来可能会发生什么，即使发生，你的代码也不应该出现bug。</p>
+<p>对于我们大多数人而言，我们在现在的工作岗位上写的代码会比我们的任期更长。我8年前写的一些代码现在还会经常用到，这想起来既让人满足又让让感到可怕。</p>
+<h2 id="阅读官方文档"><a href="#阅读官方文档" class="headerlink" title="阅读官方文档"></a>阅读官方文档</h2><p>浏览器 bug 总是存在的，但是，当两个浏览器执行相同的代码表现却不一致时，人们经常假设，而不是亲自去检查，只是把他们认为的表现好的叫做“正常”浏览器，表现异常的叫“不正常”浏览器。但并非总是这样，当你做出了错误的假设时，任何你选择的解决方法在未来也许会失效。</p>
+<p>一个现实的例子就是 <code>flex items</code> 的默认最小尺寸。根据<a href="http://www.w3.org/TR/css-flexbox/#min-size-auto" target="_blank" rel="noopener">官方文档</a>，<code>flex items</code> 的 <code>min-width</code> 和 <code>min-height</code> 是 <code>auto</code> (而不是 0)，这意味着，它们的尺寸不会比它们的内容还要小。 但是在过去的8个月里，只有 <code>Firefox</code> 是唯一一个正确的实现这一标准的浏览器。</p>
+<p>如果你遇到过这类跨浏览器的兼容性问题，而且你注意到你的页面在 Chrome，IE，Opera，和 Safari 上表现一致，唯独 Firefox 上表现不同时，你肯定会猜测这是 Firefox 自己的问题。</p>
+<p>当两个或多个浏览器在渲染相同的代码表现不一致时， 你应该花一些时间去研究到底哪个浏览器才是正确的，然后用正确的方式写下你的代码。你的作品才会是面向未来的。</p>
+<p>另外，优秀的前端工程师经常都是站在变化的最前列的，他们会在这些技术成为主流之前就采用这些技术，甚至为这些技术作出贡献。如果你凭借你自己的实力去查找官方文档，而且能够想象一个技术在你能够在浏览器中用它的之前将会是如何工作的，你将成为能够谈论这个官方标准会对开发造成什么影响的人。</p>
+<h2 id="阅读其他人的代码"><a href="#阅读其他人的代码" class="headerlink" title="阅读其他人的代码"></a>阅读其他人的代码</h2><p>阅读其他人的代码，无疑是成为一个更好的开发者的最好方式。</p>
+<p>自己解决问题是学习的最好方式，但是如果这些问题都是你以前解决过的，你很快就会进入平稳期（很难有上升的空间）。阅读其他人的代码可以为你打开处理问题的新的思路。而且阅读和理解别人写的代码的能力也是在跟团队合作或者参与开源项目时至关重要的能力。</p>
+<p>实际上，我认为在面试一个应聘者是只让他们写代码–新的代码，是最大的错误。我应聘的时候，从来没有被叫过去阅读一些已经存在的代码，在这些代码中找出问题，然后解决它。这是非常不好的，因为作为一个工程师，很多时候我们是在别人的代码上添加和改变一些代码。很少从头写一些新的。</p>
+<h2 id="跟比你聪明的人一起工作"><a href="#跟比你聪明的人一起工作" class="headerlink" title="跟比你聪明的人一起工作"></a>跟比你聪明的人一起工作</h2><p>在我印象你，比起后端开发者，更多的前端开发者希望成为一个自由职业者（全栈）。也许是前端工程师更趋向于自学，而后端工程师更趋向于学术。</p>
+<p>自学并为你自己工作的问题是无法从比你聪明的人身上得到好处。没有人来跟你讨论观点或者帮你审查代码。</p>
+<p>我强烈的建议，至少在你职业生涯初期，在一个团队中工作，特别是跟一群比你更聪明更有经验的人工作。</p>
+<p>如果你已经结束你的职业生涯，现在只是为你自己工作，那么参与到开源中来。 贡献开源项目会给你很多与团队合作的机会。</p>
+<h2 id="重复造轮子"><a href="#重复造轮子" class="headerlink" title="重复造轮子"></a>重复造轮子</h2><p>在商业上，重复造轮子是不好的，但是对于学习来说并非如此。你也许尝试从 <code>npm</code> 上获取预输入控件或者事件委托库，但是想象一下如果你自己尝试创造这些东西的话会学到更多。</p>
+<p>我确定一些正在阅读这篇文章的人对此感到强烈反对。不要误会我的意思。我不是说你永远也不应该使用第三方库。使用优秀的库是非常明智的事情。</p>
+<p>但是，在这篇文章中，我要说的是如何从一个不错的工程师成为一个优秀的工程师。大部分我认为的这个领域中优秀的工程师都是这些优秀的第三方库的维护者。</p>
+<p>你也许从来没有构建够自己的 javascript 库，但是你依然能够在你的职业生涯中获得成功，但是，可能你从来没有理解到解决问题的核心。</p>
+<p>在这个行业中，人们经常问起的一个问题是：我接下来应该做什么？ 如果你问了这个问题，为什么不去尝试重新创造一个你喜欢的 javascript 库或者 CSS 框架，而不是尝试一些新的工具或者写一个新的 app。 这样做的好处是，及时你遇到了困难，你也可以从目前已有的库中的源码找到答案。</p>
+<h2 id="把你学到的东西写下来"><a href="#把你学到的东西写下来" class="headerlink" title="把你学到的东西写下来"></a>把你学到的东西写下来</h2><p>最后， 你应该把你学到的东西写下来。有太多的理由这样做了，但是，也许最重要的原因是这样可以强迫你更好地理解你所学的东西。如果你无法解释其原理，这是一个很好的机会说明你并没有完全搞懂它。很多时候你没有意识到你不懂，直到你爸它写下来。</p>
+<p>在我的经验中，书写、做一个演讲、以及写一些 demos 是强迫我自己完全弄懂一个东西的最好方式，从里到外。及时没有一个人会看你写的东西，但是做这件事的过程更有价值。</p>
+<blockquote>
+<p>文章地址：<a href="http://blog.mcbird.cn/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/">http://blog.mcbird.cn/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/</a></p>
+</blockquote>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/07/24/react-mixins-by-example/">『译』React Mixin 的使用</a></li><li><a href="http://www.davidfnck.com/blockchain/english-terminology.html/">磨刀不误砍柴工之区块链领域专业术语中英文翻译与发音</a></li></ul></div>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/24/react-mixins-by-example/" itemprop="url">
                   『译』React Mixin 的使用
                 </a>
@@ -329,18 +492,18 @@
         
           
             <p>我使用 <code>React.js</code> 构建大型项目已经有一段时间了，我遇到过很多在不同的组件中都要用到相同功能的情况。因此，我花了一个小时左右的时间去了解<code>mixin</code>的用法，然后分享我所学习到的一些东西。</p>
-<h2 id="为什么使用_Mixin_？">为什么使用 Mixin ？</h2><p><code>React</code>回避子类组件，但是我们知道，到处重复地编写同样的代码是不好的。所以为了将同样的功能添加到多个组件当中，你需要将这些通用的功能包装成一个<code>mixin</code>，然后导入到你的模块中。 可以说，相比继承而已，<code>React</code>更喜欢这种组合的方式。嗯，我也喜欢这样。</p>
-<h2 id="写一个简单的_Mixin">写一个简单的 Mixin</h2><p>现在假设我们在写一个app，我们知道在某些情况下我们需要在好几个组件当中设置默认的<code>name</code>属性。<br>现在，我们不再是像以前一样在每个组件中写多个同样的<code>getDefaultProps</code>方法，我们可以像下面一样定义一个<code>mixin</code>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;name: <span class="string">"Skippy"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么使用-Mixin-？"><a href="#为什么使用-Mixin-？" class="headerlink" title="为什么使用 Mixin ？"></a>为什么使用 Mixin ？</h2><p><code>React</code>回避子类组件，但是我们知道，到处重复地编写同样的代码是不好的。所以为了将同样的功能添加到多个组件当中，你需要将这些通用的功能包装成一个<code>mixin</code>，然后导入到你的模块中。 可以说，相比继承而已，<code>React</code>更喜欢这种组合的方式。嗯，我也喜欢这样。</p>
+<h2 id="写一个简单的-Mixin"><a href="#写一个简单的-Mixin" class="headerlink" title="写一个简单的 Mixin"></a>写一个简单的 Mixin</h2><p>现在假设我们在写一个app，我们知道在某些情况下我们需要在好几个组件当中设置默认的<code>name</code>属性。<br>现在，我们不再是像以前一样在每个组件中写多个同样的<code>getDefaultProps</code>方法，我们可以像下面一样定义一个<code>mixin</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">"Skippy"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>它没什么特殊的，就是一个简单的对象而已。</p>
-<h2 id="加入到_React_组件中">加入到 React 组件中</h2><p>为了使用<code>mixin</code>，我们只需要简单得在组件中加入<code>mixins</code>属性，然后把刚才我们写的<code>mixin</code>包裹成一个数组，将它作为该属性的值即可：</p>
+<h2 id="加入到-React-组件中"><a href="#加入到-React-组件中" class="headerlink" title="加入到 React 组件中"></a>加入到 React 组件中</h2><p>为了使用<code>mixin</code>，我们只需要简单得在组件中加入<code>mixins</code>属性，然后把刚才我们写的<code>mixin</code>包裹成一个数组，将它作为该属性的值即可：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentOne = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">ComponentOne</span> /&gt;</span>, document.body);</span></span><br></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/1/" target="_blank" rel="external">JSFiddle 示例：一个简单的 mixin 例子</a></p>
-<h2 id="重复使用">重复使用</h2><p>就像你想象的那样，我们可以在任何其他组件中包含我们的<code>mixin</code>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>&#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>Favorite food: &#123;this.props.food&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/2/" target="_blank" rel="external">JSFiddle 示例：在多个组件中使用同一个 mixin</a></p>
-<h2 id="生命周期方法会被重复调用！">生命周期方法会被重复调用！</h2><p>如何你的<code>mixin</code>当中包含<a href="http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods" target="_blank" rel="external">生命周期方法</a>，不要焦急，你仍然可以在你的组件中使用这些方法，而且它们都会被调用：</p>
-<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/3/" target="_blank" rel="external">JSFiddle 示例：展示了两个 default props 都会被设置</a></p>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/1/" target="_blank" rel="noopener">JSFiddle 示例：一个简单的 mixin 例子</a></p>
+<h2 id="重复使用"><a href="#重复使用" class="headerlink" title="重复使用"></a>重复使用</h2><p>就像你想象的那样，我们可以在任何其他组件中包含我们的<code>mixin</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h4&gt;&#123;<span class="keyword">this</span>.props.name&#125;&lt;<span class="regexp">/h4&gt;</span></span><br><span class="line"><span class="regexp">                &lt;p&gt;Favorite food: &#123;this.props.food&#125;&lt;/</span>p&gt;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/2/" target="_blank" rel="noopener">JSFiddle 示例：在多个组件中使用同一个 mixin</a></p>
+<h2 id="生命周期方法会被重复调用！"><a href="#生命周期方法会被重复调用！" class="headerlink" title="生命周期方法会被重复调用！"></a>生命周期方法会被重复调用！</h2><p>如何你的<code>mixin</code>当中包含<a href="http://facebook.github.io/react/docs/component-specs.html#lifecycle-methods" target="_blank" rel="noopener">生命周期方法</a>，不要焦急，你仍然可以在你的组件中使用这些方法，而且它们都会被调用：</p>
+<p><a href="http://jsfiddle.net/veddermatic/qzh0ug5y/3/" target="_blank" rel="noopener">JSFiddle 示例：展示了两个 default props 都会被设置</a></p>
 <p>两个<code>getDefaultProps</code>方法都将被调用，所以我们可以得到默认为<code>Skippy</code>的<code>name</code>属性和默认为<code>Pancakes</code>的<code>food</code>属性。任何一个生命周期方法或属性都会被顺利地重复调用，但是下面的情况除外：</p>
 <ul>
 <li><code>render</code>：包含多个<code>render</code>方法是不行的。React 会跑出异常：</li>
@@ -352,16 +515,16 @@
 <p>需要指出的是，<code>mixin</code>是可以包含在其他的<code>mixin</code>中的：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UselessMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"asdas"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> LolMixin = &#123;</span><br><span class="line">   mixins: [UselessMixin]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> PantsOpinion = React.createClass(&#123;</span><br><span class="line">   mixins: [LolMixin],</span><br><span class="line">   render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>I dislike pants<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">React.renderComponent(<span class="xml"><span class="tag">&lt;<span class="name">PantsOpinion</span> /&gt;</span>, document.body);</span></span><br></pre></td></tr></table></figure>
 <p>程序会在控制台打印出<code>asdas</code>。</p>
-<h2 id="包含多个_Mixins">包含多个 Mixins</h2><p>我们的<code>mixins</code>要包裹在数组当中，提醒了我们可以在组件中包含多个<code>mixins</code>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;name: <span class="string">"Lizie"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> DefaultFoodMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;food: <span class="string">"Pancakes"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin, DefaultFoodMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h4</span>&gt;</span>&#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span>Favorite food: &#123;this.props.food&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="注意事项">注意事项</h2><p>这里有几件事需要引起我们的注意，当我们使用<code>mixins</code>的时候。 幸运地是，这些看起来并不是什么大问题，下面是我们在实践当中发现的一些问题：</p>
-<h3 id="设置相同的_Prop_和_State">设置相同的 Prop 和 State</h3><p>如果你尝试在不同的地方定义相同的属性时会出现下面的异常：</p>
+<h2 id="包含多个-Mixins"><a href="#包含多个-Mixins" class="headerlink" title="包含多个 Mixins"></a>包含多个 Mixins</h2><p>我们的<code>mixins</code>要包裹在数组当中，提醒了我们可以在组件中包含多个<code>mixins</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultNameMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">"Lizie"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> DefaultFoodMixin = &#123;</span><br><span class="line">    getDefaultProps: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="attr">food</span>: <span class="string">"Pancakes"</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [DefaultNameMixin, DefaultFoodMixin],</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h4&gt;&#123;<span class="keyword">this</span>.props.name&#125;&lt;<span class="regexp">/h4&gt;</span></span><br><span class="line"><span class="regexp">                &lt;p&gt;Favorite food: &#123;this.props.food&#125;&lt;/</span>p&gt;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>这里有几件事需要引起我们的注意，当我们使用<code>mixins</code>的时候。 幸运地是，这些看起来并不是什么大问题，下面是我们在实践当中发现的一些问题：</p>
+<h3 id="设置相同的-Prop-和-State"><a href="#设置相同的-Prop-和-State" class="headerlink" title="设置相同的 Prop 和 State"></a>设置相同的 Prop 和 State</h3><p>如果你尝试在不同的地方定义相同的属性时会出现下面的异常：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uncaught Error: Invariant Violation: mergeObjectsWithNoDuplicateKeys(): </span><br><span class="line">Tried to merge two objects with the same key: name</span><br></pre></td></tr></table></figure>
-<h3 id="设置相同的方法">设置相同的方法</h3><p>在不同的<code>mixin</code>中定义相同的方法，或者<code>mixin</code>和组件中包含了相同的方法时，会抛出异常：</p>
+<h3 id="设置相同的方法"><a href="#设置相同的方法" class="headerlink" title="设置相同的方法"></a>设置相同的方法</h3><p>在不同的<code>mixin</code>中定义相同的方法，或者<code>mixin</code>和组件中包含了相同的方法时，会抛出异常：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"mixin mount method"</span>);</span><br><span class="line">        <span class="keyword">this</span>.logBlah()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// add a logBlah method here...</span></span><br><span class="line">    logBlah: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"blah"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MoreLogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"another mixin mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ... and again here.</span></span><br><span class="line">    logBlah: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"something other than blah"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>异常信息同多次定义<code>rander</code>方法时抛出的异常一样：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Uncaught Error: Invariant Violation: ReactCompositeComponentInterface: </span><br><span class="line">You are attempting to define `logBlah` on your component more than once. </span><br><span class="line">This conflict may be due to a mixin.</span><br></pre></td></tr></table></figure>
-<h2 id="多个生命周期方法的调用顺序">多个生命周期方法的调用顺序</h2><p>如果我们的组件和<code>mixin</code>中都包含了相同的生命周期方法的话会怎样呢？</p>
+<h2 id="多个生命周期方法的调用顺序"><a href="#多个生命周期方法的调用顺序" class="headerlink" title="多个生命周期方法的调用顺序"></a>多个生命周期方法的调用顺序</h2><p>如果我们的组件和<code>mixin</code>中都包含了相同的生命周期方法的话会怎样呢？</p>
 <blockquote>
 <p>我们的<code>mixin</code>方法首先会被调用，然后再是组件的中方法被调用。</p>
 </blockquote>
@@ -370,14 +533,14 @@
 <p>它们会根据<code>mixins</code>中的顺序从左到右的进行调用。</p>
 </blockquote>
 <p>实例代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MoreLogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"another mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> ComponentOne = React.createClass(&#123;</span><br><span class="line">    mixins: [MoreLogOnMountMixin, LogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component one mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">var ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [LogOnMountMixin, MoreLogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component two mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MoreLogOnMountMixin = &#123;</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"another mixin mount method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> ComponentOne = React.createClass(&#123;</span><br><span class="line">    mixins: [MoreLogOnMountMixin, LogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component one mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ComponentTwo = React.createClass(&#123;</span><br><span class="line">    mixins: [LogOnMountMixin, MoreLogOnMountMixin],</span><br><span class="line">    componentDidMount: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"component two mount method"</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
 <p>控制台将输出：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">another mixin mount method</span><br><span class="line">mixin mount method </span><br><span class="line">component one mount method</span><br><span class="line"></span><br><span class="line">mixin mount method</span><br><span class="line">another mixin mount method </span><br><span class="line">component two mount method</span><br></pre></td></tr></table></figure>
-<h2 id="总结">总结</h2><p>Mixin 使你React程序变得更为可重用，It’s a Good Thing.<br>我希望这篇文章能够对你有所帮助，如果有任何反馈，很高兴你能够在twitter上<a href="https://twitter.com/veddermatic" target="_blank" rel="external">@veddermatic</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Mixin 使你React程序变得更为可重用，It’s a Good Thing.<br>我希望这篇文章能够对你有所帮助，如果有任何反馈，很高兴你能够在twitter上<a href="https://twitter.com/veddermatic" target="_blank" rel="noopener">@veddermatic</a></p>
 <blockquote>
-<p>原文链接：<a href="http://simblestudios.com/blog/development/react-mixins-by-example.html" target="_blank" rel="external">http://simblestudios.com/blog/development/react-mixins-by-example.html</a><br>翻译水平有限，文中带有个人理解，如有不恰当的地方，请在评论中指出，非常感谢！</p>
+<p>原文链接：<a href="http://simblestudios.com/blog/development/react-mixins-by-example.html" target="_blank" rel="noopener">http://simblestudios.com/blog/development/react-mixins-by-example.html</a><br>翻译水平有限，文中带有个人理解，如有不恰当的地方，请在评论中指出，非常感谢！</p>
 </blockquote>
-
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/09/11/react-on-es6-plus/">[译]在 React.js 中使用 ES6+</a></li><li><a href="http://blog.mcbird.cn/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/">[译]如何成为一个优秀的前端工程师</a></li><li><a href="http://www.davidfnck.com/blockchain/english-terminology.html/">磨刀不误砍柴工之区块链领域专业术语中英文翻译与发音</a></li></ul></div>
           
         
       
@@ -508,12 +671,12 @@
       
         
           
-            <p>今天偶然在youtube上看到<a href="https://www.youtube.com/watch?v=QU1JAW5LRKU" target="_blank" rel="external">一段视频</a>，讲诉的是作者在他的网页中用到了<code>background-attachment: fixed;</code>来实现背景图固定效果，但是这种是实现方式导致页面在滚动时，会出现页面卡顿的现象，这很明显降低了用户的体验。 下面介绍通过<code>will-change</code>来部分规避这个问题。</p>
-<h2 id="原始版本">原始版本</h2><p>让我们先来重现一下产生问题的场景，我写了一个简单的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/zGWyYM" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/zGWyYM</a></p>
+            <p>今天偶然在youtube上看到<a href="https://www.youtube.com/watch?v=QU1JAW5LRKU" target="_blank" rel="noopener">一段视频</a>，讲诉的是作者在他的网页中用到了<code>background-attachment: fixed;</code>来实现背景图固定效果，但是这种是实现方式导致页面在滚动时，会出现页面卡顿的现象，这很明显降低了用户的体验。 下面介绍通过<code>will-change</code>来部分规避这个问题。</p>
+<h2 id="原始版本"><a href="#原始版本" class="headerlink" title="原始版本"></a>原始版本</h2><p>让我们先来重现一下产生问题的场景，我写了一个简单的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/zGWyYM" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/zGWyYM</a></p>
 <p>可以看到， 我们在<code>.first</code>块中放了一张背景图片，并且通过<code>background-attachment:fixed</code>来实现背景图固定的效果，你可以滚动页面感受一下效果，是不是很酷炫？下面是核心的样式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.first &#123;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-attachment: fixed;</span><br><span class="line">  background-size: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="external">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
-<h2 id="改进版本">改进版本</h2><p>下面，我们试试用<code>will-change</code>来做一下浏览器优化。同样，我基于前面的例子，放弃了之前的实现方式，加入了<code>will-change</code>来优化浏览器渲染效果，这是我的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/YXadXP" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/YXadXP</a></p>
+<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="noopener">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
+<h2 id="改进版本"><a href="#改进版本" class="headerlink" title="改进版本"></a>改进版本</h2><p>下面，我们试试用<code>will-change</code>来做一下浏览器优化。同样，我基于前面的例子，放弃了之前的实现方式，加入了<code>will-change</code>来优化浏览器渲染效果，这是我的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/YXadXP" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/YXadXP</a></p>
 <p>我们没有在使用<code>background-attachment: fixed;</code>来实现这个效果，取而代之的是，利用<code>:before</code>，在其中放入一张<code>position:fixed;</code>的背景图片，然后用<code>will-change: transform</code>做浏览器渲染优化。下面是核心代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.first::before &#123;</span><br><span class="line">  content: &apos; &apos;;</span><br><span class="line">  position: fixed;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-size: cover;</span><br><span class="line">  will-change: transform;</span><br><span class="line">  z-index: -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那通过这种方式进行优化，表现力究竟如何呢？我们采用同样的方式对页面进行调试，结果如下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7d002738d7c2916a878a30dae0444445.png" alt="will-chagne 优化后的效果"><br>可以看到，<strong>页面的帧率明显得到了提升！页面滚动时变得流畅了许多。</strong></p>
@@ -521,15 +684,15 @@
 <blockquote>
 <p>will-change 为web开发者提供了一种告知浏览器该元素会有哪些变化的方法，这样浏览器可以在元素属性真正发生变化之前提前做好对应的优化准备工作。 这种优化可以将一部分复杂的计算工作提前准备好，使页面的反应更为快速灵敏。</p>
 </blockquote>
-<h2 id="will-change_的兼容性">will-change 的兼容性</h2><p>然后，will-change 目前还在实验结果，<a href="http://caniuse.com/#search=will-change" target="_blank" rel="external">浏览器的支持度不尽人意</a>，IE目前没有支持该属性，Chrome 36+, Firefox 38+ 也才开始支持这一属性。</p>
-<h2 id="注意事项">注意事项</h2><p>正如<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change" target="_blank" rel="external">MDN 上面提到的那样</a>，<code>will-change</code>虽然可以提升渲染效果，但是我们需要引起注意：</p>
+<h2 id="will-change-的兼容性"><a href="#will-change-的兼容性" class="headerlink" title="will-change 的兼容性"></a>will-change 的兼容性</h2><p>然后，will-change 目前还在实验结果，<a href="http://caniuse.com/#search=will-change" target="_blank" rel="noopener">浏览器的支持度不尽人意</a>，IE目前没有支持该属性，Chrome 36+, Firefox 38+ 也才开始支持这一属性。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>正如<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change" target="_blank" rel="noopener">MDN 上面提到的那样</a>，<code>will-change</code>虽然可以提升渲染效果，但是我们需要引起注意：</p>
 <ul>
 <li><strong>不要将 will-change 应用到太多元素上</strong>：浏览器已经尽力尝试去优化一切可以优化的东西了。有一些更强力的优化，如果与 <code>will-change</code> 结合在一起的话，有可能会消耗很多机器资源，如果过度使用的话，可能导致页面响应缓慢或者消耗非常多的资源。</li>
 <li><strong>有节制地使用</strong>：通常，当元素恢复到初始状态时，浏览器会丢弃掉之前做的优化工作。但是如果直接在样式表中显式声明了 <code>will-change</code> 属性，则表示目标元素可能会经常变化，浏览器会将优化工作保存得比之前更久。所以最佳实践是当元素变化之前和之后通过脚本来切换 <code>will-change</code> 的值。</li>
 <li><strong>不要过早应用 will-change 优化</strong>：如果你的页面在性能方面没什么问题，则不要添加 <code>will-change</code> 属性来榨取一丁点的速度。 <code>will-change</code> 的设计初衷是作为最后的优化手段，用来尝试解决现有的性能问题。它不应该被用来预防性能问题。过度使用 <code>will-change</code> 会导致大量的内存占用，并会导致更复杂的渲染过程，因为浏览器会试图准备可能存在的变化过程。这会导致更严重的性能问题。</li>
 <li><strong>给它足够的工作时间</strong>：这个属性是用来让页面开发者告知浏览器哪些属性可能会变化的。然后浏览器可以选择在变化发生前提前去做一些优化工作。所以给浏览器一点时间去真正做这些优化工作是非常重要的。使用时需要尝试去找到一些方法提前一定时间获知元素可能发生的变化，然后为它加上 <code>will-change</code> 属性。</li>
 </ul>
-
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li></ul></div>
           
         
       
@@ -662,14 +825,14 @@
           
             <p>原文来自：</p>
 <blockquote>
-<p><a href="http://tympanus.net/codrops/2015/05/28/image-tilt-effect/" target="_blank" rel="external">http://tympanus.net/codrops/2015/05/28/image-tilt-effect/</a></p>
+<p><a href="http://tympanus.net/codrops/2015/05/28/image-tilt-effect/" target="_blank" rel="noopener">http://tympanus.net/codrops/2015/05/28/image-tilt-effect/</a></p>
 </blockquote>
-<p>所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：<br><a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
-<h2 id="文档结构">文档结构</h2><p>对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非常简单。</p>
+<p>所谓的倾斜效果，我也不知如何用语言描述，那就直接看Demo啦，下面我们会对这个效果的实现原理逐步分析：<br><a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+<h2 id="文档结构"><a href="#文档结构" class="headerlink" title="文档结构"></a>文档结构</h2><p>对一个图片添加该效果，首先，我们需要一个具有宽高的容器。DOM 结构非常简单。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;img class=&quot;tilt-effect&quot; src=&quot;http://placehold.it/500x300&quot; alt=&quot;&quot; /&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <p>上面这段结构经过脚本处理之后，会被替换成下面的结构：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;tilt&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__back&quot; style=&quot;background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__front&quot; style=&quot;opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;tilt__front&quot; style=&quot;opacity: 0.7; -webkit-transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); transform: perspective(1000px) translate3d(0px, 0px, 0px) rotate3d(1, 1, 1, 0deg); background-image: url(http://placehold.it/500x300);&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="脚本分析">脚本分析</h2><p>我们利用了<a href="https://gist.github.com/CodingMonkeyzh/7c43c9a25f0d132b83d6" target="_blank" rel="external">filtfx.js</a>这个插件对上面的图片进行处理， 来实现倾斜效果。我在原来的代码中加入了一些注释，来帮助我们理解。下面我们对该插件的核心代码进行分析。</p>
+<h2 id="脚本分析"><a href="#脚本分析" class="headerlink" title="脚本分析"></a>脚本分析</h2><p>我们利用了<a href="https://gist.github.com/CodingMonkeyzh/7c43c9a25f0d132b83d6" target="_blank" rel="noopener">filtfx.js</a>这个插件对上面的图片进行处理， 来实现倾斜效果。我在原来的代码中加入了一些注释，来帮助我们理解。下面我们对该插件的核心代码进行分析。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function TiltFx(el, options) &#123;</span><br><span class="line">  this.el = el;</span><br><span class="line">  this.options = extend(&#123;&#125;, this.options);</span><br><span class="line">  extend(this.options, options);</span><br><span class="line">  this._init();</span><br><span class="line">  this._initEvents();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这是构造函数，如果我们的文档中，加入了上面的插件，那么插件会遍历文档中具有<code>tilt-effet</code>的<code>img</code>元素，来调用构造函数<code>TiltFx()</code>：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function init() &#123;</span><br><span class="line">  // 遍历所有拥有‘title-effect’类的img元素</span><br><span class="line">  [].slice.call(document.querySelectorAll(&apos;img.tilt-effect&apos;)).forEach(function(img) &#123;</span><br><span class="line">    new TiltFx(img, JSON.parse(img.getAttribute(&apos;data-tilt-options&apos;)));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -682,8 +845,8 @@
 <p>我们可以看到，监听<code>mousemove</code>的事件处理函数中的计算比较复杂，关键的部分就是在这里：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var el = self.imgElems[i],</span><br><span class="line">  rotX = moveOpts.rotateX ? 2 * ((i + 1) * moveOpts.rotateX / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.rotateX / self.options.extraImgs) : 0,</span><br><span class="line">  rotY = moveOpts.rotateY ? 2 * ((i + 1) * moveOpts.rotateY / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.rotateY / self.options.extraImgs) : 0,</span><br><span class="line">  rotZ = moveOpts.rotateZ ? 2 * ((i + 1) * moveOpts.rotateZ / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.rotateZ / self.options.extraImgs) : 0,</span><br><span class="line">  transX = moveOpts.translateX ? 2 * ((i + 1) * moveOpts.translateX / self.options.extraImgs) / self.view.width * relmousepos.x - ((i + 1) * moveOpts.translateX / self.options.extraImgs) : 0,</span><br><span class="line">  transY = moveOpts.translateY ? 2 * ((i + 1) * moveOpts.translateY / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.translateY / self.options.extraImgs) : 0,</span><br><span class="line">  transZ = moveOpts.translateZ ? 2 * ((i + 1) * moveOpts.translateZ / self.options.extraImgs) / self.view.height * relmousepos.y - ((i + 1) * moveOpts.translateZ / self.options.extraImgs) : 0;</span><br><span class="line"></span><br><span class="line">el.style.WebkitTransform = &apos;perspective(&apos; + moveOpts.perspective + &apos;px) translate3d(&apos; + transX + &apos;px,&apos; + transY + &apos;px,&apos; + transZ + &apos;px) rotate3d(1,0,0,&apos; + rotX + &apos;deg) rotate3d(0,1,0,&apos; + rotY + &apos;deg) rotate3d(0,0,1,&apos; + rotZ + &apos;deg)&apos;;</span><br><span class="line">el.style.transform = &apos;perspective(&apos; + moveOpts.perspective + &apos;px) translate3d(&apos; + transX + &apos;px,&apos; + transY + &apos;px,&apos; + transZ + &apos;px) rotate3d(1,0,0,&apos; + rotX + &apos;deg) rotate3d(0,1,0,&apos; + rotY + &apos;deg) rotate3d(0,0,1,&apos; + rotZ + &apos;deg)&apos;;</span><br></pre></td></tr></table></figure>
 <p>这里我们根据鼠标的位置，计算出了各个图层对应的<strong>偏移量和旋转角度</strong>，然后对它们进行变换即可。<br>最后<code>mouseleave</code>之后，我们再把个个图层恢复到初始位置就行了。</p>
-<p>Demo：<a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
-
+<p>Demo：<a href="http://codepen.io/CodingMonkeyzh/pen/jPYNyr" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/jPYNyr</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/07/Disable-dragging-an-image-form-html/">阻止HTML中的图片拖动</a></li></ul></div>
           
         
       
@@ -837,179 +1000,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/01/code-style/" itemprop="url">
-                  javascript 代码规范
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-01T17:10:21+08:00" content="2015-06-01">
-              2015-06-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/规范/" itemprop="url" rel="index">
-                    <span itemprop="name">规范</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/01/code-style/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/01/code-style/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>以下编码风格来自于《编写可维护的 javascript》一书中，加上个人总结，自代表个人风格，仅供参考。</p>
-<h2 id="缩进">缩进</h2><p>缩进可以采用<strong>2格缩进</strong>或者<strong>4格缩进</strong>，具体使用哪个看团队的代码规范和自己的爱好。</p>
-<h2 id="行尾分号">行尾分号</h2><p>行尾一律加上<code>;</code>分号，除非该行需要折行。</p>
-<h2 id="行的长度">行的长度</h2><p>单行不应该超过80个字符，如果超过，应该折行编写。</p>
-<h2 id="折行">折行</h2><p>当一行长度达到单行最大字符限制时，手动将一行拆成两行。遵守：</p>
-<ol>
-<li>在运算符后换行</li>
-<li>下一行增加两层缩进</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">callAFunction(argument1, argument2, argument3, argument4, argument5, argument6,</span><br><span class="line">        argument7);</span><br></pre></td></tr></table></figure>
-<h2 id="空行">空行</h2><p>一段代码的语义和另一段代码不相关，这时就应该使用空格将它们分隔开来。</p>
-<h2 id="命名">命名</h2><ul>
-<li>常量<br>常量使用大写字母和下划线命名。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var MAX_COUNT = 10;</span><br><span class="line">var URL = &apos;http://www.google.com/&apos;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var myName = &apos;Tom&apos;;</span><br><span class="line"></span><br><span class="line">function getName() &#123;</span><br><span class="line">    return myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>动词常见约定：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/1392876bfb60f3ba7f8b13c27c221c57.png" alt="动词常见约定"></p>
-<ul>
-<li>构造函数<br>构造函数首字母应该大写。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Person(name) &#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var me = Person(&apos;Tom&apos;);</span><br></pre></td></tr></table></figure>
-<h2 id="基本类型的表示">基本类型的表示</h2><ul>
-<li>字符串<br>普通字符串采用<strong><code>&#39;</code>单引号</strong>包裹，json 对象中的字符串采用<strong>双引号</strong>包裹。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var name = &apos;Tom&apos;;</span><br><span class="line"></span><br><span class="line">var me = &#123;</span><br><span class="line">    name: &quot;Tom&quot;,</span><br><span class="line">    age: 23</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数字<br>书写完整，不要省去整数部分或小数部分，<strong>不要使用八进制写法</strong>。</li>
-<li>null<br>不要使用<code>null</code>来检查是否传入了某个参数；不要用<code>null</code>来检查一个未初始化的变量。</li>
-<li>undefined<br>尽量避免在代码中使用<code>undefined</code>，如果要判断一个变量是否存在可以这样：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(name === null || typeof(name) === &apos;undefined&apos;) &#123;</span><br><span class="line">    // ..</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对象<br>采用对象字面量的方式定义对象：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var me = &#123;</span><br><span class="line">    name: &quot;Tom&quot;,</span><br><span class="line">    age: 23</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组<br>采用数组字面量的方式定义数组：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var colors = [&apos;red&apos;, &apos;green&apos;, &apos;blue&apos;];</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1055,7 +1045,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1072,7 +1062,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1138,7 +1128,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -84,21 +84,20 @@
 
 
 
-<meta name="description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。
-如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
+<meta name="description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。 如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
+<meta name="keywords" content="css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简单介绍 CSS Variables">
 <meta property="og:url" content="http://blog.mcbird.cn/2016/03/09/css-variables/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。
-如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
+<meta property="og:description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。 如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png">
 <meta property="og:updated_time" content="2016-03-09T14:12:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单介绍 CSS Variables">
-<meta name="twitter:description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。
-如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
+<meta name="twitter:description" content="如果我们用过动态样式语言（像 Less、 Sass ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 CSS Variables 也引入了自己的变量，本文就对 CSS Variables 进行简单的介绍。 如何定义和使用 CSS Variables按照 CSS Variables 规范，我们通过 -">
 <meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png">
 
 
@@ -329,20 +328,20 @@
 
       
         <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
-<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="external">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="external">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
-<h2 id="如何定义和使用_CSS_Variables">如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="external">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="noopener">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="noopener">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
+<h2 id="如何定义和使用-CSS-Variables"><a href="#如何定义和使用-CSS-Variables" class="headerlink" title="如何定义和使用 CSS Variables"></a>如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="noopener">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><em>CSS变量同样是可嵌套使用的，<code>:root</code>用来定义全局变量</em></p>
-<h2 id="浏览器兼容性">浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
-<h2 id="还有一些你该知道的">还有一些你该知道的</h2><ul>
+<h2 id="浏览器兼容性"><a href="#浏览器兼容性" class="headerlink" title="浏览器兼容性"></a>浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
+<h2 id="还有一些你该知道的"><a href="#还有一些你该知道的" class="headerlink" title="还有一些你该知道的"></a>还有一些你该知道的</h2><ul>
 <li><code>var()</code> 还可以接受第二个参数（ <code>color: var(--header-color, blue);</code> ），表示备选参数，第一个参数获取失败的时候，它就生效了。</li>
 <li><p>变量也是可用嵌套的：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--base-color</span>: <span class="selector-id">#f93ce9</span>;</span><br><span class="line"><span class="selector-tag">--background-gradient</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">to</span> <span class="selector-tag">top</span>, <span class="selector-tag">var</span>(<span class="selector-tag">--base-color</span>), <span class="selector-id">#444</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>变量还可以更另一个CSS特性——<code>calc()</code>方法一起使用：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--container-width: 1000px;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--container-width</span>: 1000<span class="selector-tag">px</span>;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-
+<div><h1>推荐阅读</h1><ul><li><a href="https://blog.naaln.com/2014/08/how-improve-performance-css-selectors/">如何提升 CSS 选择器性能</a></li></ul></div>
       
     </div>
 
@@ -454,7 +453,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -471,7 +470,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -529,7 +528,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何定义和使用_CSS_Variables"><span class="nav-number">1.</span> <span class="nav-text">如何定义和使用 CSS Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器兼容性"><span class="nav-number">2.</span> <span class="nav-text">浏览器兼容性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还有一些你该知道的"><span class="nav-number">3.</span> <span class="nav-text">还有一些你该知道的</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何定义和使用-CSS-Variables"><span class="nav-number">1.</span> <span class="nav-text">如何定义和使用 CSS Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器兼容性"><span class="nav-number">2.</span> <span class="nav-text">浏览器兼容性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还有一些你该知道的"><span class="nav-number">3.</span> <span class="nav-text">还有一些你该知道的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
           </div>
         </section>
@@ -548,7 +547,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

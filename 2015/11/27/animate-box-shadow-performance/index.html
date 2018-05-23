@@ -84,27 +84,20 @@
 
 
 
-<meta name="description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/
-
-如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。
-但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
+<meta name="description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/  如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。 但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
+<meta name="keywords" content="animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「译」高效的 “box-shadow” 动画">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/11/27/animate-box-shadow-performance/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/
-
-如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。
-但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
+<meta property="og:description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/  如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。 但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://tobiasahlin.com/static/animate-box-shadow/demo.gif">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/ca0ee6b35743513538f3d5f53b795d6a.png">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「译」高效的 “box-shadow” 动画">
-<meta name="twitter:description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/
-
-如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。
-但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
+<meta name="twitter:description" content="原文地址：http://tobiasahlin.com/blog/how-to-animate-box-shadow/  如何才能防止在给 box-shadow 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？答案就是：不可能。给变化的 box-shadow 制作动画会大大缩减页面渲染的性能。 但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以">
 <meta name="twitter:image" content="http://tobiasahlin.com/static/animate-box-shadow/demo.gif">
 
 
@@ -335,17 +328,17 @@
 
       
         <blockquote>
-<p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
+<p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="noopener">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
 </blockquote>
 <p>如何才能防止在给 <code>box-shadow</code> 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？<br>答案就是：不可能。给变化的 <code>box-shadow</code> 制作动画会大大缩减页面渲染的性能。</p>
 <p>但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以保证你的动画能够保证在 <code>60 FPS</code> 左右：通过改变子元素的 <code>opacity</code> 透明度。</p>
-<h2 id="Demo">Demo</h2><p><img src="http://tobiasahlin.com/static/animate-box-shadow/demo.gif" alt="box-shadow 动画对比"></p>
-<p><a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="external">查看这个Demo</a>，比较一下两种实现方式的不同。左边的动画是在 <code>box-shadow</code> 的 <code>:hover</code> 状态时执行 <code>box-shadow</code> 动画， 而右边的实现方式中，我们通过 <code>:after</code> 添加了一个伪元素，并给它添加了 <code>box-shadow</code>， 然后通过执行 <code>opacity</code> 动画来是实现相同的效果。</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p><img src="http://tobiasahlin.com/static/animate-box-shadow/demo.gif" alt="box-shadow 动画对比"></p>
+<p><a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="noopener">查看这个Demo</a>，比较一下两种实现方式的不同。左边的动画是在 <code>box-shadow</code> 的 <code>:hover</code> 状态时执行 <code>box-shadow</code> 动画， 而右边的实现方式中，我们通过 <code>:after</code> 添加了一个伪元素，并给它添加了 <code>box-shadow</code>， 然后通过执行 <code>opacity</code> 动画来是实现相同的效果。</p>
 <p>如果你打开你的调试工具，可以看到下面类似的结果（绿色部分表示绘制；越少越好）：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/ca0ee6b35743513538f3d5f53b795d6a.png" alt="timeline 对比"></p>
 <p>很明显如果我们直接执行 <code>box-shadow</code> 的动画会导致更多的重绘。</p>
-<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="external">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">  <span class="attribute">transition</span>: box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="noopener">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">  <span class="attribute">transition</span>: box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在上面的例子中，高效的实现方式有两层：一层负责呈现盒子，一层负责盒子阴影的过度动画，只对阴影的 <code>opcity</code> 执行动画。</p>
-
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/27/css3-animate-or-js-animate/">CSS3 Animate or JS Animate ?</a></li></ul></div>
       
     </div>
 
@@ -457,7 +450,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -474,7 +467,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -532,7 +525,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.</span> <span class="nav-text">Demo</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.</span> <span class="nav-text">Demo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
           </div>
         </section>
@@ -551,7 +544,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

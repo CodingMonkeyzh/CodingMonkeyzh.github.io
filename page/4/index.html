@@ -90,6 +90,7 @@
 <meta property="og:url" content="http://blog.mcbird.cn/page/4/index.html">
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="分享自己的学习经历，实用技巧">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MockingBird">
 <meta name="twitter:description" content="分享自己的学习经历，实用技巧">
@@ -147,7 +148,7 @@
   
 
   <div class="container one-collumn sidebar-position-left 
-  
+   page-home 
  ">
     <div class="headband"></div>
 
@@ -258,6 +259,181 @@
             
               
                 
+                <a class="post-title-link" href="/2015/06/01/code-style/" itemprop="url">
+                  javascript 代码规范
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-01T17:10:21+08:00" content="2015-06-01">
+              2015-06-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/规范/" itemprop="url" rel="index">
+                    <span itemprop="name">规范</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/01/code-style/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/01/code-style/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以下编码风格来自于《编写可维护的 javascript》一书中，加上个人总结，自代表个人风格，仅供参考。</p>
+<p>##缩进<br>缩进可以采用<strong>2格缩进</strong>或者<strong>4格缩进</strong>，具体使用哪个看团队的代码规范和自己的爱好。</p>
+<p>##行尾分号<br>行尾一律加上<code>;</code>分号，除非该行需要折行。</p>
+<p>##行的长度<br>单行不应该超过80个字符，如果超过，应该折行编写。</p>
+<p>##折行<br>当一行长度达到单行最大字符限制时，手动将一行拆成两行。遵守：</p>
+<ol>
+<li>在运算符后换行</li>
+<li>下一行增加两层缩进</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">callAFunction(argument1, argument2, argument3, argument4, argument5, argument6,</span><br><span class="line">        argument7);</span><br></pre></td></tr></table></figure>
+<p>##空行<br>一段代码的语义和另一段代码不相关，这时就应该使用空格将它们分隔开来。</p>
+<p>##命名</p>
+<ul>
+<li>常量<br>常量使用大写字母和下划线命名。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var MAX_COUNT = 10;</span><br><span class="line">var URL = &apos;http://www.google.com/&apos;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>普通变量和函数<br>遵守驼峰大小写命名法。变量以名词作为前缀，函数以动词作为前缀。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var myName = &apos;Tom&apos;;</span><br><span class="line"></span><br><span class="line">function getName() &#123;</span><br><span class="line">    return myName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>动词常见约定：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/1392876bfb60f3ba7f8b13c27c221c57.png" alt="动词常见约定"></p>
+<ul>
+<li>构造函数<br>构造函数首字母应该大写。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Person(name) &#123;</span><br><span class="line">    this.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var me = Person(&apos;Tom&apos;);</span><br></pre></td></tr></table></figure>
+<p>##基本类型的表示</p>
+<ul>
+<li>字符串<br>普通字符串采用<strong><code>&#39;</code>单引号</strong>包裹，json 对象中的字符串采用<strong>双引号</strong>包裹。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var name = &apos;Tom&apos;;</span><br><span class="line"></span><br><span class="line">var me = &#123;</span><br><span class="line">    name: &quot;Tom&quot;,</span><br><span class="line">    age: 23</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数字<br>书写完整，不要省去整数部分或小数部分，<strong>不要使用八进制写法</strong>。</li>
+<li>null<br>不要使用<code>null</code>来检查是否传入了某个参数；不要用<code>null</code>来检查一个未初始化的变量。</li>
+<li>undefined<br>尽量避免在代码中使用<code>undefined</code>，如果要判断一个变量是否存在可以这样：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(name === null || typeof(name) === &apos;undefined&apos;) &#123;</span><br><span class="line">    // ..</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对象<br>采用对象字面量的方式定义对象：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var me = &#123;</span><br><span class="line">    name: &quot;Tom&quot;,</span><br><span class="line">    age: 23</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数组<br>采用数组字面量的方式定义数组：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var colors = [&apos;red&apos;, &apos;green&apos;, &apos;blue&apos;];</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/27/css3-animate-or-js-animate/" itemprop="url">
                   CSS3 Animate or JS Animate ?
                 </a>
@@ -330,26 +506,26 @@
           
             <p>既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。</p>
 <p>首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 <code>Rendering（回流）</code>，也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试。</p>
-<h2 id="测试重绘">测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
+<h2 id="测试重绘"><a href="#测试重绘" class="headerlink" title="测试重绘"></a>测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
 <ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="noopener">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="noopener">jqeury 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png" alt="使用 jquery 动画效果图"></p>
 <p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
-<h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
+<h2 id="测试回流-重绘"><a href="#测试回流-重绘" class="headerlink" title="测试回流+重绘"></a>测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
 <ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="noopener">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="noopener">jquery 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png" alt="使用CSS3动画效果图"></p>
 <p>可以看到，两者没有太打的区别。</p>
-<h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
-<h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
-<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
-
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
+<h2 id="CSS3-动画库"><a href="#CSS3-动画库" class="headerlink" title="CSS3 动画库"></a>CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="noopener">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
+<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/11/27/animate-box-shadow-performance/">「译」高效的 “box-shadow” 动画</a></li></ul></div>
           
         
       
@@ -469,7 +645,7 @@
         
           
             <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
-<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
+<h2 id="Transition-transform-和-animation-介绍"><a href="#Transition-transform-和-animation-介绍" class="headerlink" title="Transition, transform 和 animation 介绍"></a>Transition, transform 和 animation 介绍</h2><h3 id="transition"><a href="#transition" class="headerlink" title="transition"></a>transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition ： transition-property transition-duration transition-timing-function transition-delay [, ...]</span><br></pre></td></tr></table></figure>
 <ol>
 <li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
@@ -477,16 +653,16 @@
 <li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
 <li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
 </ol>
-<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
-<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
+<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
+<h3 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform: rotate | scale | skew | translate |matrix;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
-<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
-<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
-<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
+<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
+<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
+<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
+<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
 </ul>
-<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
+<h3 id="animation"><a href="#animation" class="headerlink" title="animation"></a>animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  from &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  to &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
 <ul>
@@ -495,9 +671,9 @@
 <li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
 <li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
 </ul>
-<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
-<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
-
+<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
+<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li></ul></div>
           
         
       
@@ -617,7 +793,7 @@
         
           
             <p>一般我们通过<code>box-shadow</code>来设置盒阴影，但是有些属性我们一般没有用到，这篇文章将对<code>box-shadow</code>属性进行逐个分析。</p>
-<h2 id="语法">语法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E &#123;box-shadow:inset x-offset y-offset blur-radius spread-radius color&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;box-shadow:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">E &#123;box-shadow:inset x-offset y-offset blur-radius spread-radius color&#125;</span><br><span class="line"></span><br><span class="line">即：</span><br><span class="line"></span><br><span class="line">对象选择器 &#123;box-shadow:投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>inset</code> 投影方式<br>此参数是一个可选值，如果不设值，其默认的投影方式是外阴影；如果取其唯一值“<code>inset</code>”, 其投影就是<strong>内阴影</strong>；</li>
 <li><code>x-offset</code><br>水平方向的偏移量；</li>
@@ -627,8 +803,8 @@
 <li><code>color</code>阴影颜色<br>可选，如果不设定值，浏览器将会采用其默认色，默认色一般是黑色。</li>
 </ul>
 <p>一般我们很少用到<code>inset</code>和<code>spead-radius</code>这两个属性，如果运用好这两个属性可以制作出非常酷炫的效果。</p>
-<h2 id="DEMO">DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
-
+<h2 id="DEMO"><a href="#DEMO" class="headerlink" title="DEMO"></a>DEMO</h2><p><a href="http://codepen.io/CodingMonkeyzh/pen/rVWGvm" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/rVWGvm</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li><li><a href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a></li></ul></div>
           
         
       
@@ -748,148 +924,12 @@
         
           
             <p>通过<em>Media Query 媒体查询</em>可以针对符合相应条件的媒体设置特定的样式。</p>
-<h2 id="引入方式">引入方式</h2><p>引入媒体查询的方式有两种。</p>
-<h3 id="link_方式引入">link 方式引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-width: 600px)&quot; href=&quot;small.css&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="css_中引入">css 中引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media screen and (max-width: 600px) &#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常见的_Media_Query">常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
-<p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="external">兼容性参考</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/25/css3-drop-box/" itemprop="url">
-                  css3 实现 drop-box
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-25T14:10:34+08:00" content="2015-05-25">
-              2015-05-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/25/css3-drop-box/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/css3-drop-box/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png" alt="drop shadow 阴影"></p>
-<p>下面记录一下是实现步骤。</p>
-<h2 id="DOM_结构">DOM 结构</h2><p>我们仅仅需要一个<code>div</code>作为主体，阴影可借助伪元素<code>:before</code>和<code>:after</code>来实现。所以我们的 DOM 结构非常简单。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;drop-shadow&quot;&gt;drop shadow effect&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="添加阴影">添加阴影</h2><p>给两个伪元素添加阴影，暂时先搞定左边，右边的阴影稍后再处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>现在，我们看到的是这个样子：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/f3130bff3852dfb10af9fba8e1416b7d.png" alt="添加左边的阴影"></p>
-<h2 id="调整阴影">调整阴影</h2><p>下面我们再通过<code>transform</code>来旋转一下阴影的角度，这样看起来更有立体感。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line">   transform: rotate(-5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样我们就完成了一边的制作了：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/98f538f3a798bf60aee45c8623e3c1ad.png" alt="使用transform来是阴影倾斜"></p>
-<h2 id="调整阴影-1">调整阴影</h2><p>接下来，我们只需要把其中一个阴影挪到右边即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:after &#123;</span><br><span class="line">   right: 10px;</span><br><span class="line">   left: auto;</span><br><span class="line">   transform: rotate(5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样，左边的阴影就<em>翻转</em>到了右边，大功告成：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7850a4888ee6d6d522f3a9de9e7b6ce3.png" alt="最终的效果图"></p>
-
+<h2 id="引入方式"><a href="#引入方式" class="headerlink" title="引入方式"></a>引入方式</h2><p>引入媒体查询的方式有两种。</p>
+<h3 id="link-方式引入"><a href="#link-方式引入" class="headerlink" title="link 方式引入"></a>link 方式引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-width: 600px)&quot; href=&quot;small.css&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="css-中引入"><a href="#css-中引入" class="headerlink" title="css 中引入"></a>css 中引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media screen and (max-width: 600px) &#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常见的-Media-Query"><a href="#常见的-Media-Query" class="headerlink" title="常见的 Media Query"></a>常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
+<p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="noopener">兼容性参考</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a></li></ul></div>
           
         
       
@@ -962,7 +1002,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -979,7 +1019,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1045,7 +1085,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

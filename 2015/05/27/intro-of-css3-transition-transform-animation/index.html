@@ -84,22 +84,18 @@
 
 
 
-<meta name="description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
+<meta name="description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。 Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下： 1trans">
+<meta name="keywords" content="css3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS3 Transition, transform 和 animation 介绍">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
+<meta property="og:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。 Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下： 1trans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS3 Transition, transform 和 animation 介绍">
-<meta name="twitter:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。
-Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：
-1trans">
+<meta name="twitter:description" content="CSS3 提供了transition 过渡、transform 变换和animation 动画来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。 Transition, transform 和 animation 介绍transitiontransition允许css的属性值在一定的时间区间内平滑地过渡，语法如下： 1trans">
 
 
 
@@ -329,7 +325,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
 
       
         <p>CSS3 提供了<code>transition 过渡</code>、<code>transform 变换</code>和<code>animation 动画</code>来实现页面中的一些样式转化，这篇文章会对这几个属性做简单的介绍，然后比较一下 CSS3 动画和 JS 动画哪个性能更好。</p>
-<h2 id="Transition,_transform_和_animation_介绍">Transition, transform 和 animation 介绍</h2><h3 id="transition">transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
+<h2 id="Transition-transform-和-animation-介绍"><a href="#Transition-transform-和-animation-介绍" class="headerlink" title="Transition, transform 和 animation 介绍"></a>Transition, transform 和 animation 介绍</h2><h3 id="transition"><a href="#transition" class="headerlink" title="transition"></a>transition</h3><p>transition允许css的属性值在一定的时间区间内平滑地过渡，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition ： transition-property transition-duration transition-timing-function transition-delay [, ...]</span><br></pre></td></tr></table></figure>
 <ol>
 <li>transition-property<br>用来指定执行transition效果的属性，可以为 <code>none</code>,<code>all</code>或者特定的属性。</li>
@@ -337,16 +333,16 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
 <li>transition-timing-function<br>变换速率效果，可选值为<code>ease|linear|ease-in|ease-out|ease-in-out|cubic-bezier（自定义时间曲线）</code>。</li>
 <li>transition-delay<br>用来指定动画开始执行的时间，取值同<code>transition-duration</code>，但是可以为负数。</li>
 </ol>
-<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
-<h3 id="transform">transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
+<p>DEMO:<a href="http://codepen.io/CodingMonkeyzh/pen/ZGBRVe" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/ZGBRVe</a></p>
+<h3 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h3><p>transform 分为2D 和 3D，这里暂时只介绍比较常用的2D transform，其主要包含以下几种变换：<strong>旋转rotate、扭曲skew、缩放scale和移动translate以及矩阵变形matrix</strong>，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transform: rotate | scale | skew | translate |matrix;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
-<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
-<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
-<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
+<li>rotate 旋转<br>rotate 的单位是<code>deg 度</code>，正数表示顺时针旋转，负数表示逆时针旋转。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/XbNYOa" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/XbNYOa</a></li>
+<li>scale 缩放<br>scale 的取值范围是<code>0~n</code>，小于<code>1</code>时表示缩小，反之表示放大。例如<code>scale(0.5, 2)</code>表示水平方向缩小1倍，垂直方向放大1倍， 另外，也可以通过<code>scaleX</code>或者<code>scaleY</code>对一个方向进行设置。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/doOKrg" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/doOKrg</a></li>
+<li>skew 扭曲<br>skew 的单位跟<code>rotate</code>一样都是<code>deg 度</code>。例如 <code>skew(30deg, 10deg)</code>表示水平方向倾斜30度，垂直方向倾斜10度。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/KpNeYg" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/KpNeYg</a></li>
+<li>translate 偏移<br>偏移同样包括水平偏移和垂直偏移。<code>translate(x,y)</code>水平方向和垂直方向同时移动（也就是X轴和Y轴同时移动）；<code>translateX(x)</code>仅水平方向移动（X轴移动）；<code>translateY(Y)</code>仅垂直方向移动（Y轴移动）。<br>DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/waoXbB" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/waoXbB</a></li>
 </ul>
-<h3 id="animation">animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
+<h3 id="animation"><a href="#animation" class="headerlink" title="animation"></a>animation</h3><p>CSS3 中的 animation 是通过一个叫<code>Keyframes 关键帧</code>的玩意来控制的，他的命名是由”@keyframes”开头，后面紧接着是这个“动画的名称”加上一对花括号“{}”，括号中就是一些不同时间段样式规则，有点像我们css的样式写法一样。对于一个”@keyframes”中的样式规则是由多个百分比构成的，如“0%”到”100%”之间，语法如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  from &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  to &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">或者全部写成百分比的形式： </span><br><span class="line">@keyframes IDENT &#123;</span><br><span class="line">  0% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  Percentage &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">  100% &#123;</span><br><span class="line">    Properties: Properties value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>animation和transition一样有自己相对应的属性，那么在animation主要有以下几种：animation-name;animation-duration;animation-timing-function;animation-delay;animation-iteration-count;animation-direction;animation-play-state。下面对其中的一些属性进行解释：</p>
 <ul>
@@ -355,9 +351,9 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
 <li>animation-direction 动画播放的方向<br>其只有两个值，默认值为<code>normal</code>，如果设置为normal时，动画的每次循环都是向前播放；另一个值是<code>alternate</code>，他的作用是，动画播放在第偶数次向前播放，第奇数次向反方向播放。</li>
 <li>animation-play-state 播放状态<br>其主要有两个值，running和paused，其中running为默认值。可以通过paused将正在播放的动画停下了，也可以通过running将暂停的动画重新播放。这个属性不常用。</li>
 </ul>
-<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
-<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
-
+<p>DEMO 1: <a href="http://codepen.io/CodingMonkeyzh/pen/mJOKZY" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/mJOKZY</a></p>
+<p>DEMO 2: <a href="http://codepen.io/CodingMonkeyzh/pen/EjNpaE" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/EjNpaE</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li></ul></div>
       
     </div>
 
@@ -469,7 +465,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -486,7 +482,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -544,7 +540,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transition,_transform_和_animation_介绍"><span class="nav-number">1.</span> <span class="nav-text">Transition, transform 和 animation 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transition"><span class="nav-number">1.1.</span> <span class="nav-text">transition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transform"><span class="nav-number">1.2.</span> <span class="nav-text">transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#animation"><span class="nav-number">1.3.</span> <span class="nav-text">animation</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transition-transform-和-animation-介绍"><span class="nav-number">1.</span> <span class="nav-text">Transition, transform 和 animation 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transition"><span class="nav-number">1.1.</span> <span class="nav-text">transition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transform"><span class="nav-number">1.2.</span> <span class="nav-text">transform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#animation"><span class="nav-number">1.3.</span> <span class="nav-text">animation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
           </div>
         </section>
@@ -563,7 +559,7 @@ Transition, transform 和 animation 介绍transitiontransition允许css的属性
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

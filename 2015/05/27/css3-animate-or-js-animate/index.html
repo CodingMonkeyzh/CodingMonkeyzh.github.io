@@ -84,21 +84,20 @@
 
 
 
-<meta name="description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。
-首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
+<meta name="description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。 首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
+<meta name="keywords" content="animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS3 Animate or JS Animate ?">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/05/27/css3-animate-or-js-animate/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。
-首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
+<meta property="og:description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。 首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS3 Animate or JS Animate ?">
-<meta name="twitter:description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。
-首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
+<meta name="twitter:description" content="既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。 首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 Rendering（回流），也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试">
 <meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png">
 
 
@@ -330,26 +329,26 @@
       
         <p>既然 CSS3 和 jquery 都可以实现动画， 那么到底哪中方式的执行效率更高呢，我们简单的来比较一下吧。</p>
 <p>首先考虑一下，改变 DOM 样式导致浏览器重绘有两种方式，一种是单纯的重绘，页面布局没有受到影响（如改变盒子的背景色，修改字体颜色，修改透明度…）；另外一种是在重绘之前会触发 <code>Rendering（回流）</code>，也就是页面布局受到了影响，需要重新布局，在重绘页面。下面我们分别对这两种情况进行测试。</p>
-<h2 id="测试重绘">测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
+<h2 id="测试重绘"><a href="#测试重绘" class="headerlink" title="测试重绘"></a>测试重绘</h2><p>写了两个 DEMO，都是改变 div 的背景色：</p>
 <ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="external">jqeury 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/BNQPzo" target="_blank" rel="noopener">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/eNBjBy" target="_blank" rel="noopener">jqeury 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b48812113b4776fafe80d9427113f43e.png" alt="使用 jquery 动画效果图"></p>
 <p>由于 jquery 中，脚本运行占据了一定的CPU 时间，而 css3 几乎全部开销在页面重绘上。 这样看来 css3 具有更好的性能。</p>
-<h2 id="测试回流+重绘">测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
+<h2 id="测试回流-重绘"><a href="#测试回流-重绘" class="headerlink" title="测试回流+重绘"></a>测试回流+重绘</h2><p>接下来这两个 DEMO 效果是移动 DIV 的位置，这会导致浏览器触发 <code>Rendering（回流）</code>，然后再进行重绘：</p>
 <ul>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="external">CSS3 实现</a></li>
-<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="external">jquery 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/WvoKKO?" target="_blank" rel="noopener">CSS3 实现</a></li>
+<li><a href="http://s.codepen.io/CodingMonkeyzh/debug/KpNBBy?" target="_blank" rel="noopener">jquery 实现</a></li>
 </ul>
 <p>测试结果如下（CSS3 左， jquery 右）：</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/b6342491f6bd3709006a739c07246f38.png" alt="使用CSS3动画效果图"></p>
 <p>可以看到，两者没有太打的区别。</p>
-<h2 id="结论">结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
-<h2 id="CSS3_动画库">CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
-<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="external">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
-
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过上面两个简单的测试，可以得出一个结论，CSS3 同 jquery 在处理元素<strong>几何属性发生变化</strong>的动画时，<strong>表现相当</strong>；但是在<strong>处理元素特性变换时 CSS3 的性能要好</strong>。</p>
+<h2 id="CSS3-动画库"><a href="#CSS3-动画库" class="headerlink" title="CSS3 动画库"></a>CSS3 动画库</h2><p>可以通过<a href="http://daneden.github.io/animate.css/" target="_blank" rel="noopener">Animate.css 动画库</a>获取各种动画特效，并且可以自定义需要的动画效果列表。用 CSS3 动画来代替 jquery UI 可以大大的提升网页性能，<strong>如果你不打算考虑IE9-， 呵呵。</strong></p>
+<p>动画库测试 DEMO：<a href="http://codepen.io/CodingMonkeyzh/pen/gpLdPW" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/gpLdPW</a></p>
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/11/27/animate-box-shadow-performance/">「译」高效的 “box-shadow” 动画</a></li></ul></div>
       
     </div>
 
@@ -461,7 +460,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -478,7 +477,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -536,7 +535,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试重绘"><span class="nav-number">1.</span> <span class="nav-text">测试重绘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试回流+重绘"><span class="nav-number">2.</span> <span class="nav-text">测试回流+重绘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS3_动画库"><span class="nav-number">4.</span> <span class="nav-text">CSS3 动画库</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试重绘"><span class="nav-number">1.</span> <span class="nav-text">测试重绘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试回流-重绘"><span class="nav-number">2.</span> <span class="nav-text">测试回流+重绘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS3-动画库"><span class="nav-number">4.</span> <span class="nav-text">CSS3 动画库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
             
           </div>
         </section>
@@ -555,7 +554,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

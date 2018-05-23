@@ -84,28 +84,18 @@
 
 
 
-<meta name="description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
-函数节流（throttle）是什么
-函数节流（throttle）用来限制单位时间的函数被调用的最大次数
-
-比方说下面这段代码中的">
+<meta name="description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。 函数节流（throttle）是什么 函数节流（throttle）用来限制单位时间的函数被调用的最大次数  比方说下面这段代码中的">
+<meta name="keywords" content="性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="函数节流（throttle）与函数去抖（debounce）的区别">
 <meta property="og:url" content="http://blog.mcbird.cn/2016/09/08/the-difference-between-throttling-and-debouncing/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
-函数节流（throttle）是什么
-函数节流（throttle）用来限制单位时间的函数被调用的最大次数
-
-比方说下面这段代码中的">
+<meta property="og:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。 函数节流（throttle）是什么 函数节流（throttle）用来限制单位时间的函数被调用的最大次数  比方说下面这段代码中的">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-09-08T06:35:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="函数节流（throttle）与函数去抖（debounce）的区别">
-<meta name="twitter:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。
-函数节流（throttle）是什么
-函数节流（throttle）用来限制单位时间的函数被调用的最大次数
-
-比方说下面这段代码中的">
+<meta name="twitter:description" content="以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。 函数节流（throttle）是什么 函数节流（throttle）用来限制单位时间的函数被调用的最大次数  比方说下面这段代码中的">
 
 
 
@@ -335,22 +325,22 @@
 
       
         <p>以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。</p>
-<h2 id="函数节流（throttle）是什么">函数节流（throttle）是什么</h2><blockquote>
+<h2 id="函数节流（throttle）是什么"><a href="#函数节流（throttle）是什么" class="headerlink" title="函数节流（throttle）是什么"></a>函数节流（throttle）是什么</h2><blockquote>
 <p>函数节流（throttle）用来限制单位时间的函数被调用的最大次数</p>
 </blockquote>
 <p>比方说下面这段代码中的 <code>fn()</code> 每 <code>100ms</code> 只能执行一次，那么 <code>1s</code> 内它最多只能执行10次：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">action, delay</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">if</span> (curr - last &gt; delay)</span><br><span class="line">      action.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    last = curr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = throttle(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="函数去抖（debounce）是什么">函数去抖（debounce）是什么</h2><blockquote>
+<h2 id="函数去抖（debounce）是什么"><a href="#函数去抖（debounce）是什么" class="headerlink" title="函数去抖（debounce）是什么"></a>函数去抖（debounce）是什么</h2><blockquote>
 <p>函数去抖（debounce）规定了函数在指定的时间内不能被再次调用，如果在这期间被调用了，那么执行等待时间将会被刷新</p>
 </blockquote>
 <p>比方说下面这段代码中的 <code>fn()</code> 被调用后，要等待 <code>100ms</code> 函数 <code>func</code> 才会被执行，如果在这期间， <code>fn()</code> 又被调用了，那么等待时间将从调用的那一刻重新算起。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">action, idle</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ctx = <span class="keyword">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">    clearTimeout(last);</span><br><span class="line">    last = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        action.apply(ctx, args);</span><br><span class="line">    &#125;, idle);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = debounce(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="Demo">Demo</h2><p>借用一个第三方示例：<br>
-<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="external">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="external">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>借用一个第三方示例：<br>
+<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="noopener">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="noopener">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="noopener">CodePen</a>.
 </iframe>
 </p>
 <hr>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="external">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
+<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="noopener">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
 </ul>
 
       
@@ -389,6 +379,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/23/learning-webpack-file/" rel="prev" title="Webpack 是如何加载模块的">
+                Webpack 是如何加载模块的 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -460,7 +454,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -477,7 +471,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -554,7 +548,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

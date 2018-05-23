@@ -85,11 +85,13 @@
 
 
 <meta name="description" content="什么是 BFC (Block formating contexts)浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子，都会为他们的内容创建新的BFC（块级格式上下文）。在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他">
+<meta name="keywords" content="bfc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="理解BFC和Margin Collapse">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/05/19/understanding-bfc-and-margin-collapse/index.html">
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="什么是 BFC (Block formating contexts)浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子，都会为他们的内容创建新的BFC（块级格式上下文）。在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png">
 <meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/10d7ccedd9c05a899eeb15b02fd5d7c8.png">
@@ -326,16 +328,16 @@
       
 
       
-        <h2 id="什么是_BFC_(Block_formating_contexts)">什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
-<h2 id="BFC_的运用">BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
+        <h2 id="什么是-BFC-Block-formating-contexts"><a href="#什么是-BFC-Block-formating-contexts" class="headerlink" title="什么是 BFC (Block formating contexts)"></a>什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
+<h2 id="BFC-的运用"><a href="#BFC-的运用" class="headerlink" title="BFC 的运用"></a>BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
 <p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
-<h2 id="合并外边距与BFC">合并外边距与BFC</h2><p>在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是祖先关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。</p>
-<h3 id="折叠的结果">折叠的结果</h3><ul>
+<h2 id="合并外边距与BFC"><a href="#合并外边距与BFC" class="headerlink" title="合并外边距与BFC"></a>合并外边距与BFC</h2><p>在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是祖先关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。</p>
+<h3 id="折叠的结果"><a href="#折叠的结果" class="headerlink" title="折叠的结果"></a>折叠的结果</h3><ul>
 <li>两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。</li>
 <li>两个相邻的外边距都是负数时，折叠结果是两者绝对值的较大值。</li>
 <li>两个外边距一正一负时，折叠结果是两者的相加的和。</li>
 </ul>
-<h3 id="产生折叠的必备条件：margin必须是邻接的!">产生折叠的必备条件：margin必须是邻接的!</h3><ul>
+<h3 id="产生折叠的必备条件：margin必须是邻接的"><a href="#产生折叠的必备条件：margin必须是邻接的" class="headerlink" title="产生折叠的必备条件：margin必须是邻接的!"></a>产生折叠的必备条件：margin必须是邻接的!</h3><ul>
 <li>必须是处于常规文档流（非float和绝对定位）的块级盒子,并且处于同一个BFC当中。</li>
 <li>没有线盒，没有空隙（clearance，下面会讲到），没有padding和border将他们分隔开。</li>
 <li>都属于垂直方向上相邻的外边距，可以是下面任意一种情况<ul>
@@ -459,7 +461,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -476,7 +478,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -534,7 +536,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是_BFC_(Block_formating_contexts)"><span class="nav-number">1.</span> <span class="nav-text">什么是 BFC (Block formating contexts)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC_的运用"><span class="nav-number">2.</span> <span class="nav-text">BFC 的运用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并外边距与BFC"><span class="nav-number">3.</span> <span class="nav-text">合并外边距与BFC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#折叠的结果"><span class="nav-number">3.1.</span> <span class="nav-text">折叠的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#产生折叠的必备条件：margin必须是邻接的!"><span class="nav-number">3.2.</span> <span class="nav-text">产生折叠的必备条件：margin必须是邻接的!</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-BFC-Block-formating-contexts"><span class="nav-number">1.</span> <span class="nav-text">什么是 BFC (Block formating contexts)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC-的运用"><span class="nav-number">2.</span> <span class="nav-text">BFC 的运用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并外边距与BFC"><span class="nav-number">3.</span> <span class="nav-text">合并外边距与BFC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#折叠的结果"><span class="nav-number">3.1.</span> <span class="nav-text">折叠的结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#产生折叠的必备条件：margin必须是邻接的"><span class="nav-number">3.2.</span> <span class="nav-text">产生折叠的必备条件：margin必须是邻接的!</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
@@ -553,7 +555,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

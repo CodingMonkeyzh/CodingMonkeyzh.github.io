@@ -90,6 +90,7 @@
 <meta property="og:url" content="http://blog.mcbird.cn/index.html">
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="分享自己的学习经历，实用技巧">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MockingBird">
 <meta name="twitter:description" content="分享自己的学习经历，实用技巧">
@@ -147,7 +148,7 @@
   
 
   <div class="container one-collumn sidebar-position-left 
-  
+   page-home 
  ">
     <div class="headband"></div>
 
@@ -258,6 +259,136 @@
             
               
                 
+                <a class="post-title-link" href="/2018/05/23/learning-webpack-file/" itemprop="url">
+                  Webpack 是如何加载模块的
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-05-23T14:51:39+08:00" content="2018-05-23">
+              2018-05-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/05/23/learning-webpack-file/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/23/learning-webpack-file/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Webpack 在前端开发中作为模块打包工具非常受开发者的青睐，丰富的 loader 使它可以实现各种各样的功能。本文将通过 webpack 来打包一个 js 文件，看看 webpack 是如何加载各个模块的。</p>
+<h1 id="两个简单的源文件"><a href="#两个简单的源文件" class="headerlink" title="两个简单的源文件"></a>两个简单的源文件</h1><p>为了方便分析 webpack 加载模块的原理，我们准备了两个文件：</p>
+<p>hello.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hello = &#123;</span><br><span class="line">    say: <span class="function"><span class="params">arg</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.info(<span class="string">'hello '</span> + arg || <span class="string">'world'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> hello;</span><br></pre></td></tr></table></figure></p>
+<p>index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Hello <span class="keyword">from</span> <span class="string">'./hello'</span>;</span><br><span class="line"></span><br><span class="line">Hello.say(<span class="string">'man'</span>);</span><br></pre></td></tr></table></figure></p>
+<p><code>index.js</code> 作为入口文件，引用了 <code>hello.js</code> 模块。</p>
+<h1 id="Webpack-打包"><a href="#Webpack-打包" class="headerlink" title="Webpack 打包"></a>Webpack 打包</h1><p>在命令行执行 <code>webpack index.js bundle.js</code> 对入口文件进行打包，生成 <code>bundle.js</code> ，大体结构为（为了方便阅读，我删除了部分多余的代码）：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/2018-05-23-17-33-27-2018523173328.png" alt="2018-05-23-17-33-27-2018523173328"></p>
+<p>可以看到，最终生成的文件以 <code>(function (modules) {})([模块1, 模块2])</code> 的方式启动，我们定义的模块被包装成一个个匿名函数，然后以数组的形式传递个一个匿名函数 <code>function (modules) {}</code>，在这个匿名函数中定义了一个 <code>__webpack_require__()</code> 函数，用来加载模块，最后，通过 <code>return __webpack_require__(__webpack_require__.s = 0);</code> 来加载第一个模块 <code>index.js</code></p>
+<h1 id="webpack-require-函数"><a href="#webpack-require-函数" class="headerlink" title="webpack_require() 函数"></a><strong>webpack_require</strong>() 函数</h1><p>该函数接收一个 <code>moduleId</code> 作为参数，这个参数就是各个模块在数组中的索引，<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="comment">/******/</span> <span class="comment">// Check if module is in cache</span></span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="keyword">if</span> (installedModules[moduleId]) &#123;</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">            <span class="keyword">return</span> installedModules[moduleId].exports;</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/******/</span> <span class="comment">// Create a new module (and put it into the cache)</span></span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="keyword">var</span> <span class="built_in">module</span> = installedModules[moduleId] = &#123;</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">            i: moduleId,</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">            l: <span class="literal">false</span>,</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">            exports: &#123;&#125;</span><br><span class="line">            <span class="comment">/******/</span></span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="comment">/******/</span> <span class="comment">// Execute the module function</span></span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__);</span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="comment">/******/</span> <span class="comment">// Flag the module as loaded</span></span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="built_in">module</span>.l = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="comment">/******/</span> <span class="comment">// Return the exports of the module</span></span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">        <span class="comment">/******/</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中 <code>installedModules</code> 是用来缓存执行过的模块。通过 <code>modules[moduleId].call()</code> 来执行模块，最后返回模块的 exports。</p>
+<h1 id="模块接受的参数"><a href="#模块接受的参数" class="headerlink" title="模块接受的参数"></a>模块接受的参数</h1><p>以 <code>hello.js</code> 模块为例<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">    "use strict"</span>;</span><br><span class="line">    <span class="keyword">const</span> hello = &#123;</span><br><span class="line">        say: <span class="function"><span class="params">arg</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.info(<span class="string">'hello '</span> + arg || <span class="string">'world'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* harmony default export */</span></span><br><span class="line">    __webpack_exports__[<span class="string">"a"</span>] = (hello);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/***/</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>webpack 会向模块传递 <code>module, __webpack_exports__, __webpack_require__</code> 三个参数，前两个是用来导出模块内的变量，第三个参数为前面介绍的 <code>__webpack_require__()</code> 的引用，用来导入其它模块。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/08/the-difference-between-throttling-and-debouncing/" itemprop="url">
                   函数节流（throttle）与函数去抖（debounce）的区别
                 </a>
@@ -329,22 +460,22 @@
         
           
             <p>以前在做一些性能小优化的时候会用到 “debounce” 这种技巧，特别是在处理一些 DOM 事件上。今天了解到原来还有一个跟它类似的叫 “throttle” 的玩意，一开始看上去感觉没多大的差别，仔细阅读代码，发现它们无论是在代码逻辑和应用场景上都是有很大的区别的。</p>
-<h2 id="函数节流（throttle）是什么">函数节流（throttle）是什么</h2><blockquote>
+<h2 id="函数节流（throttle）是什么"><a href="#函数节流（throttle）是什么" class="headerlink" title="函数节流（throttle）是什么"></a>函数节流（throttle）是什么</h2><blockquote>
 <p>函数节流（throttle）用来限制单位时间的函数被调用的最大次数</p>
 </blockquote>
 <p>比方说下面这段代码中的 <code>fn()</code> 每 <code>100ms</code> 只能执行一次，那么 <code>1s</code> 内它最多只能执行10次：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">action, delay</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">if</span> (curr - last &gt; delay)</span><br><span class="line">      action.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    last = curr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = throttle(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="函数去抖（debounce）是什么">函数去抖（debounce）是什么</h2><blockquote>
+<h2 id="函数去抖（debounce）是什么"><a href="#函数去抖（debounce）是什么" class="headerlink" title="函数去抖（debounce）是什么"></a>函数去抖（debounce）是什么</h2><blockquote>
 <p>函数去抖（debounce）规定了函数在指定的时间内不能被再次调用，如果在这期间被调用了，那么执行等待时间将会被刷新</p>
 </blockquote>
 <p>比方说下面这段代码中的 <code>fn()</code> 被调用后，要等待 <code>100ms</code> 函数 <code>func</code> 才会被执行，如果在这期间， <code>fn()</code> 又被调用了，那么等待时间将从调用的那一刻重新算起。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> debounce = <span class="function"><span class="keyword">function</span>(<span class="params">action, idle</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ctx = <span class="keyword">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">    clearTimeout(last);</span><br><span class="line">    last = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        action.apply(ctx, args);</span><br><span class="line">    &#125;, idle);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">func () &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fn = debounce(func, <span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="Demo">Demo</h2><p>借用一个第三方示例：<br>
-<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="external">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="external">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="external">CodePen</a>.
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>借用一个第三方示例：<br>
+<iframe height="265" scrolling="no" src="//codepen.io/chriscoyier/embed/vOZNQV/?height=265&theme-id=0&default-tab=js,result&embed-version=2" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="http://codepen.io/chriscoyier/pen/vOZNQV/" target="_blank" rel="noopener">The Difference Between Throttling, Debouncing, and Neither</a> by Chris Coyier (<a href="http://codepen.io/chriscoyier" target="_blank" rel="noopener">@chriscoyier</a>) on <a href="http://codepen.io" target="_blank" rel="noopener">CodePen</a>.
 </iframe>
 </p>
 <hr>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="external">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
+<li><a href="https://css-tricks.com/the-difference-between-throttling-and-debouncing/" target="_blank" rel="noopener">https://css-tricks.com/the-difference-between-throttling-and-debouncing/</a></li>
 </ul>
 
           
@@ -466,30 +597,30 @@
         
           
             <blockquote>
-<p>偶然看到这篇关于node.js内存泄露监测的文章，自己对node.js对性能调试并不了解，所以翻译一下这篇感觉还不错我文章以增强自己对印象。<br>原文地址：<a href="http://www.nearform.com/nodecrunch/self-detect-memory-leak-node" target="_blank" rel="external">http://www.nearform.com/nodecrunch/self-detect-memory-leak-node</a></p>
+<p>偶然看到这篇关于node.js内存泄露监测的文章，自己对node.js对性能调试并不了解，所以翻译一下这篇感觉还不错我文章以增强自己对印象。<br>原文地址：<a href="http://www.nearform.com/nodecrunch/self-detect-memory-leak-node" target="_blank" rel="noopener">http://www.nearform.com/nodecrunch/self-detect-memory-leak-node</a></p>
 </blockquote>
-<p>在node.js里面追踪内存泄露并不是一件容易对事情。下面讨论一下通过借助“<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="external">memwatch</a>”（支持 node.js 版本：0.10.x）， “<a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="external">heapdump</a>”这两个模块，怎样在node.js程序内部让它自己追踪内存泄露。</p>
+<p>在node.js里面追踪内存泄露并不是一件容易对事情。下面讨论一下通过借助“<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="noopener">memwatch</a>”（支持 node.js 版本：0.10.x）， “<a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="noopener">heapdump</a>”这两个模块，怎样在node.js程序内部让它自己追踪内存泄露。</p>
 <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/c731695b54ad9b2b2db8903d6d325868.png" alt="内存泄露插图"></p>
 <p>首先，写一个简单的内存泄露案例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">    server.on(<span class="string">'request'</span>, <span class="function"><span class="keyword">function</span> <span class="title">leakfunc</span>(<span class="params"></span>) </span>&#123;&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.end(<span class="string">'Hello World\n'</span>);</span><br><span class="line">&#125;).listen(<span class="number">1333</span>, <span class="string">'127.0.0.1'</span>);</span><br><span class="line"></span><br><span class="line">server.setMaxListeners(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Server running at http://127.0.0.1:1333/. Progress PID:'</span>, process.pid);</span><br></pre></td></tr></table></figure></p>
 <p>每个请求都额外的创建了1000个监听器。</p>
 <p>如果我们在shell中通过 <code>while true; do curl http://127.0.0.1:1333/; done</code> 命令，不断地发起请求，然后再另外一个shell窗口通过 <code>top -pid &lt;process pid&gt;</code> 可以看到 node 进程占用非常高的内存使用率，而且非常不稳定。</p>
 <p>我们的 node 进程已经疯了。那么我们怎么诊断出问题来呢？</p>
-<h2 id="内存泄露监测">内存泄露监测</h2><p>“<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="external">memwatch</a>” 模块是最好的内存泄露检查工具。首先，我们通过下面的命令安装这个模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save memwatch</span><br></pre></td></tr></table></figure></p>
+<h2 id="内存泄露监测"><a href="#内存泄露监测" class="headerlink" title="内存泄露监测"></a>内存泄露监测</h2><p>“<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="noopener">memwatch</a>” 模块是最好的内存泄露检查工具。首先，我们通过下面的命令安装这个模块：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save memwatch</span><br></pre></td></tr></table></figure></p>
 <p>然后，在我们的代码里调用它：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> memwatch = <span class="built_in">require</span>(<span class="string">'memwatch'</span>);</span><br><span class="line">memwatch.setup();</span><br></pre></td></tr></table></figure></p>
 <p>同时，也要监听”leak”事件：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.error(<span class="string">'Memory leak detected: '</span>, info);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>现在当你再次运行上面的测试案例，我们可以在控制台看到下面的信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> start: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">10</span>:<span class="number">38</span>:<span class="number">49</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line"> end: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">10</span>:<span class="number">38</span>:<span class="number">50</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line"> growth: <span class="number">7620560</span>,</span><br><span class="line"> reason: <span class="string">'heap growth over 5 consecutive GCs (1s) - -2147483648 bytes/hr'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>（注：由于我自己的 node.js 版本问题，导致无法安装 “<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="external">memwatch</a>“， 所以这个数据直接来源于原文）<br>memwatch 监测到了内存泄露！它定义内存泄露的标准为：</p>
+<p>（注：由于我自己的 node.js 版本问题，导致无法安装 “<a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="noopener">memwatch</a>“， 所以这个数据直接来源于原文）<br>memwatch 监测到了内存泄露！它定义内存泄露的标准为：</p>
 <blockquote>
 <p>一个内存泄露事件会在堆中增加5个连续的垃圾回收行为时触发</p>
 </blockquote>
-<p>查看 <a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="external">memwatch</a> 了解更多。</p>
-<h2 id="内存泄露分析">内存泄露分析</h2><p>现在我们已经发现了内存泄露，那么下一步我们在做的就是分析造成内存泄露的原因所在！<br>打个比方，我们可以在”leak”事件发生时把堆信息dump出来看看：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hd;</span><br><span class="line">memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.error(info);</span><br><span class="line"> <span class="keyword">if</span> (!hd) &#123;</span><br><span class="line">   hd = <span class="keyword">new</span> memwatch.HeapDiff();</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> diff = hd.end();</span><br><span class="line">   <span class="built_in">console</span>.error(util.inspect(diff, <span class="literal">true</span>, <span class="literal">null</span>));</span><br><span class="line">   hd = <span class="literal">null</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>这样我可以拿到下面的信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123; before: &#123;</span><br><span class="line">   nodes: <span class="number">244023</span>,</span><br><span class="line">   time: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">12</span>:<span class="number">13</span>:<span class="number">11</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line">   size_bytes: <span class="number">22095800</span>,</span><br><span class="line">   size: <span class="string">'21.07 mb'</span> &#125;,</span><br><span class="line"> after: &#123;</span><br><span class="line">   nodes: <span class="number">280028</span>,</span><br><span class="line">   time: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">12</span>:<span class="number">13</span>:<span class="number">13</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line">   size_bytes: <span class="number">24689216</span>,</span><br><span class="line">   size: <span class="string">'23.55 mb'</span> &#125;,</span><br><span class="line"> change: &#123;</span><br><span class="line">   size_bytes: <span class="number">2593416</span>,</span><br><span class="line">   size: <span class="string">'2.47 mb'</span>,</span><br><span class="line">   freed_nodes: <span class="number">388</span>,</span><br><span class="line">   allocated_nodes: <span class="number">36393</span>,</span><br><span class="line">   details:</span><br><span class="line">   [ &#123; size_bytes: <span class="number">0</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">0</span>,</span><br><span class="line">   what: <span class="string">'(Relocatable)'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">1</span>,</span><br><span class="line">   size: <span class="string">'0 bytes'</span> &#125;,</span><br><span class="line">   &#123; size_bytes: <span class="number">0</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">1</span>,</span><br><span class="line">   what: <span class="string">'Arguments'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">1</span>,</span><br><span class="line">   size: <span class="string">'0 bytes'</span> &#125;,</span><br><span class="line">   &#123; size_bytes: <span class="number">2856</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">223</span>,</span><br><span class="line">   what: <span class="string">'Array'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">201</span>,</span><br><span class="line">   size: <span class="string">'2.79 kb'</span> &#125;,</span><br><span class="line">   &#123; size_bytes: <span class="number">2590272</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">35987</span>,</span><br><span class="line">   what: <span class="string">'Closure'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">11</span>,</span><br><span class="line">   size: <span class="string">'2.47 mb'</span> &#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>查看 <a href="https://www.npmjs.com/package/memwatch" target="_blank" rel="noopener">memwatch</a> 了解更多。</p>
+<h2 id="内存泄露分析"><a href="#内存泄露分析" class="headerlink" title="内存泄露分析"></a>内存泄露分析</h2><p>现在我们已经发现了内存泄露，那么下一步我们在做的就是分析造成内存泄露的原因所在！<br>打个比方，我们可以在”leak”事件发生时把堆信息dump出来看看：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hd;</span><br><span class="line">memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.error(info);</span><br><span class="line"> <span class="keyword">if</span> (!hd) &#123;</span><br><span class="line">   hd = <span class="keyword">new</span> memwatch.HeapDiff();</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> diff = hd.end();</span><br><span class="line">   <span class="built_in">console</span>.error(util.inspect(diff, <span class="literal">true</span>, <span class="literal">null</span>));</span><br><span class="line">   hd = <span class="literal">null</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这样我可以拿到下面的信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="attr">before</span>: &#123;</span><br><span class="line">   nodes: <span class="number">244023</span>,</span><br><span class="line">   time: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">12</span>:<span class="number">13</span>:<span class="number">11</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line">   size_bytes: <span class="number">22095800</span>,</span><br><span class="line">   size: <span class="string">'21.07 mb'</span> &#125;,</span><br><span class="line"> after: &#123;</span><br><span class="line">   nodes: <span class="number">280028</span>,</span><br><span class="line">   time: Fri Jan <span class="number">02</span> <span class="number">2015</span> <span class="number">12</span>:<span class="number">13</span>:<span class="number">13</span> GMT+<span class="number">0000</span> (GMT),</span><br><span class="line">   size_bytes: <span class="number">24689216</span>,</span><br><span class="line">   size: <span class="string">'23.55 mb'</span> &#125;,</span><br><span class="line"> change: &#123;</span><br><span class="line">   size_bytes: <span class="number">2593416</span>,</span><br><span class="line">   size: <span class="string">'2.47 mb'</span>,</span><br><span class="line">   freed_nodes: <span class="number">388</span>,</span><br><span class="line">   allocated_nodes: <span class="number">36393</span>,</span><br><span class="line">   details:</span><br><span class="line">   [ &#123; <span class="attr">size_bytes</span>: <span class="number">0</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">0</span>,</span><br><span class="line">   what: <span class="string">'(Relocatable)'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">1</span>,</span><br><span class="line">   size: <span class="string">'0 bytes'</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">size_bytes</span>: <span class="number">0</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">1</span>,</span><br><span class="line">   what: <span class="string">'Arguments'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">1</span>,</span><br><span class="line">   size: <span class="string">'0 bytes'</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">size_bytes</span>: <span class="number">2856</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">223</span>,</span><br><span class="line">   what: <span class="string">'Array'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">201</span>,</span><br><span class="line">   size: <span class="string">'2.79 kb'</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">size_bytes</span>: <span class="number">2590272</span>,</span><br><span class="line">   <span class="string">'+'</span>: <span class="number">35987</span>,</span><br><span class="line">   what: <span class="string">'Closure'</span>,</span><br><span class="line">   <span class="string">'-'</span>: <span class="number">11</span>,</span><br><span class="line">   size: <span class="string">'2.47 mb'</span> &#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>我们可以在两次 leak 事件看出堆增长了 2.47MB 的大小，然后是由闭包造成的。注意如果你指明了函数，那在这里有可能看到详细的造成内存泄露的函数名，这样我们就可以更方便的调试。</p>
 <p>然后，在上面的例子中，我们只知道是有闭包造成的内存泄露，这并没有太大的作用。</p>
-<p>所以，我们还要借助 <a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="external">heapdump</a>。</p>
-<h2 id="heapdump"><a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="external">heapdump</a></h2><p><a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="external">heapdump</a> 可以把 V8 中的堆 dump 出来，然后你可以借助 Chrome 开发者工具进行分析。你可以在开发者工具中比较两个堆，这有助于你更好的定位内存泄露的原因。</p>
-<p>下面我们开始在代码中使用 <a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="external">heapdump</a>，我们在每一次 “leak” 事件被触发时，保存一份快照到硬盘上：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.error(info);</span><br><span class="line"> <span class="keyword">var</span> file = <span class="string">'/tmp/myapp-'</span> + process.pid + <span class="string">'-'</span> + <span class="built_in">Date</span>.now() + <span class="string">'.heapsnapshot'</span>;</span><br><span class="line"> heapdump.writeSnapshot(file, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">   <span class="keyword">else</span> <span class="built_in">console</span>.error(<span class="string">'Wrote snapshot: '</span> + file);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>所以，我们还要借助 <a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="noopener">heapdump</a>。</p>
+<h2 id="heapdump"><a href="#heapdump" class="headerlink" title="heapdump"></a><a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="noopener">heapdump</a></h2><p><a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="noopener">heapdump</a> 可以把 V8 中的堆 dump 出来，然后你可以借助 Chrome 开发者工具进行分析。你可以在开发者工具中比较两个堆，这有助于你更好的定位内存泄露的原因。</p>
+<p>下面我们开始在代码中使用 <a href="https://github.com/bnoordhuis/node-heapdump" target="_blank" rel="noopener">heapdump</a>，我们在每一次 “leak” 事件被触发时，保存一份快照到硬盘上：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">memwatch.on(<span class="string">'leak'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">info</span>) </span>&#123;</span><br><span class="line"> <span class="built_in">console</span>.error(info);</span><br><span class="line"> <span class="keyword">var</span> file = <span class="string">'/tmp/myapp-'</span> + process.pid + <span class="string">'-'</span> + <span class="built_in">Date</span>.now() + <span class="string">'.heapsnapshot'</span>;</span><br><span class="line"> heapdump.writeSnapshot(file, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">   <span class="keyword">else</span> <span class="built_in">console</span>.error(<span class="string">'Wrote snapshot: '</span> + file);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>这样，我们再次运行测试案例的时候，我们可以看到 <code>/tmp</code> 目录下多了一些 <code>.heapsnapshot</code> 文件。我们打开 Chrome 的开发者工具，选中 <code>Profile</code> 面板，然后导入我们的快照。</p>
 <p>我们现在可以清晰的看见罪魁祸首是 <code>leakyfunc()</code>：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/ff45ce5621ffb061df56ccb570d533f9.png" alt="堆快照"><br>同时，我们页可以比较两个快照。这样更容易在两个时间点上找到内存泄露：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/cffac79ad467a8272224d5bfb8cd5aae.png" alt="内存泄露快照比较"></p>
 
@@ -614,36 +745,36 @@
             <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/2c418c62e57391e06b3b09628a83ce65.png" alt="header-img"></p>
 <p>Flexbox 是一个高效的CSS UI设计标准。使用简单的几个 flexbox 属性我们就可以构建我们的页面通过一个一个小的布局快，我们可以对这些布局快可以轻松地进行定位和缩放。</p>
 <p>在这篇文章中，我们将要通过5种flexbox的方式来解决普通的css布局问题。其中还包含了这些技术在真实生活中的实践。</p>
-<h2 id="创建一个等高的列">创建一个等高的列</h2><p>如果让你把所有的列的高度弄上去一样高，这是恨烦的。简单的通过 <code>min-height</code> 是不行的，因为一旦内容发生变化，那么一些列会变高而其它的仍然还是原来的高度。</p>
-<p>用 flexbox 来解决这个问题再简单不过了，因为痛过这种方式创建的列默认情况下就是等高的。我们要做的就是初始化这个 flex 盒子，然后确保 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="external"><code>flex-direction</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="external"><code>align-items</code></a> 属性被赋值为默认值。</p>
+<h2 id="创建一个等高的列"><a href="#创建一个等高的列" class="headerlink" title="创建一个等高的列"></a>创建一个等高的列</h2><p>如果让你把所有的列的高度弄上去一样高，这是恨烦的。简单的通过 <code>min-height</code> 是不行的，因为一旦内容发生变化，那么一些列会变高而其它的仍然还是原来的高度。</p>
+<p>用 flexbox 来解决这个问题再简单不过了，因为痛过这种方式创建的列默认情况下就是等高的。我们要做的就是初始化这个 flex 盒子，然后确保 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="noopener"><code>flex-direction</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="noopener"><code>align-items</code></a> 属性被赋值为默认值。</p>
 <p>CSS 部分：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="comment">/* Initialize the flex model */</span></span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* These are the default values but you can set them anyway */</span></span><br><span class="line">	<span class="attribute">flex-direction</span>: row;    <span class="comment">/* Items inside the container will be positioned horizontally */</span></span><br><span class="line">        <span class="attribute">align-items</span>: stretch;   <span class="comment">/* Items inside the container will take up it's entire height */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Equal height columns --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>你可以在 <a href="http://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/" target="_blank" rel="external">Easiest Way To Create Equal Height Sidebars </a>这篇文章中查看实例，它创建了一个包含侧边栏和主内容区的响应式页面。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fad225a184b73073e735f91483b5936a.png" alt="等高的列实例"></p>
-<h2 id="重新定位元素">重新定位元素</h2><p>以前，如果我们要动态的的区改变元素的顺序，我们可能会尝试一些CSS hack，而且还有写一些 javascript，真是让人沮丧！但是有了 flexbox，只有一个CSS属性就可以搞定这个问题了！</p>
+<p>你可以在 <a href="http://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/" target="_blank" rel="noopener">Easiest Way To Create Equal Height Sidebars </a>这篇文章中查看实例，它创建了一个包含侧边栏和主内容区的响应式页面。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fad225a184b73073e735f91483b5936a.png" alt="等高的列实例"></p>
+<h2 id="重新定位元素"><a href="#重新定位元素" class="headerlink" title="重新定位元素"></a>重新定位元素</h2><p>以前，如果我们要动态的的区改变元素的顺序，我们可能会尝试一些CSS hack，而且还有写一些 javascript，真是让人沮丧！但是有了 flexbox，只有一个CSS属性就可以搞定这个问题了！</p>
 <p>它叫做 <code>order</code> ，就像这个名字一样，一切尽可能的简单。它让我们可以通过一个数字来设定这个flex项在屏幕中的出现顺序（越小的数代表越高的优先级）。</p>
 <p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Reverse the order of elements */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.blue</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.red</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.green</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- These items will appear in reverse order --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"blue"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"red"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"green"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>这个属性有非常多多实战应用。如果你想了解的话，你可以看 <a href="http://tutorialzine.com/2015/11/using-flexbox-to-create-a-responsive-comment-section/" target="_blank" rel="external">这篇文章</a>， 它讲了如果使用这个玩意来做一个响应式的评论区。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3ee31b005c8549d72bfa12555c53a42e.png" alt="order 属性"></p>
-<h2 id="水平垂直居中">水平垂直居中</h2><p>在CSS中垂直居中问题我们经常遇到，为什么一个简单的垂直居中实现起来如此复杂？如果 Google 一下 <em>CSS 垂直居中</em>，可以找到无限多的解决方案，它们中的很大一部分都是采用 <code>table</code> 或者 <code>transform</code> 来实现（然而这些东西设计出来不是为来布局的）。</p>
+<p>这个属性有非常多多实战应用。如果你想了解的话，你可以看 <a href="http://tutorialzine.com/2015/11/using-flexbox-to-create-a-responsive-comment-section/" target="_blank" rel="noopener">这篇文章</a>， 它讲了如果使用这个玩意来做一个响应式的评论区。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3ee31b005c8549d72bfa12555c53a42e.png" alt="order 属性"></p>
+<h2 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h2><p>在CSS中垂直居中问题我们经常遇到，为什么一个简单的垂直居中实现起来如此复杂？如果 Google 一下 <em>CSS 垂直居中</em>，可以找到无限多的解决方案，它们中的很大一部分都是采用 <code>table</code> 或者 <code>transform</code> 来实现（然而这些东西设计出来不是为来布局的）。</p>
 <p>Flexbox 非常简单的解决了这个问题。没有个flex布局都具有两个方向（X轴和Y轴）和两个用来置顶它们都对齐方式的属性。把两个属性都设成居中对齐，我们就可以把这个元素放在它都父级容器的中间了。</p>
 <p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Center according to the main axis */</span></span><br><span class="line">	<span class="attribute">justify-content</span>: center;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Center according to the secondary axis */</span></span><br><span class="line">        <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Any element placed here will be centered</span><br><span class="line">		 both horizonally and vertically --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>你可以阅读<a href="http://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally/" target="_blank" rel="external">这篇文章</a>来了解更多<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/cdb8ce1aefb6b34623773d59eb12e6ee.png" alt="Horizontal And Vertical Centering With Flexbox"></p>
-<h2 id="创建一个完全的响应式网格">创建一个完全的响应式网格</h2><p>许多的开发者创建响应式网格的时候都依赖一个CSS框架。Bootstrap 是最流行的一个，当然还有其它成百上千个库可以帮你做到。它们都可以正常的工作并且有很多的选项，但是它们都太重了。如果你只是想要实现一个网格布局，仅仅需要 flexbox 就可以帮你搞定了！</p>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Any element placed here will be centered</span></span><br><span class="line"><span class="comment">		 both horizonally and vertically --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>你可以阅读<a href="http://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally/" target="_blank" rel="noopener">这篇文章</a>来了解更多<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/cdb8ce1aefb6b34623773d59eb12e6ee.png" alt="Horizontal And Vertical Centering With Flexbox"></p>
+<h2 id="创建一个完全的响应式网格"><a href="#创建一个完全的响应式网格" class="headerlink" title="创建一个完全的响应式网格"></a>创建一个完全的响应式网格</h2><p>许多的开发者创建响应式网格的时候都依赖一个CSS框架。Bootstrap 是最流行的一个，当然还有其它成百上千个库可以帮你做到。它们都可以正常的工作并且有很多的选项，但是它们都太重了。如果你只是想要实现一个网格布局，仅仅需要 flexbox 就可以帮你搞定了！</p>
 <p>在 flexbox 网格系统中，被设置了 <code>display:flex</code> 属性的元素就相当于“行（row）”。它里面的水平方向的列可以是任意数量的元素，可以通过 <code>flex</code> 属性来设置尺寸。flex 模型适应视口的大小，所以这个设置应该在所有的设备上看起来都是可以的。然而，如果我们发现在水平方向上没有足够的空间时，我们可以简单的通过媒体查询来现实一个垂直方向上的布局。</p>
 <p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Classes for each column size. */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.col-1</span>&#123;</span><br><span class="line">	<span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.col-2</span>&#123;</span><br><span class="line">	<span class="attribute">flex</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (max-width: <span class="number">800px</span>)&#123;</span><br><span class="line">	<span class="selector-class">.container</span>&#123;</span><br><span class="line">		<span class="comment">/* Turn the horizontal layout into a vertical one. */</span></span><br><span class="line">		<span class="attribute">flex-direction</span>: column;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 25% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-1"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 50% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-2"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 25% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-1"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>你可以在 <a href="http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/" target="_blank" rel="external">The Easiest Way To Make Responsive Headers</a> 查看这项技术的运用。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/80663c4d6acf85ed938506bd679b5788.png" alt="Responsive Header With Flexbox"></p>
-<h2 id="创建一个完美的紧贴页面底部的页脚">创建一个完美的紧贴页面底部的页脚</h2><p>Flexbox 同样也可以很容易的解决这个问题。通过 flex 元素可以保证页脚永远在页面的底部。</p>
+<p>你可以在 <a href="http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/" target="_blank" rel="noopener">The Easiest Way To Make Responsive Headers</a> 查看这项技术的运用。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/80663c4d6acf85ed938506bd679b5788.png" alt="Responsive Header With Flexbox"></p>
+<h2 id="创建一个完美的紧贴页面底部的页脚"><a href="#创建一个完美的紧贴页面底部的页脚" class="headerlink" title="创建一个完美的紧贴页面底部的页脚"></a>创建一个完美的紧贴页面底部的页脚</h2><p>Flexbox 同样也可以很容易的解决这个问题。通过 flex 元素可以保证页脚永远在页面的底部。</p>
 <p>给 <code>body</code> 标签加一个 <code>diplay:flex</code> 属性，这样我们就可以对整个页面使用flex模型属性。这样我们就可以把主要的内容区和页脚区分别作为 flex项，以便于我们准确的控制他们的位置。</p>
-<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.main</span>&#123;</span><br><span class="line">   <span class="comment">/* The main section will take up all the available free space</span><br><span class="line">      on the page that is not taken up by the footer. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">footer</span>&#123;</span><br><span class="line">   <span class="comment">/* The footer will take up as much vertical space as it needs and not a pixel more. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.main</span>&#123;</span><br><span class="line">   <span class="comment">/* The main section will take up all the available free space</span></span><br><span class="line"><span class="comment">      on the page that is not taken up by the footer. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">footer</span>&#123;</span><br><span class="line">   <span class="comment">/* The footer will take up as much vertical space as it needs and not a pixel more. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- All the page content goes here  --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Our sticky foooter --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">footer</span>&gt;</span>...<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>如果你要了解更多，你可以阅读 <a href="http://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/" target="_blank" rel="external">The Best Way To Make Sticky Footers。</a><br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3cdb3d6fc72b932e16861fb1803c5565.png" alt="Sticky Footers With Flexbox"></p>
-<h2 id="结论">结论</h2><p>主流的浏览器（<a href="http://caniuse.com/#feat=flexbox" target="_blank" rel="external">不包括 IE9</a>）现在都支持 flexbox 布局模型了，所以，除非你的用户更喜欢用古老的IE浏览器，你是可以非常放心的在产品用用 flexbox 布局的！</p>
+<p>如果你要了解更多，你可以阅读 <a href="http://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/" target="_blank" rel="noopener">The Best Way To Make Sticky Footers。</a><br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3cdb3d6fc72b932e16861fb1803c5565.png" alt="Sticky Footers With Flexbox"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>主流的浏览器（<a href="http://caniuse.com/#feat=flexbox" target="_blank" rel="noopener">不包括 IE9</a>）现在都支持 flexbox 布局模型了，所以，除非你的用户更喜欢用古老的IE浏览器，你是可以非常放心的在产品用用 flexbox 布局的！</p>
 <p>我希望这些能够帮助你创建更加强健响应式布局！</p>
 <blockquote>
-<p>原文地址：<a href="http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/" target="_blank" rel="external">http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/</a></p>
+<p>原文地址：<a href="http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/" target="_blank" rel="noopener">http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/</a></p>
 </blockquote>
 
           
@@ -765,150 +896,20 @@
         
           
             <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
-<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="external">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="external">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
-<h2 id="如何定义和使用_CSS_Variables">如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="external">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="noopener">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="noopener">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
+<h2 id="如何定义和使用-CSS-Variables"><a href="#如何定义和使用-CSS-Variables" class="headerlink" title="如何定义和使用 CSS Variables"></a>如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="noopener">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><em>CSS变量同样是可嵌套使用的，<code>:root</code>用来定义全局变量</em></p>
-<h2 id="浏览器兼容性">浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
-<h2 id="还有一些你该知道的">还有一些你该知道的</h2><ul>
+<h2 id="浏览器兼容性"><a href="#浏览器兼容性" class="headerlink" title="浏览器兼容性"></a>浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
+<h2 id="还有一些你该知道的"><a href="#还有一些你该知道的" class="headerlink" title="还有一些你该知道的"></a>还有一些你该知道的</h2><ul>
 <li><code>var()</code> 还可以接受第二个参数（ <code>color: var(--header-color, blue);</code> ），表示备选参数，第一个参数获取失败的时候，它就生效了。</li>
 <li><p>变量也是可用嵌套的：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--base-color</span>: <span class="selector-id">#f93ce9</span>;</span><br><span class="line"><span class="selector-tag">--background-gradient</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">to</span> <span class="selector-tag">top</span>, <span class="selector-tag">var</span>(<span class="selector-tag">--base-color</span>), <span class="selector-id">#444</span>);</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>变量还可以更另一个CSS特性——<code>calc()</code>方法一起使用：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--container-width: 1000px;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--container-width</span>: 1000<span class="selector-tag">px</span>;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/27/animate-box-shadow-performance/" itemprop="url">
-                  「译」高效的 “box-shadow” 动画
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-27T11:05:03+08:00" content="2015-11-27">
-              2015-11-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/27/animate-box-shadow-performance/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/27/animate-box-shadow-performance/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>原文地址：<a href="http://tobiasahlin.com/blog/how-to-animate-box-shadow/" target="_blank" rel="external">http://tobiasahlin.com/blog/how-to-animate-box-shadow/</a></p>
-</blockquote>
-<p>如何才能防止在给 <code>box-shadow</code> 制作动画过渡时导致的每一帧都要进行的重绘（re-paint），从而提高页面的性能？<br>答案就是：不可能。给变化的 <code>box-shadow</code> 制作动画会大大缩减页面渲染的性能。</p>
-<p>但是，这里依然有类似的方法实现相同的效果。尽量的减少重绘的次数，可以保证你的动画能够保证在 <code>60 FPS</code> 左右：通过改变子元素的 <code>opacity</code> 透明度。</p>
-<h2 id="Demo">Demo</h2><p><img src="http://tobiasahlin.com/static/animate-box-shadow/demo.gif" alt="box-shadow 动画对比"></p>
-<p><a href="http://tobiasahlin.com/demo/animate-box-shadow/" target="_blank" rel="external">查看这个Demo</a>，比较一下两种实现方式的不同。左边的动画是在 <code>box-shadow</code> 的 <code>:hover</code> 状态时执行 <code>box-shadow</code> 动画， 而右边的实现方式中，我们通过 <code>:after</code> 添加了一个伪元素，并给它添加了 <code>box-shadow</code>， 然后通过执行 <code>opacity</code> 动画来是实现相同的效果。</p>
-<p>如果你打开你的调试工具，可以看到下面类似的结果（绿色部分表示绘制；越少越好）：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/ca0ee6b35743513538f3d5f53b795d6a.png" alt="timeline 对比"></p>
-<p>很明显如果我们直接执行 <code>box-shadow</code> 的动画会导致更多的重绘。</p>
-<p>为什么会有这样的结果？ <a href="http://csstriggers.com/" target="_blank" rel="external">只有很少的属性</a> 才能避免在动画的过程不断的重绘，像 <code>opacity</code> 和 <code>transform</code>。<br>这就是两种方式的不同之处，下面是核心代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* The slow way */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">  <span class="attribute">transition</span>: box-shadow <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to a bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-slow</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* The fast way */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.15);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Pre-render the bigger shadow, but hide it */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">5px</span> <span class="number">15px</span> <span class="built_in">rgba</span>(0,0,0,0.3);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">transition</span>: opacity <span class="number">0.3s</span> ease-in-out:</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Transition to showing the bigger shadow on hover */</span></span><br><span class="line"><span class="selector-class">.make-it-fast</span><span class="selector-pseudo">:hover</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在上面的例子中，高效的实现方式有两层：一层负责呈现盒子，一层负责盒子阴影的过度动画，只对阴影的 <code>opcity</code> 执行动画。</p>
-
+<div><h1>推荐阅读</h1><ul><li><a href="https://blog.naaln.com/2014/08/how-improve-performance-css-selectors/">如何提升 CSS 选择器性能</a></li></ul></div>
           
         
       
@@ -981,7 +982,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -998,7 +999,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1064,7 +1065,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

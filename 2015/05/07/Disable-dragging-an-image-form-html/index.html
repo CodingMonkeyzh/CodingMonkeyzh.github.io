@@ -84,31 +84,18 @@
 
 
 
-<meta name="description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：
-
-改用background-image的方式实现。
-给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。
-添加属性draggable=&amp;quot;false&amp;quot;：
-1&amp;lt;img draggable">
+<meta name="description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：  改用background-image的方式实现。 给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。 添加属性draggable=&amp;quot;false&amp;quot;： 1&amp;lt;img draggable">
+<meta name="keywords" content="image">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阻止HTML中的图片拖动">
 <meta property="og:url" content="http://blog.mcbird.cn/2015/05/07/Disable-dragging-an-image-form-html/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：
-
-改用background-image的方式实现。
-给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。
-添加属性draggable=&amp;quot;false&amp;quot;：
-1&amp;lt;img draggable">
+<meta property="og:description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：  改用background-image的方式实现。 给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。 添加属性draggable=&amp;quot;false&amp;quot;： 1&amp;lt;img draggable">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阻止HTML中的图片拖动">
-<meta name="twitter:description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：
-
-改用background-image的方式实现。
-给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。
-添加属性draggable=&amp;quot;false&amp;quot;：
-1&amp;lt;img draggable">
+<meta name="twitter:description" content="在HTML中的img图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：  改用background-image的方式实现。 给image添加一条样式规则：pointer-events:none（兼容性不太好，而且一旦设置，这个元素将无法收到hover/click事件）。 添加属性draggable=&amp;quot;false&amp;quot;： 1&amp;lt;img draggable">
 
 
 
@@ -340,14 +327,14 @@
         <p>在HTML中的<code>img</code>图片默认是可以拖动了，为了提升页面到逼格，可以通过下面几种方法阻止图片拖动：</p>
 <ol>
 <li>改用<code>background-image</code>的方式实现。</li>
-<li>给<code>image</code>添加一条样式规则：<code>pointer-events:none</code>（<a href="http://caniuse.com/#feat=pointer-events" target="_blank" rel="external">兼容性不太好</a>，而且一旦设置，这个元素将无法收到<code>hover/click</code>事件）。</li>
+<li>给<code>image</code>添加一条样式规则：<code>pointer-events:none</code>（<a href="http://caniuse.com/#feat=pointer-events" target="_blank" rel="noopener">兼容性不太好</a>，而且一旦设置，这个元素将无法收到<code>hover/click</code>事件）。</li>
 <li><p>添加属性<code>draggable=&quot;false&quot;</code>：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">draggable</span>=<span class="string">"false"</span> <span class="attr">src</span>=<span class="string">"images.png"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>给<code>img</code>元素绑定事件处理函数：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"img"</span>).mousedown(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
 </ol>
-
+<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/06/26/image-tilt-effect/">制作图片倾斜（tilt）效果</a></li></ul></div>
       
     </div>
 
@@ -455,7 +442,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -472,7 +459,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -530,7 +517,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">推荐阅读</span></a></li></ol></div>
             
           </div>
         </section>
@@ -549,7 +536,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
