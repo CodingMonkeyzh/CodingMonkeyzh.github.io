@@ -259,6 +259,159 @@
             
               
                 
+                <a class="post-title-link" href="/2015/08/28/learning-gulp/" itemprop="url">
+                  gulp 入门
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-28T18:14:02+08:00" content="2015-08-28">
+              2015-08-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/28/learning-gulp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/28/learning-gulp/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/8d3777b647413ea22733efca334a294a.png" alt="gulp logo"></p>
+<h2 id="Gulp-是什么？"><a href="#Gulp-是什么？" class="headerlink" title="Gulp 是什么？"></a>Gulp 是什么？</h2><p><a href="http://gulpjs.com/" title="gulp" target="_blank" rel="noopener">Gulp</a> 是 <a href="http://gruntjs.com/" target="_blank" rel="noopener">Grunt</a> 的替代者。作为构建工具，Gulp 更具有语法简洁易懂的优势，所以学习成本更低。<br>利用 Gulp， 我们不仅可以对HTML、CSS（LESS|SASS）、JS（CoffeeScript）进行编译；还可以监听文件的变化，同时借助 <em>livereloader</em> 实时地刷新页面；甚至还可以对图片进行压缩优化。下面记录一下我的 <em>Gulp 学习之旅</em> 。</p>
+<h2 id="安装-Gulp"><a href="#安装-Gulp" class="headerlink" title="安装 Gulp"></a>安装 Gulp</h2><p>Gulp 需要 <a href="node.js">nodejs.org</a> 运行环境，首先请确保你的机器上安装了 <code>node.js</code>。</p>
+<ol start="0">
+<li><p>安装全局 Gulp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --global gulp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装本地（作为开发依赖项）Gulp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i --save-dev gulp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建 <em>gulpfile.js</em> 文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 将你的默认的任务代码放在这</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hello world!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行 Gulp<br>在终端运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><code>gulp</code> 后不接参数，那么默认会执行 <code>default</code> 任务，所以上面的代码会在终端中输出 <code>hello world!</code>。</p>
+<h2 id="使用插件压缩脚本"><a href="#使用插件压缩脚本" class="headerlink" title="使用插件压缩脚本"></a>使用插件压缩脚本</h2><p><em>gulp</em> 依靠各种<a href="http://gulpjs.com/plugins/" target="_blank" rel="noopener">插件（plugin）</a>实现常用功能。比方说我们要对所有的 <em>*.js</em> 文件进行压缩（借助 <a href="https://npmjs.org/package/gulp-uglify/" target="_blank" rel="noopener">gulp-uglify 插件</a>）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</span><br><span class="line">    uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  gulp.src(<span class="string">'js/*.js'</span>)</span><br><span class="line">      .pipe(uglify())</span><br><span class="line">      .pipe(gulp.dest(<span class="string">'build/js'</span>))；</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>重新在终端运行 <code>gulp</code>， Gulp 会对 <code>js/</code> 目录下的所有 <code>js</code>文件进行压缩，然后输出到 <code>build/js</code> 目录。</p>
+<h2 id="给任务（Task）命名"><a href="#给任务（Task）命名" class="headerlink" title="给任务（Task）命名"></a>给任务（Task）命名</h2><p>上面我们定义了一个对 <code>js</code> 进行压缩的任务，并把它放在了默认的（<code>default</code>）任务下，其实我们最好把处理脚本的相关操作抽出来，当独作为一个任务（例如 <code>scripts</code> ）更为合理：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'scripts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'js/*.js'</span>)</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'build/js'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>我们可以在终端运行指定的任务项，只需在 <code>gulp</code> 后面接上任务名参数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp scripts</span><br></pre></td></tr></table></figure></p>
+<h2 id="监听文件的改变"><a href="#监听文件的改变" class="headerlink" title="监听文件的改变"></a>监听文件的改变</h2><p>我们可以借助 <a href="https://npmjs.org/package/gulp-watch/" target="_blank" rel="noopener">gulp-watch 插件</a> 来监听文件的改变：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</span><br><span class="line">    uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>),</span><br><span class="line">    watch = <span class="built_in">require</span>(<span class="string">'gulp-watch'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'watch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.watch(<span class="string">'js/*.js'</span>, [<span class="string">'scripts'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这里我们定义了一个 <code>watch</code> 任务，监听 <code>js/*.js</code> 文件的改变， <code>watch()</code> 的第二个参数是文件发生改变之后的回调，这里表示，文件一旦发生改变，就会执行前面我们定义的 <code>scripts</code> 任务，重新对 <code>js</code> 文件进行压缩处理。</p>
+<h2 id="用Gulp来编译LESS"><a href="#用Gulp来编译LESS" class="headerlink" title="用Gulp来编译LESS"></a>用Gulp来编译LESS</h2><p>Gulp 不仅可以对 <code>js</code> 进行压缩处理，还可以编译 less/scss 文件，这一功能也是我们经常在项目中用到的。这里需要借助 <a href="https://npmjs.org/package/gulp-less/" target="_blank" rel="noopener">gulp-less</a> 插件：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</span><br><span class="line">    uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>),</span><br><span class="line">    watch = <span class="built_in">require</span>(<span class="string">'gulp-watch'</span>),</span><br><span class="line">    less = <span class="built_in">require</span>(<span class="string">'gulp-less'</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'styles'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'less/**/*.less'</span>)</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css/'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用Plumber来让Gulp保持运行"><a href="#使用Plumber来让Gulp保持运行" class="headerlink" title="使用Plumber来让Gulp保持运行"></a>使用Plumber来让Gulp保持运行</h2><p>如果我们在编写代码的过程中，不小心代码写错了，存在语法错误，那么编译不会被通过，gulp 会在终端抛出异常，同时终止。这不是我们想要的，我们希望存在语法错误是，Gulp 能够给我们提示，并继续保持运行，而不是中断，这个时候就要借助 <a href="https://npmjs.org/package/gulp-plumber/" target="_blank" rel="noopener">gulp-plumber</a> 来帮我们做这个事：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'styles'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'less/**/*.less'</span>)</span><br><span class="line">        .pipe(plumber())</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css/'</span>))</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>注意：</em> 我们要保证 <code>plumber()</code> 要放在其他操作前面，这样才能捕捉到错误异常。</p>
+<h2 id="实时更新（LiveReload）页面"><a href="#实时更新（LiveReload）页面" class="headerlink" title="实时更新（LiveReload）页面"></a>实时更新（LiveReload）页面</h2><p>我们期望代码更新后不仅能够重新编译代码，而且希望浏览器帮我们自己刷新网页，这个时候，我们就需要用到 <a href="https://www.npmjs.com/package/gulp-livereload/" target="_blank" rel="noopener">gulp-livereload</a> 的帮助了，同时我们需要安装 <a href="https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei" target="_blank" rel="noopener">livereload 的Chrome插件</a>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'styles'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'less/**/*.less'</span>)</span><br><span class="line">        .pipe(plumber())</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css/'</span>))</span><br><span class="line">        .pipe(livereload());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>注意：</em> 与 <code>plumber()</code> 相反，我们要把 <code>livereload()</code> 放在操作的最后。</p>
+<h2 id="简单的进行图像压缩"><a href="#简单的进行图像压缩" class="headerlink" title="简单的进行图像压缩"></a>简单的进行图像压缩</h2><p>我们可以借助 <a href="https://npmjs.org/package/gulp-imagemin/" target="_blank" rel="noopener">gulp-imagemin</a> 对图片进行优化：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'images'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'src/images/*'</span>)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/images'</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="自动补全浏览器前缀"><a href="#自动补全浏览器前缀" class="headerlink" title="自动补全浏览器前缀"></a>自动补全浏览器前缀</h2><p>我们还可以用 <a href="https://npmjs.org/package/gulp-autoprefixer/" target="_blank" rel="noopener">gulp-autoprefixer</a> 对 CSS3 中的一些属性进行前缀的自动补全（例如 <code>transition, transform 等</code> ）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(<span class="string">'styles'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'less/**/*.less'</span>)</span><br><span class="line">        .pipe(plumber())</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(prefixer(<span class="string">'last 2 versions'</span>))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css/'</span>))</span><br><span class="line">        .pipe(livereload());</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><code>prefixer()</code> 的参数可参考 <a href="https://github.com/ai/browserslist" target="_blank" rel="noopener">这里</a></p>
+<h2 id="最终的-gulpfile-js-配置文件"><a href="#最终的-gulpfile-js-配置文件" class="headerlink" title="最终的 gulpfile.js 配置文件"></a>最终的 gulpfile.js 配置文件</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>),</span><br><span class="line">    uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>),</span><br><span class="line">    watch = <span class="built_in">require</span>(<span class="string">'gulp-watch'</span>),</span><br><span class="line">    less = <span class="built_in">require</span>(<span class="string">'gulp-less'</span>),</span><br><span class="line">    plumber = <span class="built_in">require</span>(<span class="string">'gulp-plumber'</span>),</span><br><span class="line">    livereload = <span class="built_in">require</span>(<span class="string">'gulp-livereload'</span>),</span><br><span class="line">    prefixer = <span class="built_in">require</span>(<span class="string">'gulp-autoprefixer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Scripts Task</span></span><br><span class="line">gulp.task(<span class="string">'scripts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'js/*.js'</span>)</span><br><span class="line">        .pipe(plumber())</span><br><span class="line">        .pipe(uglify())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'build/js'</span>))</span><br><span class="line">        .pipe(livereload());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Styles Task</span></span><br><span class="line">gulp.task(<span class="string">'styles'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'less/**/*.less'</span>)</span><br><span class="line">        .pipe(plumber())</span><br><span class="line">        .pipe(less())</span><br><span class="line">        .pipe(prefixer(<span class="string">'last 2 versions'</span>))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'css/'</span>))</span><br><span class="line">        .pipe(livereload());</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML Task</span></span><br><span class="line">gulp.task(<span class="string">'html'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp.src(<span class="string">'*.html'</span>)</span><br><span class="line">        .pipe(livereload());</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Image Task</span></span><br><span class="line">gulp.task(<span class="string">'images'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> gulp.src(<span class="string">'src/images/*'</span>)</span><br><span class="line">        .pipe(imagemin())</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/images'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Watch Task</span></span><br><span class="line">gulp.task(<span class="string">'watch'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    livereload.listen();</span><br><span class="line">    gulp.watch(<span class="string">'js/*.js'</span>, [<span class="string">'scripts'</span>]);</span><br><span class="line">    gulp.watch(<span class="string">'less/**/*.less'</span>, [<span class="string">'styles'</span>]);</span><br><span class="line">    gulp.watch(<span class="string">'*.html'</span>, [<span class="string">'html'</span>]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'scripts'</span>, <span class="string">'styles'</span>, <span class="string">'watch'</span>]);</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面列出了一些日常开发中比较常用的几种功能，其他更多的功能可<a href="http://gulpjs.com/plugins/" target="_blank" rel="noopener">参考官方 plugin 库</a>，根据个人需求对其功能继续扩展。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/08/15/How-to-Become-a-Great-Front-End-Engineer/" itemprop="url">
                   [译]如何成为一个优秀的前端工程师
                 </a>
@@ -874,132 +1027,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/04/function-hoisting/" itemprop="url">
-                  函数的提升
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-06-04T14:38:23+08:00" content="2015-06-04">
-              2015-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/04/function-hoisting/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/function-hoisting/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>我们知道，对于所有的变量，无论在函数体的什么地方声明，都会在后台被提升到函数体顶部。</p>
-</blockquote>
-<p>这个规则对于函数同样适用，其原因在于函数只是分配给变量的对象。<strong>唯一需要引起注意的地方在于当适用函数声明时，函数定义也会被提升，而不仅仅是函数声明被提升。</strong>看下面的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function test() &#123;</span><br><span class="line">  console.log(typeof foo);   // &quot;function&quot;</span><br><span class="line">  console.log(typeof bar);   // &quot;undefined&quot;</span><br><span class="line">  </span><br><span class="line">  function foo() &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  var bar = function () &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
-<p><code>test()</code>函数中的<code>foo</code>和<code>bar</code>的声明被提升到了顶部；同时，需要注意的是：<code>foo</code>和<code>bar</code>的区别在于前者的定义得到了提升，而后者的定义没有提升，这也就是<code>console.log(typeof bar)</code>输出<code>undefined</code>的原因。</p>
-<p>所以，需要记住的是：<strong>函数表达式仅仅是变量被提升，而函数的实现没有被提升。</strong><br>上面的代码中，后台解析的代码类似于：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function test() &#123;</span><br><span class="line">  var bar;</span><br><span class="line">  function foo() &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">  console.log(typeof foo);   // &quot;function&quot;</span><br><span class="line">  console.log(typeof bar);   // &quot;undefined&quot;</span><br><span class="line">  </span><br><span class="line">  var bar = function () &#123;</span><br><span class="line">    </span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1045,7 +1072,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1062,7 +1089,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

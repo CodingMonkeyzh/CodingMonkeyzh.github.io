@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css3," />
+  <meta name="keywords" content="nginx,macosx," />
 
 
 
@@ -84,23 +84,18 @@
 
 
 
-<meta name="description" content="我们可以通过 CSS3 中的box-shdow和transform 来实现酷炫的Drop-shadow效果：  下面记录一下是实现步骤。 DOM 结构我们仅仅需要一个div作为主体，阴影可借助伪元素:before和:after来实现。所以我们的 DOM 结构非常简单。 1&amp;lt;div class=&amp;quot;drop-shadow&amp;quot;&amp;gt;drop shadow effect&amp;lt;/">
-<meta name="keywords" content="css3">
+<meta name="description" content="本文记录了在 Mac OSX 下，通过 Nginx 1.15.5 来配置虚拟主机的过程。 0. 准备工作本次模拟的是效果是，通过浏览器访问 www.shop.com 和 api.shop.com 能定位到不同的网站目录下：  www.shop.com -&amp;gt; ~/Sites/home api.show.com -&amp;gt; ~/Sites/api  上面的两个域名是随便取的，为了能让它指向本地，">
+<meta name="keywords" content="nginx,macosx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="css3 实现 drop-box">
-<meta property="og:url" content="http://blog.mcbird.cn/2015/05/25/css3-drop-box/index.html">
+<meta property="og:title" content="Nginx 配置虚拟主机">
+<meta property="og:url" content="http://blog.mcbird.cn/2018/10/19/install-nginx-on-mac-osx/index.html">
 <meta property="og:site_name" content="MockingBird">
-<meta property="og:description" content="我们可以通过 CSS3 中的box-shdow和transform 来实现酷炫的Drop-shadow效果：  下面记录一下是实现步骤。 DOM 结构我们仅仅需要一个div作为主体，阴影可借助伪元素:before和:after来实现。所以我们的 DOM 结构非常简单。 1&amp;lt;div class=&amp;quot;drop-shadow&amp;quot;&amp;gt;drop shadow effect&amp;lt;/">
+<meta property="og:description" content="本文记录了在 Mac OSX 下，通过 Nginx 1.15.5 来配置虚拟主机的过程。 0. 准备工作本次模拟的是效果是，通过浏览器访问 www.shop.com 和 api.shop.com 能定位到不同的网站目录下：  www.shop.com -&amp;gt; ~/Sites/home api.show.com -&amp;gt; ~/Sites/api  上面的两个域名是随便取的，为了能让它指向本地，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/f3130bff3852dfb10af9fba8e1416b7d.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/98f538f3a798bf60aee45c8623e3c1ad.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/7850a4888ee6d6d522f3a9de9e7b6ce3.png">
-<meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
+<meta property="og:updated_time" content="2018-10-19T03:10:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="css3 实现 drop-box">
-<meta name="twitter:description" content="我们可以通过 CSS3 中的box-shdow和transform 来实现酷炫的Drop-shadow效果：  下面记录一下是实现步骤。 DOM 结构我们仅仅需要一个div作为主体，阴影可借助伪元素:before和:after来实现。所以我们的 DOM 结构非常简单。 1&amp;lt;div class=&amp;quot;drop-shadow&amp;quot;&amp;gt;drop shadow effect&amp;lt;/">
-<meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png">
+<meta name="twitter:title" content="Nginx 配置虚拟主机">
+<meta name="twitter:description" content="本文记录了在 Mac OSX 下，通过 Nginx 1.15.5 来配置虚拟主机的过程。 0. 准备工作本次模拟的是效果是，通过浏览器访问 www.shop.com 和 api.shop.com 能定位到不同的网站目录下：  www.shop.com -&amp;gt; ~/Sites/home api.show.com -&amp;gt; ~/Sites/api  上面的两个域名是随便取的，为了能让它指向本地，">
 
 
 
@@ -121,9 +116,9 @@
 
 
 
-  <link rel="canonical" href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/"/>
+  <link rel="canonical" href="http://blog.mcbird.cn/2018/10/19/install-nginx-on-mac-osx/"/>
 
-  <title> css3 实现 drop-box | MockingBird </title>
+  <title> Nginx 配置虚拟主机 | MockingBird </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -263,7 +258,7 @@
             
             
               
-                css3 实现 drop-box
+                Nginx 配置虚拟主机
               
             
           </h1>
@@ -275,38 +270,19 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-25T14:10:34+08:00" content="2015-05-25">
-              2015-05-25
+            <time itemprop="dateCreated" datetime="2018-10-19T11:10:40+08:00" content="2018-10-19">
+              2018-10-19
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css3/" itemprop="url" rel="index">
-                    <span itemprop="name">css3</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/05/25/css3-drop-box/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/25/css3-drop-box/" itemprop="commentsCount"></span>
+                <a href="/2018/10/19/install-nginx-on-mac-osx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/19/install-nginx-on-mac-osx/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -329,24 +305,22 @@
       
 
       
-        <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png" alt="drop shadow 阴影"></p>
-<p>下面记录一下是实现步骤。</p>
-<h2 id="DOM-结构"><a href="#DOM-结构" class="headerlink" title="DOM 结构"></a>DOM 结构</h2><p>我们仅仅需要一个<code>div</code>作为主体，阴影可借助伪元素<code>:before</code>和<code>:after</code>来实现。所以我们的 DOM 结构非常简单。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;drop-shadow&quot;&gt;drop shadow effect&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="添加阴影"><a href="#添加阴影" class="headerlink" title="添加阴影"></a>添加阴影</h2><p>给两个伪元素添加阴影，暂时先搞定左边，右边的阴影稍后再处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>现在，我们看到的是这个样子：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/f3130bff3852dfb10af9fba8e1416b7d.png" alt="添加左边的阴影"></p>
-<h2 id="调整阴影"><a href="#调整阴影" class="headerlink" title="调整阴影"></a>调整阴影</h2><p>下面我们再通过<code>transform</code>来旋转一下阴影的角度，这样看起来更有立体感。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line">   transform: rotate(-5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样我们就完成了一边的制作了：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/98f538f3a798bf60aee45c8623e3c1ad.png" alt="使用transform来是阴影倾斜"></p>
-<h2 id="调整阴影-1"><a href="#调整阴影-1" class="headerlink" title="调整阴影"></a>调整阴影</h2><p>接下来，我们只需要把其中一个阴影挪到右边即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:after &#123;</span><br><span class="line">   right: 10px;</span><br><span class="line">   left: auto;</span><br><span class="line">   transform: rotate(5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>这样，左边的阴影就<em>翻转</em>到了右边，大功告成：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7850a4888ee6d6d522f3a9de9e7b6ce3.png" alt="最终的效果图"></p>
-<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li><li><a href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a></li></ul></div>
+        <p>本文记录了在 Mac OSX 下，通过 Nginx 1.15.5 来配置虚拟主机的过程。</p>
+<h1 id="0-准备工作"><a href="#0-准备工作" class="headerlink" title="0. 准备工作"></a>0. 准备工作</h1><p>本次模拟的是效果是，通过浏览器访问 <a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> 和 api.shop.com 能定位到不同的网站目录下：</p>
+<ul>
+<li><a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> -&gt; ~/Sites/home</li>
+<li>api.show.com -&gt; ~/Sites/api</li>
+</ul>
+<p>上面的两个域名是随便取的，为了能让它指向本地，我们需要修改 <code>vhost</code> 文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /private/etc/hosts</span><br></pre></td></tr></table></figure></p>
+<p>追加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1       www.shop.com</span><br><span class="line">127.0.0.1       api.shop.com</span><br></pre></td></tr></table></figure></p>
+<h1 id="1-通过-brew-安装-nginx"><a href="#1-通过-brew-安装-nginx" class="headerlink" title="1. 通过 brew 安装 nginx"></a>1. 通过 brew 安装 nginx</h1><p>通过 homebrew 安装 nginx:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后通过 <code>brew services start nginx</code> 启动 nginx 服务</p>
+<h1 id="2-修改-nginx-配置文件"><a href="#2-修改-nginx-配置文件" class="headerlink" title="2. 修改 nginx 配置文件"></a>2. 修改 nginx 配置文件</h1><p>接下来需要对 nginx 的配置文件(<code>/usr/local/etc/nginx/nginx.conf</code>)进行修改，打开 <code>nginx.conf</code> 确保下面这行配置已经启用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include servers/*;</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-添加虚拟主机配置文件"><a href="#3-添加虚拟主机配置文件" class="headerlink" title="3. 添加虚拟主机配置文件"></a>3. 添加虚拟主机配置文件</h1><p>然后，在 <code>/usr/local/etc/nginx/services</code> 目录下，创建两个配置文件（<code>home.conf, api.conf</code>）用于对上面两个 host 进行配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># home.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  www.shop.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /Users/mcbird/Sites/main;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># api.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  api.shop.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /Users/mcbird/Sites/api;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-加载新的-nginx-配置"><a href="#4-加载新的-nginx-配置" class="headerlink" title="4. 加载新的 nginx 配置"></a>4. 加载新的 nginx 配置</h1><p>修改完 nginx 配置文件，并不会立即生效，接下来可以先对配置文件进行检查：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查配置文件是否有语法错误</span></span><br><span class="line">sudo nginx -t</span><br><span class="line">nginx: the configuration file /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure></p>
+<p>检查成功后，通过 <code>reload</code> 信号重新加载配置文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure></p>
+<h1 id="5-完成"><a href="#5-完成" class="headerlink" title="5. 完成"></a>5. 完成</h1><p>通过浏览器访问 <a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> 就会打开 <code>/Users/mcbird/Sites/main/index.html</code> 文件；api.shop.com 会打开 <code>/Users/mcbird/Sites/api/index.html</code></p>
+
       
     </div>
 
@@ -367,7 +341,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css3/" rel="tag">#css3</a>
+            <a href="/tags/nginx/" rel="tag">#nginx</a>
+          
+            <a href="/tags/macosx/" rel="tag">#macosx</a>
           
         </div>
       
@@ -376,17 +352,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/19/understanding-bfc-and-margin-collapse/" rel="next" title="理解BFC和Margin Collapse">
-                <i class="fa fa-chevron-left"></i> 理解BFC和Margin Collapse
+              <a href="/2018/05/23/learning-webpack-file/" rel="next" title="Webpack 是如何加载模块的">
+                <i class="fa fa-chevron-left"></i> Webpack 是如何加载模块的
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/05/26/css3-media-query/" rel="prev" title="CSS3 Media Query">
-                CSS3 Media Query <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -412,8 +384,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/05/25/css3-drop-box/"
-           data-title="css3 实现 drop-box" data-url="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">
+      <div class="ds-thread" data-thread-key="2018/10/19/install-nginx-on-mac-osx/"
+           data-title="Nginx 配置虚拟主机" data-url="http://blog.mcbird.cn/2018/10/19/install-nginx-on-mac-osx/">
       </div>
     
   </div>
@@ -533,7 +505,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-结构"><span class="nav-number">1.</span> <span class="nav-text">DOM 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加阴影"><span class="nav-number">2.</span> <span class="nav-text">添加阴影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调整阴影"><span class="nav-number">3.</span> <span class="nav-text">调整阴影</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调整阴影-1"><span class="nav-number">4.</span> <span class="nav-text">调整阴影</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐阅读</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-准备工作"><span class="nav-number">1.</span> <span class="nav-text">0. 准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-通过-brew-安装-nginx"><span class="nav-number">2.</span> <span class="nav-text">1. 通过 brew 安装 nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-修改-nginx-配置文件"><span class="nav-number">3.</span> <span class="nav-text">2. 修改 nginx 配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-添加虚拟主机配置文件"><span class="nav-number">4.</span> <span class="nav-text">3. 添加虚拟主机配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-加载新的-nginx-配置"><span class="nav-number">5.</span> <span class="nav-text">4. 加载新的 nginx 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-完成"><span class="nav-number">6.</span> <span class="nav-text">5. 完成</span></a></li></ol></div>
             
           </div>
         </section>

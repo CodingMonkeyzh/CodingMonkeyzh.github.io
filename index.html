@@ -259,6 +259,121 @@
             
               
                 
+                <a class="post-title-link" href="/2018/10/19/install-nginx-on-mac-osx/" itemprop="url">
+                  Nginx 配置虚拟主机
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-10-19T11:10:40+08:00" content="2018-10-19">
+              2018-10-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/10/19/install-nginx-on-mac-osx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/19/install-nginx-on-mac-osx/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文记录了在 Mac OSX 下，通过 Nginx 1.15.5 来配置虚拟主机的过程。</p>
+<h1 id="0-准备工作"><a href="#0-准备工作" class="headerlink" title="0. 准备工作"></a>0. 准备工作</h1><p>本次模拟的是效果是，通过浏览器访问 <a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> 和 api.shop.com 能定位到不同的网站目录下：</p>
+<ul>
+<li><a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> -&gt; ~/Sites/home</li>
+<li>api.show.com -&gt; ~/Sites/api</li>
+</ul>
+<p>上面的两个域名是随便取的，为了能让它指向本地，我们需要修改 <code>vhost</code> 文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /private/etc/hosts</span><br></pre></td></tr></table></figure></p>
+<p>追加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1       www.shop.com</span><br><span class="line">127.0.0.1       api.shop.com</span><br></pre></td></tr></table></figure></p>
+<h1 id="1-通过-brew-安装-nginx"><a href="#1-通过-brew-安装-nginx" class="headerlink" title="1. 通过 brew 安装 nginx"></a>1. 通过 brew 安装 nginx</h1><p>通过 homebrew 安装 nginx:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后通过 <code>brew services start nginx</code> 启动 nginx 服务</p>
+<h1 id="2-修改-nginx-配置文件"><a href="#2-修改-nginx-配置文件" class="headerlink" title="2. 修改 nginx 配置文件"></a>2. 修改 nginx 配置文件</h1><p>接下来需要对 nginx 的配置文件(<code>/usr/local/etc/nginx/nginx.conf</code>)进行修改，打开 <code>nginx.conf</code> 确保下面这行配置已经启用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include servers/*;</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-添加虚拟主机配置文件"><a href="#3-添加虚拟主机配置文件" class="headerlink" title="3. 添加虚拟主机配置文件"></a>3. 添加虚拟主机配置文件</h1><p>然后，在 <code>/usr/local/etc/nginx/services</code> 目录下，创建两个配置文件（<code>home.conf, api.conf</code>）用于对上面两个 host 进行配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># home.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  www.shop.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /Users/mcbird/Sites/main;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># api.conf</span><br><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  api.shop.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /Users/mcbird/Sites/api;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-加载新的-nginx-配置"><a href="#4-加载新的-nginx-配置" class="headerlink" title="4. 加载新的 nginx 配置"></a>4. 加载新的 nginx 配置</h1><p>修改完 nginx 配置文件，并不会立即生效，接下来可以先对配置文件进行检查：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查配置文件是否有语法错误</span></span><br><span class="line">sudo nginx -t</span><br><span class="line">nginx: the configuration file /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /usr/<span class="built_in">local</span>/etc/nginx/nginx.conf <span class="built_in">test</span> is successful</span><br></pre></td></tr></table></figure></p>
+<p>检查成功后，通过 <code>reload</code> 信号重新加载配置文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nginx -s reload</span><br></pre></td></tr></table></figure></p>
+<h1 id="5-完成"><a href="#5-完成" class="headerlink" title="5. 完成"></a>5. 完成</h1><p>通过浏览器访问 <a href="http://www.shop.com" target="_blank" rel="noopener">www.shop.com</a> 就会打开 <code>/Users/mcbird/Sites/main/index.html</code> 文件；api.shop.com 会打开 <code>/Users/mcbird/Sites/api/index.html</code></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/05/23/learning-webpack-file/" itemprop="url">
                   Webpack 是如何加载模块的
                 </a>
@@ -804,139 +919,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/09/css-variables/" itemprop="url">
-                  简单介绍 CSS Variables
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-09T21:13:11+08:00" content="2016-03-09">
-              2016-03-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index">
-                    <span itemprop="name">css</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/09/css-variables/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/09/css-variables/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3310efbad24e13eb3c16748b8bc49644.png" alt="css3"></p>
-<p>如果我们用过动态样式语言（像 <a href="http://lesscss.org/" target="_blank" rel="noopener">Less</a>、 <a href="http://sass-lang.com/" target="_blank" rel="noopener">Sass</a> ）的话，肯定对其中可以定义变量的特性非常喜欢，特别是随着样式文件越来越复杂的时候，把一些值抽成变量会使代码更好维护。现在随着 CSS 的发展，目前 <em>CSS Variables</em> 也引入了自己的变量，本文就对 <em>CSS Variables</em> 进行简单的介绍。</p>
-<h2 id="如何定义和使用-CSS-Variables"><a href="#如何定义和使用-CSS-Variables" class="headerlink" title="如何定义和使用 CSS Variables"></a>如何定义和使用 <em>CSS Variables</em></h2><p>按照 <a href="https://drafts.csswg.org/css-variables/" target="_blank" rel="noopener">CSS Variables 规范</a>，我们通过 <code>--*</code> 的方式来创建一个CSS变量，并通过 <code>var(--foo)</code> 的方式来引用一个变量（大小写敏感哦）。例如：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">	<span class="attribute">--brand-primary</span>: <span class="number">#338800</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="built_in">var</span>(--brand-primary);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><em>CSS变量同样是可嵌套使用的，<code>:root</code>用来定义全局变量</em></p>
-<h2 id="浏览器兼容性"><a href="#浏览器兼容性" class="headerlink" title="浏览器兼容性"></a>浏览器兼容性</h2><p>我在写这篇文章的时候，这个特性依然处于实验阶段，所以，目前来说，只有 <em>FireFox 34+</em> 、 <em>Chrome 49+</em> 以及 <em>Safari 9.1+</em> 支持了这个特性。另外， <em>Chrome 48</em> 其实也支持了这个特性，用户需要在浏览器地址栏输入 <code>chrome://flag/</code> 找到“Enable experimental Web Platform”选项开启才行。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/94af41aa76a2f39084cbd5533d181444.png" alt="css variables 兼容性"></p>
-<h2 id="还有一些你该知道的"><a href="#还有一些你该知道的" class="headerlink" title="还有一些你该知道的"></a>还有一些你该知道的</h2><ul>
-<li><code>var()</code> 还可以接受第二个参数（ <code>color: var(--header-color, blue);</code> ），表示备选参数，第一个参数获取失败的时候，它就生效了。</li>
-<li><p>变量也是可用嵌套的：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--base-color</span>: <span class="selector-id">#f93ce9</span>;</span><br><span class="line"><span class="selector-tag">--background-gradient</span>: <span class="selector-tag">linear-gradient</span>(<span class="selector-tag">to</span> <span class="selector-tag">top</span>, <span class="selector-tag">var</span>(<span class="selector-tag">--base-color</span>), <span class="selector-id">#444</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>变量还可以更另一个CSS特性——<code>calc()</code>方法一起使用：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">--container-width</span>: 1000<span class="selector-tag">px</span>;</span><br><span class="line">max-width: calc(var(--container-width) / 2);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<div><h1>推荐阅读</h1><ul><li><a href="https://blog.naaln.com/2014/08/how-improve-performance-css-selectors/">如何提升 CSS 选择器性能</a></li></ul></div>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -982,7 +964,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -999,7 +981,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
