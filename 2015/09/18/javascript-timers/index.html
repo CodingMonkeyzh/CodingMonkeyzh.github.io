@@ -92,13 +92,13 @@
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。 setTimeout()MDN对 setTimeout 的定义为：  在指定的延迟时间之后调用一个函数或执行一个代码片段。  语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png">
-<meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
+<meta property="og:image" content="http://img.mcbird.cn/d83d0ac5f1c6e766b2bd61422df501d5.png">
+<meta property="og:image" content="http://img.mcbird.cn/7738497179ec4dfb252dd6c3e46ac8da.png">
+<meta property="og:updated_time" content="2020-10-27T05:54:11.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript 定时器工作原理">
 <meta name="twitter:description" content="说到 javascript 中的定时器，我们肯定会想到 setTimeout() 和 setInterval() 这两个函数。本文将从 事件循环（Event Loop） 的角度来分析两者的工作原理和区别。 setTimeout()MDN对 setTimeout 的定义为：  在指定的延迟时间之后调用一个函数或执行一个代码片段。  语法setTimeout 的语法非常简单，第一个参数为回调函数，第二">
-<meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png">
+<meta name="twitter:image" content="http://img.mcbird.cn/d83d0ac5f1c6e766b2bd61422df501d5.png">
 
 
 
@@ -353,10 +353,10 @@
 <li>从耗时任务开始执行，过了 <code>100ms</code>， 第一个 <code>setTimeout</code> 的回调函数期望执行，于是被加入到事件队列，但是此时前面的耗时任务还没执行完，所以它只能在队列中等待，直到耗时任务执行完毕它才开始执行，所以结果中我们开的看到的是： <code>第一个setTimeout回调执行等待时间： 1018</code>。</li>
 <li>第一个 <code>setTimeout</code> 回调一执行，又开启了第二个 <code>setTimeout</code>， 这个定时器也是期望延时 <code>100ms</code> 之后能够执行它的回调函数。 但是，在第一个 <code>setTimeout</code> 又存在一个耗时任务，所有它的剧情跟第一个定时器一样，也等待了 1000ms 才开始执行。</li>
 </ol>
-<p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/d83d0ac5f1c6e766b2bd61422df501d5.png" alt="setTimeout"></p>
+<p>可以用下面的图来概括：<br><img src="http://img.mcbird.cn/d83d0ac5f1c6e766b2bd61422df501d5.png" alt="setTimeout"></p>
 <p>再来看 <code>setInterval</code> 的一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> intervalStart = now();</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'interval距定义定时器的时间：'</span>, now() - loopStart);</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> loopStart = now();</span><br><span class="line">heavyTask();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'heavyTask耗费时间：'</span>, now() - loopStart);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">heavyTask</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> s = now();</span><br><span class="line">  <span class="keyword">while</span>(now() - s &lt; <span class="number">1000</span>) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">now</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// heavyTask耗费时间： 1013</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1016</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1123</span></span><br><span class="line"><span class="comment">// interval距定义定时器的时间： 1224</span></span><br></pre></td></tr></table></figure></p>
 <p>上面这段代码，我们期望每隔 <code>100ms</code> 就打出一条日志。相对于 <code>setTimeout</code> 的区别， <code>setInterval</code> 在<strong>准备把回调函数加入到事件队列的时候，会判断队列中是否还有未执行的回调</strong>，如果有的话，它就不会再往队列中添加回调函数。 不然，会出现多个回调同时执行的情况。</p>
-<p>可以用下面的图来概括：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7738497179ec4dfb252dd6c3e46ac8da.png" alt="setInterval"></p>
+<p>可以用下面的图来概括：<br><img src="http://img.mcbird.cn/7738497179ec4dfb252dd6c3e46ac8da.png" alt="setInterval"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面对javascript定时器执行原理进行了简要的分析，希望能够帮助我们更深入的理解javascript。文中有描述不当的地方可以在评论中指出。</p>
 <blockquote>
 <p>文章地址：<a href="http://blog.mcbird.cn/2015/09/18/javascript-timers/">http://blog.mcbird.cn/2015/09/18/javascript-timers/</a></p>
@@ -467,7 +467,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               src="http://img.mcbird.cn/p1.jpeg"
                alt="McBird" />
           <p class="site-author-name" itemprop="name">McBird</p>
           <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
@@ -569,7 +569,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

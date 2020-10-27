@@ -333,7 +333,7 @@
 <h2 id="引入方式"><a href="#引入方式" class="headerlink" title="引入方式"></a>引入方式</h2><p>引入媒体查询的方式有两种。</p>
 <h3 id="link-方式引入"><a href="#link-方式引入" class="headerlink" title="link 方式引入"></a>link 方式引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; media=&quot;screen and (max-width: 600px)&quot; href=&quot;small.css&quot; /&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="css-中引入"><a href="#css-中引入" class="headerlink" title="css 中引入"></a>css 中引入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media screen and (max-width: 600px) &#123;</span><br><span class="line">  选择器 &#123;</span><br><span class="line">    属性：属性值；</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="常见的-Media-Query"><a href="#常见的-Media-Query" class="headerlink" title="常见的 Media Query"></a>常见的 Media Query</h2><p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
+<h2 id="常见的-Media-Query"><a href="#常见的-Media-Query" class="headerlink" title="常见的 Media Query"></a>常见的 Media Query</h2><p><img src="http://img.mcbird.cn/11677e3fb23e03994e6f2241ae75caee.png" alt="media query 参考表"></p>
 <p><a href="http://caniuse.com/#feat=css-mediaqueries" target="_blank" rel="noopener">兼容性参考</a></p>
 <div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/25/css3-drop-box/">css3 实现 drop-box</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a></li></ul></div>
           
@@ -455,22 +455,22 @@
         
           
             <p>我们可以通过 CSS3 中的<code>box-shdow</code>和<code>transform</code> 来实现酷炫的<em>Drop-shadow</em>效果：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/4aee299b344bf0f211fbb30fed99cb8a.png" alt="drop shadow 阴影"></p>
+<p><img src="http://img.mcbird.cn/4aee299b344bf0f211fbb30fed99cb8a.png" alt="drop shadow 阴影"></p>
 <p>下面记录一下是实现步骤。</p>
 <h2 id="DOM-结构"><a href="#DOM-结构" class="headerlink" title="DOM 结构"></a>DOM 结构</h2><p>我们仅仅需要一个<code>div</code>作为主体，阴影可借助伪元素<code>:before</code>和<code>:after</code>来实现。所以我们的 DOM 结构非常简单。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;drop-shadow&quot;&gt;drop shadow effect&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="添加阴影"><a href="#添加阴影" class="headerlink" title="添加阴影"></a>添加阴影</h2><p>给两个伪元素添加阴影，暂时先搞定左边，右边的阴影稍后再处理。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>现在，我们看到的是这个样子：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/f3130bff3852dfb10af9fba8e1416b7d.png" alt="添加左边的阴影"></p>
+<p><img src="http://img.mcbird.cn/f3130bff3852dfb10af9fba8e1416b7d.png" alt="添加左边的阴影"></p>
 <h2 id="调整阴影"><a href="#调整阴影" class="headerlink" title="调整阴影"></a>调整阴影</h2><p>下面我们再通过<code>transform</code>来旋转一下阴影的角度，这样看起来更有立体感。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:before,</span><br><span class="line"> .drop-shadow:after &#123;</span><br><span class="line">   content: &quot;&quot;;</span><br><span class="line">   position: absolute;</span><br><span class="line">   z-index: -1;</span><br><span class="line">   bottom: 15px;</span><br><span class="line">   left: 10px;</span><br><span class="line">   width: 50%;</span><br><span class="line">   height: 20%;</span><br><span class="line">   box-shadow: 0 15px 20px rgba(125, 125, 125, 0.8);</span><br><span class="line">   transform: rotate(-5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们就完成了一边的制作了：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/98f538f3a798bf60aee45c8623e3c1ad.png" alt="使用transform来是阴影倾斜"></p>
+<p><img src="http://img.mcbird.cn/98f538f3a798bf60aee45c8623e3c1ad.png" alt="使用transform来是阴影倾斜"></p>
 <h2 id="调整阴影-1"><a href="#调整阴影-1" class="headerlink" title="调整阴影"></a>调整阴影</h2><p>接下来，我们只需要把其中一个阴影挪到右边即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.drop-shadow:after &#123;</span><br><span class="line">   right: 10px;</span><br><span class="line">   left: auto;</span><br><span class="line">   transform: rotate(5deg);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>这样，左边的阴影就<em>翻转</em>到了右边，大功告成：</p>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7850a4888ee6d6d522f3a9de9e7b6ce3.png" alt="最终的效果图"></p>
+<p><img src="http://img.mcbird.cn/7850a4888ee6d6d522f3a9de9e7b6ce3.png" alt="最终的效果图"></p>
 <div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/05/26/css3-box-shadow/">css3 box shadow</a></li><li><a href="http://blog.mcbird.cn/2015/05/26/css3-media-query/">CSS3 Media Query</a></li><li><a href="http://blog.mcbird.cn/2015/05/27/intro-of-css3-transition-transform-animation/">CSS3 Transition, transform 和 animation 介绍</a></li></ul></div>
           
         
@@ -591,8 +591,8 @@
         
           
             <h2 id="什么是-BFC-Block-formating-contexts"><a href="#什么是-BFC-Block-formating-contexts" class="headerlink" title="什么是 BFC (Block formating contexts)"></a>什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
-<h2 id="BFC-的运用"><a href="#BFC-的运用" class="headerlink" title="BFC 的运用"></a>BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
-<p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
+<h2 id="BFC-的运用"><a href="#BFC-的运用" class="headerlink" title="BFC 的运用"></a>BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://img.mcbird.cn/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
+<p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://img.mcbird.cn/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
 <h2 id="合并外边距与BFC"><a href="#合并外边距与BFC" class="headerlink" title="合并外边距与BFC"></a>合并外边距与BFC</h2><p>在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是祖先关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。</p>
 <h3 id="折叠的结果"><a href="#折叠的结果" class="headerlink" title="折叠的结果"></a>折叠的结果</h3><ul>
 <li>两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。</li>
@@ -610,7 +610,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/10d7ccedd9c05a899eeb15b02fd5d7c8.png" alt=""><br>如上图所示，<code>margin-top</code>产生了折叠。</p>
+<p><img src="http://img.mcbird.cn/10d7ccedd9c05a899eeb15b02fd5d7c8.png" alt=""><br>如上图所示，<code>margin-top</code>产生了折叠。</p>
 
           
         
@@ -930,7 +930,7 @@
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               src="http://img.mcbird.cn/p1.jpeg"
                alt="McBird" />
           <p class="site-author-name" itemprop="name">McBird</p>
           <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
@@ -1021,7 +1021,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -92,14 +92,14 @@
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="什么是 BFC (Block formating contexts)浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子，都会为他们的内容创建新的BFC（块级格式上下文）。在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/10d7ccedd9c05a899eeb15b02fd5d7c8.png">
-<meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
+<meta property="og:image" content="http://img.mcbird.cn/89341379b4d8e240031fd3b8905d4a87.png">
+<meta property="og:image" content="http://img.mcbird.cn/fb6f5a2e47c06be58530e2e066b15c78.png">
+<meta property="og:image" content="http://img.mcbird.cn/10d7ccedd9c05a899eeb15b02fd5d7c8.png">
+<meta property="og:updated_time" content="2020-10-27T05:54:11.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解BFC和Margin Collapse">
 <meta name="twitter:description" content="什么是 BFC (Block formating contexts)浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子，都会为他们的内容创建新的BFC（块级格式上下文）。在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他">
-<meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png">
+<meta name="twitter:image" content="http://img.mcbird.cn/89341379b4d8e240031fd3b8905d4a87.png">
 
 
 
@@ -329,8 +329,8 @@
 
       
         <h2 id="什么是-BFC-Block-formating-contexts"><a href="#什么是-BFC-Block-formating-contexts" class="headerlink" title="什么是 BFC (Block formating contexts)"></a>什么是 BFC (Block formating contexts)</h2><p><strong>浮动元素和绝对定位元素，非块级盒子的块级容器（例如 inline-blocks, table-cells, 和 table-captions），以及overflow值不为“visiable”的块级盒子</strong>，都会为他们的内容创建新的BFC（块级格式上下文）。<br>在BFC中，盒子从顶端开始垂直地一个接一个地排列，两个盒子之间的垂直的间隙是由他们的margin 值所决定的。在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠。<br>在BFC中，每一个盒子的左外边缘（margin-left）会触碰到容器的左边缘(border-left)（对于从右到左的格式来说，则触碰到右边缘）。</p>
-<h2 id="BFC-的运用"><a href="#BFC-的运用" class="headerlink" title="BFC 的运用"></a>BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
-<p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
+<h2 id="BFC-的运用"><a href="#BFC-的运用" class="headerlink" title="BFC 的运用"></a>BFC 的运用</h2><p>在很多情况下，我们都会遇到下面这种情况：<br><img src="http://img.mcbird.cn/89341379b4d8e240031fd3b8905d4a87.png" alt="没有运用BFC之前的效果图"></p>
+<p>图片是 float:left 的，右侧文本过多时会围绕图片，而我们希望的是，文本保持在红框内，那么这个时候，我们就可以把文本转化为一个<code>BFC</code>来实现此效果。<br><img src="http://img.mcbird.cn/fb6f5a2e47c06be58530e2e066b15c78.png" alt="BFC的运用"></p>
 <h2 id="合并外边距与BFC"><a href="#合并外边距与BFC" class="headerlink" title="合并外边距与BFC"></a>合并外边距与BFC</h2><p>在CSS当中，相邻的两个盒子（可能是兄弟关系也可能是祖先关系）的外边距可以结合成一个单独的外边距。这种合并外边距的方式被称为折叠，并且因而所结合成的外边距称为折叠外边距。</p>
 <h3 id="折叠的结果"><a href="#折叠的结果" class="headerlink" title="折叠的结果"></a>折叠的结果</h3><ul>
 <li>两个相邻的外边距都是正数时，折叠结果是它们两者之间较大的值。</li>
@@ -348,7 +348,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/10d7ccedd9c05a899eeb15b02fd5d7c8.png" alt=""><br>如上图所示，<code>margin-top</code>产生了折叠。</p>
+<p><img src="http://img.mcbird.cn/10d7ccedd9c05a899eeb15b02fd5d7c8.png" alt=""><br>如上图所示，<code>margin-top</code>产生了折叠。</p>
 
       
     </div>
@@ -453,7 +453,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               src="http://img.mcbird.cn/p1.jpeg"
                alt="McBird" />
           <p class="site-author-name" itemprop="name">McBird</p>
           <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
@@ -555,7 +555,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

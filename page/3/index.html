@@ -329,7 +329,7 @@
       
         
           
-            <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/8d3777b647413ea22733efca334a294a.png" alt="gulp logo"></p>
+            <p><img src="http://img.mcbird.cn/8d3777b647413ea22733efca334a294a.png" alt="gulp logo"></p>
 <h2 id="Gulp-是什么？"><a href="#Gulp-是什么？" class="headerlink" title="Gulp 是什么？"></a>Gulp 是什么？</h2><p><a href="http://gulpjs.com/" title="gulp" target="_blank" rel="noopener">Gulp</a> 是 <a href="http://gruntjs.com/" target="_blank" rel="noopener">Grunt</a> 的替代者。作为构建工具，Gulp 更具有语法简洁易懂的优势，所以学习成本更低。<br>利用 Gulp， 我们不仅可以对HTML、CSS（LESS|SASS）、JS（CoffeeScript）进行编译；还可以监听文件的变化，同时借助 <em>livereloader</em> 实时地刷新页面；甚至还可以对图片进行压缩优化。下面记录一下我的 <em>Gulp 学习之旅</em> 。</p>
 <h2 id="安装-Gulp"><a href="#安装-Gulp" class="headerlink" title="安装 Gulp"></a>安装 Gulp</h2><p>Gulp 需要 <a href="node.js">nodejs.org</a> 运行环境，首先请确保你的机器上安装了 <code>node.js</code>。</p>
 <ol start="0">
@@ -828,11 +828,11 @@
 <h2 id="原始版本"><a href="#原始版本" class="headerlink" title="原始版本"></a>原始版本</h2><p>让我们先来重现一下产生问题的场景，我写了一个简单的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/zGWyYM" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/zGWyYM</a></p>
 <p>可以看到， 我们在<code>.first</code>块中放了一张背景图片，并且通过<code>background-attachment:fixed</code>来实现背景图固定的效果，你可以滚动页面感受一下效果，是不是很酷炫？下面是核心的样式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.first &#123;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-attachment: fixed;</span><br><span class="line">  background-size: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="noopener">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
+<p>通过这种方式实现的效果表现力如何呢？ 打开<a href="https://developer.chrome.com/devtools/docs/timeline" target="_blank" rel="noopener">Chrome DevTool 的 Timeline</a>来调试一下：<br><img src="http://img.mcbird.cn/7fdd27f8394339658b20384c60a2a1b6.png" alt="background-attachment: fixed;的表现力"><br><strong>这看上去并不怎么样， 很多时候都掉到了<code>30fps</code>以下。</strong></p>
 <h2 id="改进版本"><a href="#改进版本" class="headerlink" title="改进版本"></a>改进版本</h2><p>下面，我们试试用<code>will-change</code>来做一下浏览器优化。同样，我基于前面的例子，放弃了之前的实现方式，加入了<code>will-change</code>来优化浏览器渲染效果，这是我的DEMO：<br><a href="http://codepen.io/CodingMonkeyzh/pen/YXadXP" target="_blank" rel="noopener">http://codepen.io/CodingMonkeyzh/pen/YXadXP</a></p>
 <p>我们没有在使用<code>background-attachment: fixed;</code>来实现这个效果，取而代之的是，利用<code>:before</code>，在其中放入一张<code>position:fixed;</code>的背景图片，然后用<code>will-change: transform</code>做浏览器渲染优化。下面是核心代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.first::before &#123;</span><br><span class="line">  content: &apos; &apos;;</span><br><span class="line">  position: fixed;</span><br><span class="line">  width: 100%;</span><br><span class="line">  height: 100%;</span><br><span class="line">  top: 0;</span><br><span class="line">  left: 0;</span><br><span class="line">  background: url(&apos;http://placehold.it/800x500&apos;) no-repeat center center;</span><br><span class="line">  background-size: cover;</span><br><span class="line">  will-change: transform;</span><br><span class="line">  z-index: -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那通过这种方式进行优化，表现力究竟如何呢？我们采用同样的方式对页面进行调试，结果如下：<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/7d002738d7c2916a878a30dae0444445.png" alt="will-chagne 优化后的效果"><br>可以看到，<strong>页面的帧率明显得到了提升！页面滚动时变得流畅了许多。</strong></p>
+<p>那通过这种方式进行优化，表现力究竟如何呢？我们采用同样的方式对页面进行调试，结果如下：<br><img src="http://img.mcbird.cn/7d002738d7c2916a878a30dae0444445.png" alt="will-chagne 优化后的效果"><br>可以看到，<strong>页面的帧率明显得到了提升！页面滚动时变得流畅了许多。</strong></p>
 <p>那么，<code>will-change</code>到底是什么？</p>
 <blockquote>
 <p>will-change 为web开发者提供了一种告知浏览器该元素会有哪些变化的方法，这样浏览器可以在元素属性真正发生变化之前提前做好对应的优化准备工作。 这种优化可以将一部分复杂的计算工作提前准备好，使页面的反应更为快速灵敏。</p>
@@ -1064,7 +1064,7 @@
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               src="http://img.mcbird.cn/p1.jpeg"
                alt="McBird" />
           <p class="site-author-name" itemprop="name">McBird</p>
           <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
@@ -1155,7 +1155,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

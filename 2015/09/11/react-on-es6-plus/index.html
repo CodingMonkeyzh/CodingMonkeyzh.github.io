@@ -92,12 +92,12 @@
 <meta property="og:site_name" content="MockingBird">
 <meta property="og:description" content="原文地址： http://babeljs.io/blog/2015/06/07/react-on-es6-plus/   在今年对 Instagram Web 进行全新的设计的时候，我喜欢在写 React 组件的时候，用上一些 ES6+ 的新特性。请允许我列举这些能够改变你写 React 应用方式的新特性。比起以往，这些特性能够使你撸起码来更加容易、有趣！ 类（Class）使用 ES6+ 来编写">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/652b57761014ee46dc3114e22229b92f.png">
-<meta property="og:updated_time" content="2016-03-09T13:14:28.000Z">
+<meta property="og:image" content="http://img.mcbird.cn/652b57761014ee46dc3114e22229b92f.png">
+<meta property="og:updated_time" content="2020-10-27T05:54:11.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[译]在 React.js 中使用 ES6+">
 <meta name="twitter:description" content="原文地址： http://babeljs.io/blog/2015/06/07/react-on-es6-plus/   在今年对 Instagram Web 进行全新的设计的时候，我喜欢在写 React 组件的时候，用上一些 ES6+ 的新特性。请允许我列举这些能够改变你写 React 应用方式的新特性。比起以往，这些特性能够使你撸起码来更加容易、有趣！ 类（Class）使用 ES6+ 来编写">
-<meta name="twitter:image" content="http://7xiyp1.com1.z0.glb.clouddn.com/652b57761014ee46dc3114e22229b92f.png">
+<meta name="twitter:image" content="http://img.mcbird.cn/652b57761014ee46dc3114e22229b92f.png">
 
 
 
@@ -329,7 +329,7 @@
         <blockquote>
 <p>原文地址： <a href="http://babeljs.io/blog/2015/06/07/react-on-es6-plus/" target="_blank" rel="noopener">http://babeljs.io/blog/2015/06/07/react-on-es6-plus/</a></p>
 </blockquote>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/652b57761014ee46dc3114e22229b92f.png" alt="babel.js"></p>
+<p><img src="http://img.mcbird.cn/652b57761014ee46dc3114e22229b92f.png" alt="babel.js"></p>
 <p>在今年对 Instagram Web 进行全新的设计的时候，我喜欢在写 React 组件的时候，用上一些 ES6+ 的新特性。请允许我列举这些能够改变你写 React 应用方式的新特性。比起以往，这些特性能够使你撸起码来更加容易、有趣！</p>
 <h2 id="类（Class）"><a href="#类（Class）" class="headerlink" title="类（Class）"></a>类（Class）</h2><p>使用 ES6+ 来编写 React 组件最明显的变化就是我们定义组件（类）的语法的方式。我们可以用定义一个继承了 <code>React.Component</code> 的ES6 类来代替原本使用 <code>React.createClass</code> 的来创建类的方式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">&#123;this.props.caption&#125;</span> <span class="attr">src</span>=<span class="string">&#123;this.props.src&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure></p>
 <p>我们可以发现这种写法使得定义组件的方式变得更加简洁：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> Photo = React.createClass(&#123;</span><br><span class="line">  handleDoubleTap: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123; … &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; … &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  handleDoubleTap(e) &#123; … &#125;</span><br><span class="line">  render() &#123; … &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -456,7 +456,7 @@
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               src="http://img.mcbird.cn/p1.jpeg"
                alt="McBird" />
           <p class="site-author-name" itemprop="name">McBird</p>
           <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
@@ -558,7 +558,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
