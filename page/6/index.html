@@ -259,6 +259,131 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/08/change-screenshot-name/" itemprop="url">
+                  Mac OS X 修改截图默认文件名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-08T10:14:33+08:00" content="2015-05-08">
+              2015-05-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/system/" itemprop="url" rel="index">
+                    <span itemprop="name">system</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/08/change-screenshot-name/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/change-screenshot-name/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>下面纪录一下通过<strong>Terminal</strong>来改变默认截图格式、名称、以及存储目录。</p>
+<h2 id="查看当前配置"><a href="#查看当前配置" class="headerlink" title="查看当前配置"></a>查看当前配置</h2><p>可以通过下面的命令查看当前配置（修改之后的）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">defaults <span class="built_in">read</span> com.apple.screencapture</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"include-date"</span> = 0;</span><br><span class="line">    location = <span class="string">"/Users/mcbird/Sites/blog/static/images"</span>;</span><br><span class="line">    name = screen;</span><br><span class="line">    <span class="built_in">type</span> = jpg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="改变格式"><a href="#改变格式" class="headerlink" title="改变格式"></a>改变格式</h2><p>默认是<code>png</code>格式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture type jpg</span><br></pre></td></tr></table></figure></p>
+<h2 id="自定义文件名"><a href="#自定义文件名" class="headerlink" title="自定义文件名"></a>自定义文件名</h2><p>默认文件名是<strong>屏幕截图 2015-01-01 12:12:12</strong>这样的，下面对其修改。</p>
+<h3 id="去掉日期"><a href="#去掉日期" class="headerlink" title="去掉日期"></a>去掉日期</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture &quot;include-date&quot; 0</span><br></pre></td></tr></table></figure>
+<h3 id="改变名称"><a href="#改变名称" class="headerlink" title="改变名称"></a>改变名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture name screen</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/07/Disable-dragging-an-image-form-html/" itemprop="url">
                   阻止HTML中的图片拖动
                 </a>
@@ -412,7 +537,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -420,7 +545,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -429,7 +554,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
