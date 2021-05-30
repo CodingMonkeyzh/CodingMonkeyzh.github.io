@@ -259,6 +259,159 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/24/5-flexbox-tech-you-need-to-know-ahout/" itemprop="url">
+                  [译]你应该知道的5个 Flexbox 技巧
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-24T16:28:28+08:00" content="2016-05-24">
+              2016-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/css3/" itemprop="url" rel="index">
+                    <span itemprop="name">css3</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/24/5-flexbox-tech-you-need-to-know-ahout/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/5-flexbox-tech-you-need-to-know-ahout/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/2c418c62e57391e06b3b09628a83ce65.png" alt="header-img"></p>
+<p>Flexbox 是一个高效的CSS UI设计标准。使用简单的几个 flexbox 属性我们就可以构建我们的页面通过一个一个小的布局快，我们可以对这些布局快可以轻松地进行定位和缩放。</p>
+<p>在这篇文章中，我们将要通过5种flexbox的方式来解决普通的css布局问题。其中还包含了这些技术在真实生活中的实践。</p>
+<h2 id="创建一个等高的列"><a href="#创建一个等高的列" class="headerlink" title="创建一个等高的列"></a>创建一个等高的列</h2><p>如果让你把所有的列的高度弄上去一样高，这是恨烦的。简单的通过 <code>min-height</code> 是不行的，因为一旦内容发生变化，那么一些列会变高而其它的仍然还是原来的高度。</p>
+<p>用 flexbox 来解决这个问题再简单不过了，因为痛过这种方式创建的列默认情况下就是等高的。我们要做的就是初始化这个 flex 盒子，然后确保 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="noopener"><code>flex-direction</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="noopener"><code>align-items</code></a> 属性被赋值为默认值。</p>
+<p>CSS 部分：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">        <span class="comment">/* Initialize the flex model */</span></span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* These are the default values but you can set them anyway */</span></span><br><span class="line">	<span class="attribute">flex-direction</span>: row;    <span class="comment">/* Items inside the container will be positioned horizontally */</span></span><br><span class="line">        <span class="attribute">align-items</span>: stretch;   <span class="comment">/* Items inside the container will take up it's entire height */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Equal height columns --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>你可以在 <a href="http://tutorialzine.com/2014/10/easiest-way-equal-height-sidebar/" target="_blank" rel="noopener">Easiest Way To Create Equal Height Sidebars </a>这篇文章中查看实例，它创建了一个包含侧边栏和主内容区的响应式页面。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/fad225a184b73073e735f91483b5936a.png" alt="等高的列实例"></p>
+<h2 id="重新定位元素"><a href="#重新定位元素" class="headerlink" title="重新定位元素"></a>重新定位元素</h2><p>以前，如果我们要动态的的区改变元素的顺序，我们可能会尝试一些CSS hack，而且还有写一些 javascript，真是让人沮丧！但是有了 flexbox，只有一个CSS属性就可以搞定这个问题了！</p>
+<p>它叫做 <code>order</code> ，就像这个名字一样，一切尽可能的简单。它让我们可以通过一个数字来设定这个flex项在屏幕中的出现顺序（越小的数代表越高的优先级）。</p>
+<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Reverse the order of elements */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.blue</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.red</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.green</span>&#123;</span><br><span class="line">	<span class="attribute">order</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- These items will appear in reverse order --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"blue"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"red"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"green"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这个属性有非常多多实战应用。如果你想了解的话，你可以看 <a href="http://tutorialzine.com/2015/11/using-flexbox-to-create-a-responsive-comment-section/" target="_blank" rel="noopener">这篇文章</a>， 它讲了如果使用这个玩意来做一个响应式的评论区。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3ee31b005c8549d72bfa12555c53a42e.png" alt="order 属性"></p>
+<h2 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h2><p>在CSS中垂直居中问题我们经常遇到，为什么一个简单的垂直居中实现起来如此复杂？如果 Google 一下 <em>CSS 垂直居中</em>，可以找到无限多的解决方案，它们中的很大一部分都是采用 <code>table</code> 或者 <code>transform</code> 来实现（然而这些东西设计出来不是为来布局的）。</p>
+<p>Flexbox 非常简单的解决了这个问题。没有个flex布局都具有两个方向（X轴和Y轴）和两个用来置顶它们都对齐方式的属性。把两个属性都设成居中对齐，我们就可以把这个元素放在它都父级容器的中间了。</p>
+<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Center according to the main axis */</span></span><br><span class="line">	<span class="attribute">justify-content</span>: center;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Center according to the secondary axis */</span></span><br><span class="line">        <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Any element placed here will be centered</span></span><br><span class="line"><span class="comment">		 both horizonally and vertically --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>你可以阅读<a href="http://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally/" target="_blank" rel="noopener">这篇文章</a>来了解更多<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/cdb8ce1aefb6b34623773d59eb12e6ee.png" alt="Horizontal And Vertical Centering With Flexbox"></p>
+<h2 id="创建一个完全的响应式网格"><a href="#创建一个完全的响应式网格" class="headerlink" title="创建一个完全的响应式网格"></a>创建一个完全的响应式网格</h2><p>许多的开发者创建响应式网格的时候都依赖一个CSS框架。Bootstrap 是最流行的一个，当然还有其它成百上千个库可以帮你做到。它们都可以正常的工作并且有很多的选项，但是它们都太重了。如果你只是想要实现一个网格布局，仅仅需要 flexbox 就可以帮你搞定了！</p>
+<p>在 flexbox 网格系统中，被设置了 <code>display:flex</code> 属性的元素就相当于“行（row）”。它里面的水平方向的列可以是任意数量的元素，可以通过 <code>flex</code> 属性来设置尺寸。flex 模型适应视口的大小，所以这个设置应该在所有的设备上看起来都是可以的。然而，如果我们发现在水平方向上没有足够的空间时，我们可以简单的通过媒体查询来现实一个垂直方向上的布局。</p>
+<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">	<span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Classes for each column size. */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.col-1</span>&#123;</span><br><span class="line">	<span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.col-2</span>&#123;</span><br><span class="line">	<span class="attribute">flex</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (max-width: <span class="number">800px</span>)&#123;</span><br><span class="line">	<span class="selector-class">.container</span>&#123;</span><br><span class="line">		<span class="comment">/* Turn the horizontal layout into a vertical one. */</span></span><br><span class="line">		<span class="attribute">flex-direction</span>: column;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 25% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-1"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 50% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-2"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- This column will be 25% wide --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-1"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>你可以在 <a href="http://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/" target="_blank" rel="noopener">The Easiest Way To Make Responsive Headers</a> 查看这项技术的运用。<br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/80663c4d6acf85ed938506bd679b5788.png" alt="Responsive Header With Flexbox"></p>
+<h2 id="创建一个完美的紧贴页面底部的页脚"><a href="#创建一个完美的紧贴页面底部的页脚" class="headerlink" title="创建一个完美的紧贴页面底部的页脚"></a>创建一个完美的紧贴页面底部的页脚</h2><p>Flexbox 同样也可以很容易的解决这个问题。通过 flex 元素可以保证页脚永远在页面的底部。</p>
+<p>给 <code>body</code> 标签加一个 <code>diplay:flex</code> 属性，这样我们就可以对整个页面使用flex模型属性。这样我们就可以把主要的内容区和页脚区分别作为 flex项，以便于我们准确的控制他们的位置。</p>
+<p>CSS 部分：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>: column;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.main</span>&#123;</span><br><span class="line">   <span class="comment">/* The main section will take up all the available free space</span></span><br><span class="line"><span class="comment">      on the page that is not taken up by the footer. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">footer</span>&#123;</span><br><span class="line">   <span class="comment">/* The footer will take up as much vertical space as it needs and not a pixel more. */</span></span><br><span class="line">   <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTML 部分：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- All the page content goes here  --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Our sticky foooter --&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">footer</span>&gt;</span>...<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果你要了解更多，你可以阅读 <a href="http://tutorialzine.com/2016/03/quick-tip-the-best-way-to-make-sticky-footers/" target="_blank" rel="noopener">The Best Way To Make Sticky Footers。</a><br><img src="http://7xiyp1.com1.z0.glb.clouddn.com/3cdb3d6fc72b932e16861fb1803c5565.png" alt="Sticky Footers With Flexbox"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>主流的浏览器（<a href="http://caniuse.com/#feat=flexbox" target="_blank" rel="noopener">不包括 IE9</a>）现在都支持 flexbox 布局模型了，所以，除非你的用户更喜欢用古老的IE浏览器，你是可以非常放心的在产品用用 flexbox 布局的！</p>
+<p>我希望这些能够帮助你创建更加强健响应式布局！</p>
+<blockquote>
+<p>原文地址：<a href="http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/" target="_blank" rel="noopener">http://tutorialzine.com/2016/04/5-flexbox-techniques-you-need-to-know-about/</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/09/css-variables/" itemprop="url">
                   简单介绍 CSS Variables
                 </a>
@@ -818,154 +971,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/09/11/react-on-es6-plus/" itemprop="url">
-                  [译]在 React.js 中使用 ES6+
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-09-11T15:54:36+08:00" content="2015-09-11">
-              2015-09-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/09/11/react-on-es6-plus/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/11/react-on-es6-plus/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>原文地址： <a href="http://babeljs.io/blog/2015/06/07/react-on-es6-plus/" target="_blank" rel="noopener">http://babeljs.io/blog/2015/06/07/react-on-es6-plus/</a></p>
-</blockquote>
-<p><img src="http://7xiyp1.com1.z0.glb.clouddn.com/652b57761014ee46dc3114e22229b92f.png" alt="babel.js"></p>
-<p>在今年对 Instagram Web 进行全新的设计的时候，我喜欢在写 React 组件的时候，用上一些 ES6+ 的新特性。请允许我列举这些能够改变你写 React 应用方式的新特性。比起以往，这些特性能够使你撸起码来更加容易、有趣！</p>
-<h2 id="类（Class）"><a href="#类（Class）" class="headerlink" title="类（Class）"></a>类（Class）</h2><p>使用 ES6+ 来编写 React 组件最明显的变化就是我们定义组件（类）的语法的方式。我们可以用定义一个继承了 <code>React.Component</code> 的ES6 类来代替原本使用 <code>React.createClass</code> 的来创建类的方式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">&#123;this.props.caption&#125;</span> <span class="attr">src</span>=<span class="string">&#123;this.props.src&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>我们可以发现这种写法使得定义组件的方式变得更加简洁：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> Photo = React.createClass(&#123;</span><br><span class="line">  handleDoubleTap: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123; … &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; … &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  handleDoubleTap(e) &#123; … &#125;</span><br><span class="line">  render() &#123; … &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样我们可以少写一对圆括号、一个分号、每个方法的冒号和 <code>function</code> 关键字。</p>
-<p>所有生命周期方法都可以采用这种方式来定义。 但是 <code>componentWillMount</code> 还可以用 <code>constructor</code> 来代替：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> EmbedModal = React.createClass(&#123;</span><br><span class="line">  componentWillMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; … &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmbedModal</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="comment">// Operations usually carried out in componentWillMount go here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="属性初始化（property-initializers）"><a href="#属性初始化（property-initializers）" class="headerlink" title="属性初始化（property initializers）"></a>属性初始化（property initializers）</h2><p>在 ES6+ 类中，属性类型 <code>prop type</code> 和默认属性 <code>default prop</code> 可以通过类中的 <code>static</code> 来声明。同时，组件的初始状态（ <code>initial state</code> ）可以通过 ES7 的<a href="https://gist.github.com/jeffmo/054df782c05639da2adb" target="_blank" rel="noopener">属性初始化（property initializers）</a>来完成：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The ES5 way</span></span><br><span class="line"><span class="keyword">var</span> Video = React.createClass(&#123;</span><br><span class="line">  getDefaultProps: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      autoPlay: <span class="literal">false</span>,</span><br><span class="line">      maxLoops: <span class="number">10</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      loopsRemaining: <span class="keyword">this</span>.props.maxLoops,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    autoPlay: React.PropTypes.bool.isRequired,</span><br><span class="line">    maxLoops: React.PropTypes.number.isRequired,</span><br><span class="line">    posterFrameSrc: React.PropTypes.string.isRequired,</span><br><span class="line">    videoSrc: React.PropTypes.string.isRequired,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// The ES6+ way</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Video</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> defaultProps = &#123;</span><br><span class="line">    autoPlay: <span class="literal">false</span>,</span><br><span class="line">    maxLoops: <span class="number">10</span>,</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> propTypes = &#123;</span><br><span class="line">    autoPlay: React.PropTypes.bool.isRequired,</span><br><span class="line">    maxLoops: React.PropTypes.number.isRequired,</span><br><span class="line">    posterFrameSrc: React.PropTypes.string.isRequired,</span><br><span class="line">    videoSrc: React.PropTypes.string.isRequired,</span><br><span class="line">  &#125;</span><br><span class="line">  state = &#123;</span><br><span class="line">    loopsRemaining: <span class="keyword">this</span>.props.maxLoops,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>ES7 中在构造函数（ <code>constructor</code> ）下的属性初始化操作中的 <code>this</code> 指向的是类的实例，所以初始状态（ <code>initial state</code> ）可以通过 <code>this.prop</code> （即传入的参数）来设定。</p>
-<h2 id="箭头函数（Arrow-function）"><a href="#箭头函数（Arrow-function）" class="headerlink" title="箭头函数（Arrow function）"></a>箭头函数（Arrow function）</h2><p><code>React.createClass</code> 方法在你的组件上做了一些额外的绑定工作，以确保在组件实实例的方法内部， <code>this</code> 指向的是组件实例自身。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Autobinding, brought to you by React.createClass</span></span><br><span class="line"><span class="keyword">var</span> PostInfo = React.createClass(&#123;</span><br><span class="line">  handleOptionsButtonClick: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Here, 'this' refers to the component instance.</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">showOptionsModal</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>由于我们使用 ES6+ 的语法定义类的时候没有采用 <code>React.createClass</code> 的方式，所以，这样看来我们不得不手动来绑定这些方法中 <code>this</code> 的指向：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Manually bind, wherever you need to</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostInfo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="comment">// Manually bind this method to the component instance...</span></span><br><span class="line">    <span class="keyword">this</span>.handleOptionsButtonClick = <span class="keyword">this</span>.handleOptionsButtonClick.bind(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  handleOptionsButtonClick(e) &#123;</span><br><span class="line">    <span class="comment">// ...to ensure that 'this' refers to the component instance here.</span></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">showOptionsModal</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>幸运的是，通过 ES6+ 的箭头函数（ Arrow functions ）和属性初始化（ property initializers ）这两个特性使得把函数的 <code>this</code> 指向绑定为组件的实例变得非常的简单：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PostInfo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  handleOptionsButtonClick = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">showOptionsModal</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>函数体内的 <code>this</code> 对象，绑定定义时所在的对象，而不是使用时所在的对象。而恰好属性初始化（ property initializers ）刚好在这个作用域内。</p>
-<h2 id="动态属性名-amp-字符串模板"><a href="#动态属性名-amp-字符串模板" class="headerlink" title="动态属性名 &amp; 字符串模板"></a>动态属性名 &amp; 字符串模板</h2><p>在 ES6+ 中对 <em>对象字面量的扩展</em> 使得我们可以在对象字面量中使用表达式来对属性命名。如果是在 ES5 中，我们也许只能这样做：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Form = React.createClass(&#123;</span><br><span class="line">  onChange: <span class="function"><span class="keyword">function</span>(<span class="params">inputName, e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> stateToSet = &#123;&#125;;</span><br><span class="line">    stateToSet[inputName + <span class="string">'Value'</span>] = e.target.value;</span><br><span class="line">    <span class="keyword">this</span>.setState(stateToSet);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>但是，在 ES6+ 中，我们不仅可以在对象字面量属性的定义中使用表达式，还有使用使用 <em>字符串模板</em> ：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Form</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  onChange(inputName, e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      [<span class="string">`<span class="subst">$&#123;inputName&#125;</span>Value`</span>]: e.target.value,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="析构-amp-扩展运算符"><a href="#析构-amp-扩展运算符" class="headerlink" title="析构 &amp; 扩展运算符"></a>析构 &amp; 扩展运算符</h2><p>我们在编写组件的过程中，经常遇到要从父组件要把自己的很多属性多传给子组件的情况。有了 ES6+ 的 _析构_ 和 <em>扩展运算符</em> 特性，这变得非常的方便：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AutoloadingPostsGrid</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">var</span> &#123;</span><br><span class="line">      className,</span><br><span class="line">      ...others,  <span class="comment">// contains all properties of this.props except for className</span></span><br><span class="line">    &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=&#123;className&#125;&gt;</span><br><span class="line">        &lt;PostsGrid &#123;...others&#125; /&gt;</span><br><span class="line">        &lt;button onClick=&#123;<span class="keyword">this</span>.handleLoadMoreClick&#125;&gt;Load more&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们可以把 <em>扩展运算符</em> 属性和普通的属性结合起来使用，这样使得我们可以利用优先级来使用属性的默认值和属性的覆盖。下面这个元素会获得一个 <code>override</code> 的类（ <code>class</code> ），及时 <code>this.props</code> 中有传递 <code>className</code> 属性。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div &#123;...this.props&#125; className=<span class="string">"override"</span>&gt;</span><br><span class="line">  …</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>下面这种写法，可以给元素设定默认的 <code>className</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=<span class="string">"base"</span> &#123;...this.props&#125;&gt;</span><br><span class="line">  …</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>我希望你能够享受 ES6+ 的这些特性给你在编写 React.js 中带来的好处。感谢我的同事他们为这篇文章作出的贡献，还有，特别的感谢 Babel 团队，使得我们可以随意的使用这些特性。</p>
-<blockquote>
-<p>文章地址：<a href="http://blog.mcbird.cn/2015/09/11/react-on-es6-plus/">http://blog.mcbird.cn/2015/09/11/react-on-es6-plus/</a></p>
-</blockquote>
-<div><h1>推荐阅读</h1><ul><li><a href="http://blog.mcbird.cn/2015/07/24/react-mixins-by-example/">『译』React Mixin 的使用</a></li><li><a href="http://www.hui-wang.info/2015/10/31/ES6模拟布朗运动/">ES6模拟布朗运动</a></li></ul></div>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1006,7 +1016,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1014,7 +1024,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1023,7 +1033,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1089,7 +1099,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

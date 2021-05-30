@@ -1,0 +1,688 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="typescript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="type guards (类型守卫) 和 narrowing通过 if 条件语句对类型进行判断，TypeScript会对变量的类型进行分析，以明白这个分支下变量的具体类型，这个过程叫做 type guards 。而这整个由不确定类型到确定具体类型到过程就叫做 narrowing ，下面有几种方式可以对类型进行校验。 typeof 守卫可以通过 typeofe 运算符对类型进行最基础对判断：  st">
+<meta name="keywords" content="typescript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Narrowing 类型收缩 - 《TypeScript学习笔记》">
+<meta property="og:url" content="http://blog.mcbird.cn/2021/05/24/Narrowing-TypeScript/index.html">
+<meta property="og:site_name" content="MockingBird">
+<meta property="og:description" content="type guards (类型守卫) 和 narrowing通过 if 条件语句对类型进行判断，TypeScript会对变量的类型进行分析，以明白这个分支下变量的具体类型，这个过程叫做 type guards 。而这整个由不确定类型到确定具体类型到过程就叫做 narrowing ，下面有几种方式可以对类型进行校验。 typeof 守卫可以通过 typeofe 运算符对类型进行最基础对判断：  st">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-30T03:48:06.475Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Narrowing 类型收缩 - 《TypeScript学习笔记》">
+<meta name="twitter:description" content="type guards (类型守卫) 和 narrowing通过 if 条件语句对类型进行判断，TypeScript会对变量的类型进行分析，以明白这个分支下变量的具体类型，这个过程叫做 type guards 。而这整个由不确定类型到确定具体类型到过程就叫做 narrowing ，下面有几种方式可以对类型进行校验。 typeof 守卫可以通过 typeofe 运算符对类型进行最基础对判断：  st">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.mcbird.cn/2021/05/24/Narrowing-TypeScript/"/>
+
+  <title> Narrowing 类型收缩 - 《TypeScript学习笔记》 | MockingBird </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f86a845dc60f2f2581b1e0dd02613510";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MockingBird</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">记录 Web 前端成长旅程</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Narrowing 类型收缩 - 《TypeScript学习笔记》
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2021-05-24T22:36:32+08:00" content="2021-05-24">
+              2021-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/typescript/" itemprop="url" rel="index">
+                    <span itemprop="name">typescript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2021/05/24/Narrowing-TypeScript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2021/05/24/Narrowing-TypeScript/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="type-guards-类型守卫-和-narrowing"><a href="#type-guards-类型守卫-和-narrowing" class="headerlink" title="type guards (类型守卫) 和 narrowing"></a>type guards (类型守卫) 和 narrowing</h1><p>通过 <code>if</code> 条件语句对类型进行判断，TypeScript会对变量的类型进行分析，以明白这个分支下变量的具体类型，这个过程叫做 <code>type guards</code> 。而这整个由不确定类型到确定具体类型到过程就叫做 <code>narrowing</code> ，下面有几种方式可以对类型进行校验。</p>
+<h1 id="typeof-守卫"><a href="#typeof-守卫" class="headerlink" title="typeof 守卫"></a><code>typeof</code> 守卫</h1><p>可以通过 <code>typeofe</code> 运算符对类型进行最基础对判断：</p>
+<ul>
+<li><code>string</code></li>
+<li><code>number</code></li>
+<li><code>bigint</code></li>
+<li><code>boolean</code></li>
+<li><code>symbol</code></li>
+<li><code>undefined</code></li>
+<li><code>object</code></li>
+<li><code>function</code></li>
+</ul>
+<h1 id="Truthiness-narrowing（是否为真）"><a href="#Truthiness-narrowing（是否为真）" class="headerlink" title="Truthiness narrowing（是否为真）"></a>Truthiness narrowing（是否为真）</h1><p>在 <code>if</code> 表达式内，JavaScript 对条件是否为真对判断并不是决定对，它会把非 <code>boolean</code> 类型对表达式转化为 <code>boolean</code> 类型进行判断。下面的值会被转化为 <code>false</code> ：</p>
+<ul>
+<li><code>0</code></li>
+<li><code>NaN</code></li>
+<li><code>&quot;&quot;</code>（空字符串）</li>
+<li><code>0n</code> （大整型0）</li>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+</ul>
+<p>除了上面这些值会被转化为<code>false</code>，其它都会被转发为<code>true</code>。</p>
+<h1 id="Equality-narrowing（是否相等）"><a href="#Equality-narrowing（是否相等）" class="headerlink" title="Equality narrowing（是否相等）"></a>Equality narrowing（是否相等）</h1><p>我们可以通过 <code>===</code>，<code>!==</code>，<code>==</code>，<code>!=</code> 对类型进行收缩。比如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x: string | number, y: string | boolean</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (x === y) &#123;</span><br><span class="line">    <span class="comment">// We can now call any 'string' method on 'x' or 'y'.</span></span><br><span class="line">    x.toUpperCase();</span><br><span class="line">    <span class="comment">// ^?</span></span><br><span class="line">    y.toLowerCase();</span><br><span class="line">    <span class="comment">// ^?</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">    <span class="comment">//          ^?</span></span><br><span class="line">    <span class="built_in">console</span>.log(y);</span><br><span class="line">    <span class="comment">//          ^?</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="instanceof-narrowing（原型校验）"><a href="#instanceof-narrowing（原型校验）" class="headerlink" title="instanceof narrowing（原型校验）"></a><code>instanceof</code> narrowing（原型校验）</h1><p>这种方式用来检查通过<code>new</code>对方式创建出来对对象对类型。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logValue</span>(<span class="params">x: Date | string</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (x <span class="keyword">instanceof</span> <span class="built_in">Date</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x.toUTCString());</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x.toUpperCase());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h1><p>TypeScript会根据赋值操作符<code>=</code>右边对类型决定变量的类型<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="built_in">Math</span>.random() &lt; <span class="number">0.5</span> ? <span class="number">10</span> : <span class="string">"hello world!"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这里的 <code>x</code> 会被推断为 <code>string | number</code> 两种类型。</p>
+<h1 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h1><p>对于自定义类型，可以通过 <code>parameterName is Type</code> 的方式断言某个变量是 <code>Type</code> 类型，其中 <code>parameterName</code> 必须为函数的参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isFish</span>(<span class="params">pet: Fish | Bird</span>): <span class="title">pet</span> <span class="title">is</span> <span class="title">Fish</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (pet <span class="keyword">as</span> Fish).swim !== <span class="literal">undefined</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h1><p>通过 <code>|</code> 符号来表示字面类型的组合，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">interface Shape &#123;</span><br><span class="line">  kind: <span class="string">"circle"</span> | <span class="string">"square"</span>;</span><br><span class="line">  radius?: number;</span><br><span class="line">  sideLength?: number;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="never-类型"><a href="#never-类型" class="headerlink" title="never 类型"></a><code>never</code> 类型</h1><p><code>never</code> 类型表示一个不应该存在的状态，如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">type Shape = Circle | Square;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getArea</span>(<span class="params">shape: Shape</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (shape.kind) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"circle"</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Math</span>.PI * shape.radius ** <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"square"</span>:</span><br><span class="line">      <span class="keyword">return</span> shape.sideLength ** <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">const</span> _exhaustiveCheck: never = shape;</span><br><span class="line">      <span class="keyword">return</span> _exhaustiveCheck;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/typescript/" rel="tag">#typescript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/19/install-nginx-on-mac-osx/" rel="next" title="Nginx 配置虚拟主机">
+                <i class="fa fa-chevron-left"></i> Nginx 配置虚拟主机
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2021/05/24/Narrowing-TypeScript/"
+           data-title="Narrowing 类型收缩 - 《TypeScript学习笔记》" data-url="http://blog.mcbird.cn/2021/05/24/Narrowing-TypeScript/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xip55.com1.z0.glb.clouddn.com/pp1.jpeg"
+               alt="McBird" />
+          <p class="site-author-name" itemprop="name">McBird</p>
+          <p class="site-description motion-element" itemprop="description">分享自己的学习经历，实用技巧</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CodingMonkeyzh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1914017207" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/zhou-quan-31-68" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#type-guards-类型守卫-和-narrowing"><span class="nav-number">1.</span> <span class="nav-text">type guards (类型守卫) 和 narrowing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typeof-守卫"><span class="nav-number">2.</span> <span class="nav-text">typeof 守卫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Truthiness-narrowing（是否为真）"><span class="nav-number">3.</span> <span class="nav-text">Truthiness narrowing（是否为真）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Equality-narrowing（是否相等）"><span class="nav-number">4.</span> <span class="nav-text">Equality narrowing（是否相等）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#instanceof-narrowing（原型校验）"><span class="nav-number">5.</span> <span class="nav-text">instanceof narrowing（原型校验）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#赋值操作"><span class="nav-number">6.</span> <span class="nav-text">赋值操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类型断言"><span class="nav-number">7.</span> <span class="nav-text">类型断言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联合类型"><span class="nav-number">8.</span> <span class="nav-text">联合类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#never-类型"><span class="nav-number">9.</span> <span class="nav-text">never 类型</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">McBird</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"codingmonkeyzh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
